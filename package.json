@@ -2,7 +2,7 @@
   "name": "wire-webapp-message-protocol",
   "version": "1.17.0",
   "description": "Protocol definition for generic messages.",
-  "main": "index.js",
+  "main": "./proto",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wireapp/generic-message-proto.git"
