@@ -20,6 +20,7 @@ message GenericMessage {
     Confirmation confirmation = 16;
     Reaction reaction = 17;
   }
+  optional int64 expire_after_millis = 18;
 }
 
 message Text {

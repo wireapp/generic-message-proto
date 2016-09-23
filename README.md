@@ -11,7 +11,10 @@ Protocol definition for generic messages.
 
 `GenericMessage` is supposed to be used in client messages ('client-message-add' event) and in OTR encrypted messages. Once E2EE is released client messages will no longer be used.
 
-`GenericMessage` contains message id and specific message content (`oneOf`)
+`GenericMessage` contains:
+ - message id 
+ - specific message content (`oneOf`)
+ - optional expiration delay (for ephemeral messages)
 
 ## Message Id
 `MessageId` field is client generated identifier of a message this `GenericMessage` relates to, it should be used by all clients to correlate message updates. This is **not** unique event id, there may (and will) be several `GenericMessage` events with the same `messageId`, each `GenericMessage` provides part of final message or some update to it.
