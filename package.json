@@ -1,5 +1,5 @@
 {
-  "name": "wire-webapp-message-protocol",
+  "name": "wire-webapp-protocol-message",
   "version": "1.17.0",
   "description": "Protocol definition for generic messages.",
   "main": "./proto",
