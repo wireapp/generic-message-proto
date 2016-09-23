@@ -1,6 +1,6 @@
 {
   "name": "wire-webapp-message-protocol",
-  "version": "1.0.0",
+  "version": "1.17.0",
   "description": "Protocol definition for generic messages.",
   "main": "index.js",
   "repository": {
