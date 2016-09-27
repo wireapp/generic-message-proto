@@ -19,6 +19,18 @@ message GenericMessage {
     MessageEdit edited = 15;
     Confirmation confirmation = 16;
     Reaction reaction = 17;
+    Ephemeral ephemeral = 18;
+  }
+}
+
+message Ephemeral {
+  required int64 expire_after_millis = 1;
+  oneof content {
+    Text text = 2;
+    ImageAsset image = 3;
+    Knock knock = 4;
+    Asset asset = 5;
+    Location location = 6;
   }
 }
 
