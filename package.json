@@ -2,7 +2,7 @@
   "description": "Protocol definition for generic messages.",
   "license": "GPL-3.0",
   "main": "./proto",
-  "name": "wire-webapp-protocol-message",
+  "name": "wire-webapp-protocol-messaging",
   "private": true,
   "repository": {
     "type": "git",
