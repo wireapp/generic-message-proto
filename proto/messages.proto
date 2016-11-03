@@ -218,5 +218,5 @@ enum ClientAction {
 }
 
 message Calling {
-  required string content = 1;
+  required bytes content = 1;
 }
