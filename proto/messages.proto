@@ -32,6 +32,7 @@ message Ephemeral {
     Asset asset = 5;
     Location location = 6;
   }
+  optional int64 expire_after_millis = 18;
 }
 
 message Text {
