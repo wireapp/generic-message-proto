@@ -16,5 +16,5 @@
     "url": "git+https://github.com/wireapp/generic-message-proto.git"
   },
   "types": "web/index.d.ts",
-  "version": "1.19.0"
+  "version": "1.20.0"
 }
