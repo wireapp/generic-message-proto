@@ -24,6 +24,9 @@ Clients need to take case of message id collisions. It is possible, that some ma
 ## Message Content
 Actual message content is included as `oneof` field in `GenericMessage`, this way we can later add more message types in backward compatible manner.
 
+### Availability
+A user sends a generic message of type `Availability` if he wants to change his personal availability. The availability can be of four types: `None`, `Available`, `Busy`, and `Away`.
+
 ### Text
 Regular text message content, optionally including a list of mentioned users.
 
