@@ -14,10 +14,10 @@
     "removeComments": true,
     "rootDir": "web",
     "sourceMap": false,
+    "strict": true,
     "target": "ES5"
   },
   "exclude": [
-    "dist/commonjs",
     "node_modules"
   ]
 }

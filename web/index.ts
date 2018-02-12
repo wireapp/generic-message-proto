@@ -1,7 +1,7 @@
-import {load, Root} from 'protobufjs';
+import { load, Root } from 'protobufjs';
 
 function loadProtocolBuffers(): Promise<Root> {
-    return load(`${__dirname}/../proto/messages.proto`);
+  return load(`${__dirname}/../proto/messages.proto`);
 }
 
-module.exports = loadProtocolBuffers;
+export = loadProtocolBuffers;
