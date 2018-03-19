@@ -95,6 +95,7 @@ message Mention {
 message LastRead {
   required string conversation_id = 1;
   required int64 last_read_timestamp = 2;
+  optional bool force_update = 3;
 }
 
 message Cleared {

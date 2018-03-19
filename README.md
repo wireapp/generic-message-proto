@@ -36,7 +36,7 @@ Describes user mentioned in text message. Contains `userId` and `userName`. User
 ### Knock
 
 ### LastRead
-Internal message, sent on self conversation to notify other clients (belonging to the same user) about messages being read in some conversation.
+Internal message, sent on self conversation to notify other clients (belonging to the same user) about messages being read in some conversation. Clients ignore the last read that is earlier than the current last read. To set the conversation to be unread until certain timestamp use `force_update` flag.
 
 ### Cleared
 Internal message, sent on self conversation to notify other clients about conversation being cleared.
