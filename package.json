@@ -1,25 +1,24 @@
 {
   "dependencies": {
-    "protobufjs": "6.8.4"
+    "protobufjs": "6.8.6"
   },
   "description": "Protocol definition for generic messages.",
   "devDependencies": {
-    "typescript": "2.7.1"
+    "typescript": "2.8.1"
   },
   "files": [
     "proto/messages.proto",
     "web/index.d.ts",
-    "web/index.js"
+    "web/index.js",
+    "web/messages.json"
   ],
   "license": "GPL-3.0",
   "main": "web/index.js",
   "name": "@wireapp/protocol-messaging",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wireapp/generic-message-proto.git"
-  },
+  "repository": "https://github.com/wireapp/generic-message-proto.git",
   "scripts": {
-    "dist": "tsc"
+    "build": "node web/convert.js",
+    "dist": "tsc && yarn build"
   },
   "types": "web/index.d.ts",
   "version": "1.20.0"
