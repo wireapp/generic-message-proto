@@ -17,8 +17,9 @@
   "name": "@wireapp/protocol-messaging",
   "repository": "https://github.com/wireapp/generic-message-proto.git",
   "scripts": {
-    "build": "node web/convert.js",
-    "dist": "tsc && yarn build"
+    "build": "tsc",
+    "convert": "node web/convert.js",
+    "dist": "yarn build && yarn convert"
   },
   "types": "web/index.d.ts",
   "version": "1.20.0"
