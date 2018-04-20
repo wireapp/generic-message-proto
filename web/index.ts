@@ -17,15 +17,9 @@
  *
  */
 
-import {load, Root} from 'protobufjs';
+import {Root} from 'protobufjs';
 const protoJSON = require('./messages.json');
 
-function loadProtocolBuffers(): Promise<Root> {
-  if (typeof window !== 'undefined') {
-    return Promise.resolve(Root.fromJSON(protoJSON));
-  }
-
-  return load(`${__dirname}/../proto/messages.proto`);
-}
+const loadProtocolBuffers = (): Root => Root.fromJSON(protoJSON);
 
 export default loadProtocolBuffers;

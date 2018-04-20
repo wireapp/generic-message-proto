@@ -1,3 +1,3 @@
 import { Root } from 'protobufjs';
-declare function loadProtocolBuffers(): Promise<Root>;
+declare const loadProtocolBuffers: () => Root;
 export default loadProtocolBuffers;

@@ -23,7 +23,6 @@
 const {load} = require('protobufjs');
 const fs = require('fs');
 const path = require('path');
-const {promisify} = require('util');
 
 const protoFile = path.join(__dirname, '..', 'proto', 'messages.proto');
 const jsonFile = path.resolve(__dirname, 'messages.json');
@@ -31,5 +30,5 @@ const jsonFile = path.resolve(__dirname, 'messages.json');
 load(protoFile)
   .then(Root => {
     const json = JSON.stringify(Root.toJSON());
-    return promisify(fs.writeFile)(jsonFile, json, 'utf8');
+    return fs.writeFileSync(jsonFile, json, {encoding: 'utf8'});
   });

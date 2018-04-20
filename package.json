@@ -7,7 +7,6 @@
     "typescript": "2.8.1"
   },
   "files": [
-    "proto/messages.proto",
     "web/index.d.ts",
     "web/index.js",
     "web/messages.json"
