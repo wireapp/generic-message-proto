@@ -4,7 +4,7 @@
   },
   "description": "Protocol definition for generic messages.",
   "devDependencies": {
-    "typescript": "2.8.1"
+    "typescript": "2.8.3"
   },
   "files": [
     "web/index.d.ts",

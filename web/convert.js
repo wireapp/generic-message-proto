@@ -29,6 +29,6 @@ const jsonFile = path.resolve(__dirname, 'messages.json');
 
 load(protoFile)
   .then(Root => {
-    const json = JSON.stringify(Root.toJSON());
+    const json = JSON.stringify(Root.toJSON()) + '\n';
     return fs.writeFileSync(jsonFile, json, {encoding: 'utf8'});
   });
