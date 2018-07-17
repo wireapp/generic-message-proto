@@ -17,5 +17,5 @@
     "postversion": "git push && git push --tags"
   },
   "types": "web/Protobuf.d.ts",
-  "version": "1.20.1"
+  "version": "1.20.0"
 }
