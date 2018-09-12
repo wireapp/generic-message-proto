@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "protobufjs": "6.8.6"
+    "protobufjs": "6.8.8"
   },
   "description": "Protocol definition for generic messages.",
   "files": [
@@ -17,5 +17,5 @@
     "postversion": "git push && git push --tags"
   },
   "types": "web/Protobuf.d.ts",
-  "version": "1.20.1"
+  "version": "1.21.0"
 }
