@@ -4,6 +4,7 @@
   },
   "description": "Protocol definition for generic messages.",
   "files": [
+    "proto/messages.proto",
     "web/Protobuf.d.ts",
     "web/Protobuf.js"
   ],
@@ -17,5 +18,5 @@
     "postversion": "git push && git push --tags"
   },
   "types": "web/Protobuf.d.ts",
-  "version": "1.21.0"
+  "version": "1.21.1"
 }
