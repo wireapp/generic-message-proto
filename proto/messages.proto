@@ -89,9 +89,11 @@ message Article {
 }
 
 message Mention {
-  optional string user_id = 1;
-  required int32 start = 2; // offset from beginning of the message counting in utf16 characters
-  required int32 end = 3; // offset from beginning of the message counting in utf16 characters
+  required int32 start = 1; // offset from beginning of the message counting in utf16 characters
+  required int32 end = 2; // offset from beginning of the message counting in utf16 characters
+  oneof mention_type {
+       string user_id = 3;
+  }
 }
 
 message LastRead {
