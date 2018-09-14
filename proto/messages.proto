@@ -50,7 +50,7 @@ message Text {
   required string content = 1;
   reserved 2; 
   repeated LinkPreview link_preview = 3;
-  repeated UserMention user_mentions = 4;
+  repeated Mention mentions = 4;
 }
 
 message Knock {
@@ -88,7 +88,7 @@ message Article {
   optional Asset image = 4;
 }
 
-message UserMention {
+message Mention {
   required int32 start = 1; // offset from beginning of the message counting in utf16 characters
   required int32 end = 2; // offset from beginning of the message counting in utf16 characters
   oneof mention_type {
