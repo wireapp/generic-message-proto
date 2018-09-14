@@ -48,7 +48,7 @@ message Ephemeral {
 
 message Text {
   required string content = 1;
-  reserved 2; 
+  // reserved 2; // reserved keyword is not available in older protoc versions
   repeated LinkPreview link_preview = 3;
   repeated Mention mentions = 4;
 }
