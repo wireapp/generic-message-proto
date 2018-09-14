@@ -48,8 +48,9 @@ message Ephemeral {
 
 message Text {
   required string content = 1;
-  repeated Mention mention = 2;
+  //repeated Mention mention = 2; // Deprecated, use Mention = 4
   repeated LinkPreview link_preview = 3;
+  repeated Mention mention = 4;
 }
 
 message Knock {
@@ -88,11 +89,9 @@ message Article {
 }
 
 message Mention {
-  // required string user_id = 1; // Deprecated it is optional now, use user_id = 3 instead
-  // required string user_name = 2; // Deprecated
-  optional string user_id = 3;
-  required int32 start = 4; // offset from beginning of the message counting in utf16 characters
-  required int32 end = 5; // offset from beginning of the message counting in utf16 characters
+  optional string user_id = 1;
+  required int32 start = 2; // offset from beginning of the message counting in utf16 characters
+  required int32 end = 3; // offset from beginning of the message counting in utf16 characters
 }
 
 message LastRead {
