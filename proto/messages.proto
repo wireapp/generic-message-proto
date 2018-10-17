@@ -225,6 +225,7 @@ message Asset {
 //  optional Preview preview = 2;  // deprecated - preview was completely replaced
   oneof status {
     NotUploaded not_uploaded = 3;
+    RemoteData uploaded = 4;
   }
   optional Preview preview = 5;
 }
