@@ -21,6 +21,7 @@ message GenericMessage {
     Reaction reaction = 17;
     Ephemeral ephemeral = 18;
     Availability availability = 19;
+    Reply reply = 20;
   }
 }
 
@@ -43,6 +44,7 @@ message Ephemeral {
     Knock knock = 4;
     Asset asset = 5;
     Location location = 6;
+    Reply reply = 7;
   }
 }
 
@@ -117,6 +119,14 @@ message MessageDelete {
 
 message MessageEdit {
   required string replacing_message_id = 1;
+  oneof content {
+    Text text = 2;
+    // Reply can also be edited, but the edit will only affect the Text part
+  }
+}
+
+message Reply {
+  required string quoted_message_id = 1;
   oneof content {
     Text text = 2;
   }
@@ -215,7 +225,6 @@ message Asset {
 //  optional Preview preview = 2;  // deprecated - preview was completely replaced
   oneof status {
     NotUploaded not_uploaded = 3;
-    RemoteData uploaded = 4;
   }
   optional Preview preview = 5;
 }
