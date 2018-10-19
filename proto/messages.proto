@@ -127,8 +127,9 @@ message MessageEdit {
 
 message Reply {
   required string quoted_message_id = 1;
+  required bytes quoted_message_sha256 = 2;
   oneof content {
-    Text text = 2;
+    Text text = 3;
   }
 }
 
