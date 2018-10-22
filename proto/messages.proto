@@ -21,7 +21,6 @@ message GenericMessage {
     Reaction reaction = 17;
     Ephemeral ephemeral = 18;
     Availability availability = 19;
-    Reply reply = 20;
   }
 }
 
@@ -44,7 +43,6 @@ message Ephemeral {
     Knock knock = 4;
     Asset asset = 5;
     Location location = 6;
-    Reply reply = 7;
   }
 }
 
@@ -53,6 +51,7 @@ message Text {
   // reserved 2; // reserved keyword is not available in older protoc versions
   repeated LinkPreview link_preview = 3;
   repeated Mention mentions = 4;
+  optional Quote quote = 5; // if this Text is part of a MessageEdit, this field is ignored
 }
 
 message Knock {
@@ -125,12 +124,9 @@ message MessageEdit {
   }
 }
 
-message Reply {
+message Quote {
   required string quoted_message_id = 1;
   optional bytes quoted_message_sha256 = 2;
-  oneof content {
-    Text text = 3;
-  }
 }
 
 message Confirmation {
