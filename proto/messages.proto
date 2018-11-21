@@ -52,10 +52,12 @@ message Text {
   repeated LinkPreview link_preview = 3;
   repeated Mention mentions = 4;
   optional Quote quote = 5; // if this Text is part of a MessageEdit, this field is ignored
+  optional bool expects_read_confirmation = 6 [default = false]; // whether the sender is expecting to receive a read confirmation
 }
 
 message Knock {
   required bool hot_knock = 1 [default = false];
+  optional bool expects_read_confirmation = 2 [default = false]; // whether the sender is expecting to receive a read confirmation
 }
 
 message LinkPreview {
@@ -145,6 +147,8 @@ message Location {
   required float latitude = 2;
   optional string name = 3; // location description/name
   optional int32 zoom = 4; // google maps zoom level (check maps api documentation)
+  optional bool expects_read_confirmation = 5 [default = false]; // whether the sender is expecting to receive a read confirmation
+
 }
 
 message ImageAsset { // deprecated in favour of Asset.Original.ImageMetaData
@@ -225,6 +229,8 @@ message Asset {
     RemoteData uploaded = 4;
   }
   optional Preview preview = 5;
+  optional bool expects_read_confirmation = 6 [default = false]; // whether the sender is expecting to receive a read confirmation
+
 }
 
 // Actual message is encrypted with AES and sent as additional data
