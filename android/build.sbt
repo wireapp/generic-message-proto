@@ -3,7 +3,7 @@ import com.github.os72.protocjar.Protoc.runProtoc
 name := "generic-message-proto"
 organization := "com.wire"
 
-version := "1.22.1"
+version := "1.23.0"
 
 crossPaths := false
 scalaVersion := "2.11.8"
