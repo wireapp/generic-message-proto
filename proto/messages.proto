@@ -39,7 +39,7 @@ message Ephemeral {
   required int64 expire_after_millis = 1;
   oneof content {
     Text text = 2;
-    ImageAsset image = 3;  // deprecated in favour of Asset
+    ImageAsset image = 3; // deprecated in favour of Asset
     Knock knock = 4;
     Asset asset = 5;
     Location location = 6;
@@ -65,7 +65,7 @@ message LinkPreview {
   required int32 url_offset = 2; // url offset from beginning of text message
 
   oneof preview {
-    Article article = 3;  // deprecated - use meta_data
+    Article article = 3; // deprecated - use meta_data
   }
 
   optional string permanent_url = 5;
@@ -146,12 +146,12 @@ message Location {
   required float longitude = 1;
   required float latitude = 2;
   optional string name = 3; // location description/name
-  optional int32 zoom = 4; // google maps zoom level (check maps api documentation)
+  optional int32 zoom = 4;  // google maps zoom level (check maps api documentation)
   optional bool expects_read_confirmation = 5 [default = false]; // whether the sender is expecting to receive a read confirmation
-
 }
 
-message ImageAsset { // deprecated in favour of Asset.Original.ImageMetaData
+// deprecated in favour of Asset.Original.ImageMetaData
+message ImageAsset {
   required string tag = 1;
   required int32 width = 2;
   required int32 height = 3;
@@ -162,7 +162,7 @@ message ImageAsset { // deprecated in favour of Asset.Original.ImageMetaData
   optional bytes otr_key = 8;
   optional bytes mac_key = 9;    // deprecated - use sha256
   optional bytes mac = 10;       // deprecated - use sha256
-  optional bytes sha256 = 11;      // sha256 of ciphertext
+  optional bytes sha256 = 11;    // sha256 of ciphertext
 }
 
 message Asset {
@@ -175,7 +175,7 @@ message Asset {
       VideoMetaData video = 5;
       AudioMetaData audio = 6;
     }
-    optional string source = 7; // link to source e.g. http://giphy.com/234245
+    optional string source = 7;  // link to source e.g. http://giphy.com/234245
     optional string caption = 8; // caption of the asset, e.g. "dog" for a Giphy "dog" search result
   }
 
@@ -217,13 +217,13 @@ message Asset {
     required bytes otr_key = 1;
     required bytes sha256 = 2; // obsolete but required for backward compatibility
     optional string asset_id = 3;
-//    optional bytes asset_token = 4; // deprecated - changed type to string
+    // optional bytes asset_token = 4; // deprecated - changed type to string
     optional string asset_token = 5;
     optional EncryptionAlgorithm encryption = 6;
   }
 
   optional Original original = 1;
-//  optional Preview preview = 2;  // deprecated - preview was completely replaced
+  // optional Preview preview = 2;  // deprecated - preview was completely replaced
   oneof status {
     NotUploaded not_uploaded = 3;
     RemoteData uploaded = 4;
@@ -236,7 +236,7 @@ message Asset {
 // Actual message is encrypted with AES and sent as additional data
 message External {
   required bytes otr_key = 1;
-  optional bytes sha256 = 2;      // sha256 of ciphertext, obsolete but required for backward compatibility
+  optional bytes sha256 = 2; // sha256 of ciphertext, obsolete but required for backward compatibility
   optional EncryptionAlgorithm encryption = 3;
 }
 
