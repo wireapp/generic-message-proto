@@ -53,13 +53,13 @@ message Text {
   repeated Mention mentions = 4;
   optional Quote quote = 5; // if this Text is part of a MessageEdit, this field is ignored
   optional bool expects_read_confirmation = 6 [default = false]; // whether the sender is expecting to receive a read confirmation
-  optional bool sent_to_legal_hold = 7 [default = false]; // whether a user in the conversation is under legal hold
+  optional LegalHoldStatus legal_hold_status = 7 [default = LegalHoldStatus.DISABLED]; // whether this message was sent to legal hold
 }
 
 message Knock {
   required bool hot_knock = 1 [default = false];
   optional bool expects_read_confirmation = 2 [default = false]; // whether the sender is expecting to receive a read confirmation
-  optional bool sent_to_legal_hold = 3 [default = false]; // whether a user in the conversation is under legal hold
+  optional LegalHoldStatus legal_hold_status = 3 [default = LegalHoldStatus.DISABLED]; // whether this message was sent to legal hold
 }
 
 message LinkPreview {
@@ -150,7 +150,7 @@ message Location {
   optional string name = 3; // location description/name
   optional int32 zoom = 4;  // google maps zoom level (check maps api documentation)
   optional bool expects_read_confirmation = 5 [default = false]; // whether the sender is expecting to receive a read confirmation
-  optional bool sent_to_legal_hold = 6 [default = false]; // whether a user in the conversation is under legal hold
+  optional LegalHoldStatus legal_hold_status = 6 [default = LegalHoldStatus.DISABLED]; // whether this message was sent to legal hold
 }
 
 // deprecated in favour of Asset.Original.ImageMetaData
@@ -233,7 +233,7 @@ message Asset {
   }
   optional Preview preview = 5;
   optional bool expects_read_confirmation = 6 [default = false]; // whether the sender is expecting to receive a read confirmation
-  optional bool sent_to_legal_hold = 7 [default = false]; // whether a user in the conversation is under legal hold
+  optional LegalHoldStatus legal_hold_status = 7 [default = LegalHoldStatus.DISABLED]; // whether this message was sent to legal hold
 }
 
 // Actual message is encrypted with AES and sent as additional data
@@ -259,4 +259,9 @@ message Calling {
 enum EncryptionAlgorithm {
   AES_CBC = 0;
   AES_GCM = 1;
+}
+
+enum LegalHoldStatus {
+  DISABLED = 0;
+  ENABLED = 1;
 }
