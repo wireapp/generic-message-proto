@@ -246,6 +246,7 @@ message External {
 message Reaction {
   optional string emoji = 1; // some emoji reaction or the empty string to remove previous reaction(s)
   required string message_id = 2;
+  optional LegalHoldStatus legal_hold_status = 3; // whether this message was sent to legal hold
 }
 
 enum ClientAction {
