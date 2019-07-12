@@ -264,6 +264,6 @@ enum EncryptionAlgorithm {
 
 enum LegalHoldStatus {
   UNKNOWN = 0;
-  DISABLED = 0;
+  DISABLED = 1;
   ENABLED = 2;
 }
