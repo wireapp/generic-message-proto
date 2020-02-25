@@ -28,7 +28,11 @@ message GenericMessage {
 }
 
 message CompositeMessage {
-  repeated content {
+  repeated Item items = 1;
+}
+
+message Item {
+  oneof content {
     Text text = 1;
     Button button = 2;
   }
@@ -36,7 +40,7 @@ message CompositeMessage {
 
 message Button {
   required string text = 1;
-  require string id = 2;
+  required string id = 2;
 }
 
 message ButtonAction {
@@ -174,7 +178,7 @@ message Location {
   required float longitude = 1;
   required float latitude = 2;
   optional string name = 3; // location description/name
-  optional int32 zoom = 4;  // google maps zoom level (check maps api documentation)
+  optional int32 zoom = 4; // google maps zoom level (check maps api documentation)
   optional bool expects_read_confirmation = 5 [default = false]; // whether the sender is expecting to receive a read confirmation
   optional LegalHoldStatus legal_hold_status = 6 [default = UNKNOWN]; // whether this message was sent to legal hold
 }
@@ -189,9 +193,9 @@ message ImageAsset {
   required string mime_type = 6;
   required int32 size = 7;
   optional bytes otr_key = 8;
-  optional bytes mac_key = 9;    // deprecated - use sha256
-  optional bytes mac = 10;       // deprecated - use sha256
-  optional bytes sha256 = 11;    // sha256 of ciphertext
+  optional bytes mac_key = 9; // deprecated - use sha256
+  optional bytes mac = 10; // deprecated - use sha256
+  optional bytes sha256 = 11; // sha256 of ciphertext
 }
 
 message Asset {
@@ -204,7 +208,7 @@ message Asset {
       VideoMetaData video = 5;
       AudioMetaData audio = 6;
     }
-    optional string source = 7;  // link to source e.g. http://giphy.com/234245
+    optional string source = 7; // link to source e.g. http://giphy.com/234245
     optional string caption = 8; // caption of the asset, e.g. "dog" for a Giphy "dog" search result
   }
 
@@ -232,9 +236,9 @@ message Asset {
   message AudioMetaData {
     optional uint64 duration_in_millis = 1;
     // repeated float normalized_loudness = 2 [packed=true]; // deprecated - Switched to bytes instead
-    optional bytes normalized_loudness = 3;     // each byte represent one loudness value as a byte (char) value.
-                                                // e.g. a 100-bytes field here represents 100 loudness values.
-                                                // Values are in chronological order and range from 0 to 255.
+    optional bytes normalized_loudness = 3; // each byte represent one loudness value as a byte (char) value.
+    // e.g. a 100-bytes field here represents 100 loudness values.
+    // Values are in chronological order and range from 0 to 255.
   }
 
   enum NotUploaded {
