@@ -29,12 +29,12 @@ message GenericMessage {
 
 message CompositeMessage {
   repeated Item items = 1;
-}
 
-message Item {
-  oneof content {
-    Text text = 1;
-    Button button = 2;
+  message Item {
+      oneof content {
+          Text text = 1;
+          Button button = 2;
+      }
   }
 }
 
