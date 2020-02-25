@@ -21,7 +21,32 @@ message GenericMessage {
     Reaction reaction = 17;
     Ephemeral ephemeral = 18;
     Availability availability = 19;
+    CompositeMessage compositeMessage = 20;
+    ButtonAction buttonAction = 21;
+    ButtonActionConfirmation buttonActionConfirmation = 22;
   }
+}
+
+message CompositeMessage {
+  repeated content {
+    Text text = 1;
+    Button button = 2;
+  }
+}
+
+message Button {
+  required string text = 1;
+  require string id = 2;
+}
+
+message ButtonAction {
+  required string button_id = 1;
+  required string reference_message_id = 2;
+}
+
+message ButtonActionConfirmation {
+  required string reference_message_id = 1;
+  optional string button_id = 2; // if not present, no button is accepted
 }
 
 message Availability {
@@ -124,6 +149,7 @@ message MessageEdit {
   required string replacing_message_id = 1;
   oneof content {
     Text text = 2;
+    CompositeMessage compositeMessage = 3;
     // Reply can also be edited, but the edit will only affect the Text part
   }
 }
