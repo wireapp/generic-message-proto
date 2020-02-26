@@ -33,12 +33,12 @@ message CompositeMessage {
   message Item {
       oneof content {
           Text text = 1;
-          Button button = 2;
+          MultipleChoiceButton multipleChoiceButton = 2;
       }
   }
 }
 
-message Button {
+message MultipleChoiceButton {
   required string text = 1;
   required string id = 2;
 }
