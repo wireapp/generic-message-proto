@@ -2,6 +2,9 @@
   "dependencies": {
     "protobufjs": "6.8.8"
   },
+  "devDependencies": {
+    "typescript": "latest"
+  },
   "description": "Protocol definition for generic messages.",
   "files": [
     "proto/messages.proto",
@@ -16,7 +19,7 @@
     "dist": "node web/compile.js",
     "postversion": "git push origin && git push origin --tags && npm publish",
     "preversion": "git checkout master && git pull && yarn && yarn test && yarn dist",
-    "test": "exit 0"
+    "test": "tsc --noEmit"
   },
   "types": "web/Protobuf.d.ts",
   "version": "1.25.3"
