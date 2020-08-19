@@ -24,6 +24,7 @@ message GenericMessage {
     Composite composite = 20;
     ButtonAction buttonAction = 21;
     ButtonActionConfirmation buttonActionConfirmation = 22;
+    DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
   }
 }
 
@@ -298,4 +299,12 @@ enum LegalHoldStatus {
   UNKNOWN = 0;
   DISABLED = 1;
   ENABLED = 2;
+}
+
+message DataTrasfer {
+  optional TrackingIdentifier trackingIdentifier = 0;
+}
+
+message TrackingIdentifier {
+  required string identifier = 0;
 }
