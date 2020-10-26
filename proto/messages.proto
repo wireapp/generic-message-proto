@@ -301,7 +301,7 @@ enum LegalHoldStatus {
   ENABLED = 2;
 }
 
-message DataTrasfer {
+message DataTransfer {
   optional TrackingIdentifier trackingIdentifier = 0;
 }
 
