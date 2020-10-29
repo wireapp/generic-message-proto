@@ -282,12 +282,20 @@ message Reaction {
   optional LegalHoldStatus legal_hold_status = 3 [default = UNKNOWN]; // whether this message was sent to legal hold
 }
 
-enum ClientAction {
-  RESET_SESSION = 0;
-}
-
 message Calling {
   required string content = 1;
+}
+
+message DataTransfer {
+  optional TrackingIdentifier trackingIdentifier = 0;
+}
+
+message TrackingIdentifier {
+  required string identifier = 0;
+}
+
+enum ClientAction {
+  RESET_SESSION = 0;
 }
 
 enum EncryptionAlgorithm {
@@ -299,12 +307,4 @@ enum LegalHoldStatus {
   UNKNOWN = 0;
   DISABLED = 1;
   ENABLED = 2;
-}
-
-message DataTransfer {
-  optional TrackingIdentifier trackingIdentifier = 0;
-}
-
-message TrackingIdentifier {
-  required string identifier = 0;
 }
