@@ -92,7 +92,7 @@ Clients use fallowing procedure when sending a message:
 
 - generate original `GenericMessage` (`OM`)
 - estimate payload size - client could run regular encryption step and check the size of encrypted data, or could estimate the size based on participants count (make sure to recheck if new participant is added after `ClientMismatch` error)
-- if payload is smaller then 256KB then `OM` can be sent directly
+- if payload is smaller than 256KB then `OM` can be sent directly
 - if payload is too big:
   - encrypt `OM` using symmetric encryption (the same way as for assets)
   - create `External` message with AES key and sha of encrypted data
@@ -100,3 +100,7 @@ Clients use fallowing procedure when sending a message:
 
 ## Forward compatibility
 Messages sent throug OTR can be decrypted only once, so it's important not to loose any info, even when receiving a message that can not be fully decoded (when using older app version). It would be advisable to save original `GenericMessage` data and decode it again after app update. This should be done at least when decoded message seems to have no `content`, this will happen when new content type is added, in that case old app will think that the message is empty.
+
+## Releases
+
+To create a new release for web-related projects, all you have to do is executing `yarn version --minor`. Make sure that `npm whoami` shows your username and that you have the access rights to publish [@wireapp/protocol-messaging](https://www.npmjs.com/package/@wireapp/protocol-messaging) on npm.
