@@ -19,6 +19,7 @@
   "scripts": {
     "dist": "node web/compile.js",
     "postversion": "git push origin && git push origin --tags && npm publish",
+    "_preversion_": "git checkout master && git pull && yarn && yarn test && yarn dist",
     "test": "tsc --noEmit"
   },
   "types": "web/Protobuf.d.ts",
