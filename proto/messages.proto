@@ -294,6 +294,9 @@ message TrackingIdentifier {
   required string identifier = 0;
 }
 
+// Enums have to come last because of an unresolved issue with jsdoc
+// https://github.com/jsdoc/jsdoc/pull/1686
+
 enum ClientAction {
   RESET_SESSION = 0;
 }
