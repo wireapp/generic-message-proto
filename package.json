@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "protobufjs": "6.8.8"
+    "protobufjs": "6.10.1"
   },
   "devDependencies": {
     "@types/node": "~12",
@@ -19,9 +19,8 @@
   "scripts": {
     "dist": "node web/compile.js",
     "postversion": "git push origin && git push origin --tags && npm publish",
-    "preversion": "git checkout master && git pull && yarn && yarn test && yarn dist",
     "test": "tsc --noEmit"
   },
   "types": "web/Protobuf.d.ts",
-  "version": "1.25.4"
+  "version": "1.26.0"
 }
