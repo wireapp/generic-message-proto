@@ -287,11 +287,11 @@ message Calling {
 }
 
 message DataTransfer {
-  optional TrackingIdentifier trackingIdentifier = 0;
+  optional TrackingIdentifier trackingIdentifier = 1;
 }
 
 message TrackingIdentifier {
-  required string identifier = 0;
+  required string identifier = 1;
 }
 
 // Enums have to come last because of an unresolved issue with jsdoc
