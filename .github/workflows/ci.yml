@@ -11,10 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 'Checkout repository'
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: 'Extend environment variables'
+        run: |
+          echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: 'Test'
         run: yarn test
@@ -22,7 +26,7 @@ jobs:
       - name: 'Authenticate with npm registry'
         if: env.BRANCH_NAME == 'master'
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" >> "${HOME}/.npmrc"
+          echo "//registry.npmjs.org/:_authToken=${{secrets.WEBTEAM_NPM_TOKEN}}" >> "${HOME}/.npmrc"
           git config --global user.email webapp+travis@wire.com
           git config --global user.name "Wire Travis CI"
 
