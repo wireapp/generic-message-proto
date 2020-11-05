@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: 'Extend environment variables'
         run: |

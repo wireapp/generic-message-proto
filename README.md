@@ -99,8 +99,4 @@ Clients use fallowing procedure when sending a message:
   - send message with `External` content and encrypted `OM` attached (`data` field in json)
 
 ## Forward compatibility
-Messages sent throug OTR can be decrypted only once, so it's important not to loose any info, even when receiving a message that can not be fully decoded (when using older app version). It would be advisable to save original `GenericMessage` data and decode it again after app update. This should be done at least when decoded message seems to have no `content`, this will happen when new content type is added, in that case old app will think that the message is empty.
-
-## Releases
-
-To create a new release for web-related projects, all you have to do is executing `yarn version --minor`. Make sure that `npm whoami` shows your username and that you have the access rights to publish [@wireapp/protocol-messaging](https://www.npmjs.com/package/@wireapp/protocol-messaging) on npm.
+Messages sent through OTR can be decrypted only once, so it's important not to loose any info, even when receiving a message that can not be fully decoded (when using older app version). It would be advisable to save original `GenericMessage` data and decode it again after app update. This should be done at least when decoded message seems to have no `content`, this will happen when new content type is added, in that case old app will think that the message is empty.
