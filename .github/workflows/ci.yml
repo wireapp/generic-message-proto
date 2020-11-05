@@ -21,7 +21,7 @@ jobs:
           echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: 'Build & Test'
-        run: yarn dist && yarn test
+        run: yarn && yarn dist && yarn test
 
       - name: 'Authenticate with npm registry'
         if: env.BRANCH_NAME == 'master'
