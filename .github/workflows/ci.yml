@@ -23,13 +23,19 @@ jobs:
       - name: 'Build & Test'
         run: yarn && yarn dist && yarn test
 
-      - name: 'Authenticate with npm registry'
+      - name: 'Authenticate with GitHub (to commit new tag)'
+        if: env.BRANCH_NAME == 'master'
+        env:
+          GH_TOKEN: ${{secrets.OTTO_THE_BOT_GH_TOKEN}}
+        run: echo -e "machine github.com\n  login ${GH_TOKEN}" > ~/.netrc
+
+      - name: 'Authenticate with npm registry (to publish new version)'
         if: env.BRANCH_NAME == 'master'
         run: |
           echo "//registry.npmjs.org/:_authToken=${{secrets.WEBTEAM_NPM_TOKEN}}" >> "${HOME}/.npmrc"
           git config --global user.email webapp+travis@wire.com
           git config --global user.name "Wire Travis CI"
 
-      - name: 'Release'
+      - name: 'Release new version'
         if: env.BRANCH_NAME == 'master'
         run: yarn version --minor
