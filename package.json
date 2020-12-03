@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "protobufjs": "6.10.1"
+    "protobufjs": "6.10.2"
   },
   "devDependencies": {
     "@types/node": "~12",
@@ -8,12 +8,13 @@
   },
   "description": "Protocol definition for generic messages.",
   "files": [
-    "proto/messages.proto",
-    "web/Protobuf.d.ts",
-    "web/Protobuf.js"
+    "proto/*.proto",
+    "web/*.d.ts",
+    "web/*.js",
+    "!web/compile.js"
   ],
   "license": "GPL-3.0",
-  "main": "web/Protobuf.js",
+  "main": "web/messages.js",
   "name": "@wireapp/protocol-messaging",
   "repository": "https://github.com/wireapp/generic-message-proto.git",
   "scripts": {
@@ -22,6 +23,5 @@
     "preversion": "git checkout master && git pull && yarn && yarn dist && yarn test",
     "test": "tsc --noEmit"
   },
-  "types": "web/Protobuf.d.ts",
-  "version": "1.27.0"
+  "version": "1.27.1"
 }
