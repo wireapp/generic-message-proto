@@ -28,6 +28,16 @@ message GenericMessage {
   }
 }
 
+message QualifiedUser {
+  optional string id = 1;
+  optional string domain = 2;
+}
+
+message QualifiedConversation {
+  optional string id = 1;
+  optional string domain = 2;
+}
+
 message Composite {
   repeated Item items = 1;
   optional bool expects_read_confirmation = 2 [default = false];
@@ -135,9 +145,7 @@ message Mention {
     string user_id = 3;
   }
   // only optional to maintain backwards compatibility.
-  optional string federated_user_id = 4;
-  // only optional to maintain backwards compatibility
-  optional string federated_backend_domain = 5;
+  optional QualifiedUser qualified_user = 4;
 }
 
 message LastRead {
@@ -146,9 +154,7 @@ message LastRead {
   required string conversation_id = 1;
   required int64 last_read_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional string federated_conversation_id = 3;
-  // only optional to maintain backwards compatibility
-  optional string federated_backend_domain = 4;
+  optional QualifiedConversation qualified_conversation = 3;
 }
 
 message Cleared {
@@ -157,9 +163,7 @@ message Cleared {
   required string conversation_id = 1;
   required int64 cleared_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional string federated_conversation_id = 3;
-  // only optional to maintain backwards compatibility
-  optional string federated_backend_domain = 4;
+  optional QualifiedConversation qualified_conversation = 3;
 }
 
 message MessageHide {
@@ -168,9 +172,7 @@ message MessageHide {
   required string conversation_id = 1;
   required string message_id = 2;
   // only optional to maintain backwards compatibility
-  optional string federated_conversation_id = 3;
-  // only optional to maintain backwards compatibility
-  optional string federated_backend_domain = 4;
+  optional QualifiedConversation qualified_conversation = 3;
 }
 
 message MessageDelete {
