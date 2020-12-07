@@ -22,8 +22,7 @@ const path = require('path');
 const {pbjs, pbts} = require('protobufjs/cli');
 
 const protoDir = path.join(__dirname, '../proto');
-
-const protoFiles = fs.readdirSync(protoDir);
+const protoFiles = fs.readdirSync(protoDir).filter(fileName => fileName.endsWith('.proto'));
 
 for (const protoFileName of protoFiles) {
   const protoBufferFile = path.join(__dirname, '../proto', protoFileName);
