@@ -145,7 +145,7 @@ message Mention {
     string user_id = 3;
   }
   // only optional to maintain backwards compatibility.
-  optional QualifiedUser qualified_user = 4;
+  optional QualifiedUser qualified_user_id = 4;
 }
 
 message LastRead {
@@ -154,7 +154,7 @@ message LastRead {
   required string conversation_id = 1;
   required int64 last_read_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation = 3;
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message Cleared {
@@ -163,7 +163,7 @@ message Cleared {
   required string conversation_id = 1;
   required int64 cleared_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation = 3;
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message MessageHide {
@@ -172,7 +172,7 @@ message MessageHide {
   required string conversation_id = 1;
   required string message_id = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation = 3;
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message MessageDelete {
