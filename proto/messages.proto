@@ -29,13 +29,13 @@ message GenericMessage {
 }
 
 message QualifiedUser {
-  optional string id = 1;
-  optional string domain = 2;
+  required string id = 1;
+  required string domain = 2;
 }
 
 message QualifiedConversation {
-  optional string id = 1;
-  optional string domain = 2;
+  required string id = 1;
+  required string domain = 2;
 }
 
 message Composite {
