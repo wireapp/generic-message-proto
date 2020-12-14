@@ -28,6 +28,16 @@ message GenericMessage {
   }
 }
 
+message QualifiedUser {
+  required string id = 1;
+  required string domain = 2;
+}
+
+message QualifiedConversation {
+  required string id = 1;
+  required string domain = 2;
+}
+
 message Composite {
   repeated Item items = 1;
   optional bool expects_read_confirmation = 2 [default = false];
@@ -129,23 +139,40 @@ message Mention {
   required int32 start = 1; // offset from beginning of the message counting in utf16 characters
   required int32 length = 2;
   oneof mention_type {
+    // deprecated. Should be set such that old clients always fail when looking
+    // up the user. Ideally, this should not be a problem, as a non-federation
+    // aware user should never be part of a federated conversation.
     string user_id = 3;
   }
+  // only optional to maintain backwards compatibility.
+  optional QualifiedUser qualified_user_id = 4;
 }
 
 message LastRead {
+  // deprecated. Should be set such that old clients always fail when looking up
+  // the conversation.
   required string conversation_id = 1;
   required int64 last_read_timestamp = 2;
+  // only optional to maintain backwards compatibility
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message Cleared {
+  // deprecated. Should be set such that old clients always fail when looking up
+  // the conversation.
   required string conversation_id = 1;
   required int64 cleared_timestamp = 2;
+  // only optional to maintain backwards compatibility
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message MessageHide {
+  // deprecated. Should be set such that old clients always fail when looking up
+  // the conversation.
   required string conversation_id = 1;
   required string message_id = 2;
+  // only optional to maintain backwards compatibility
+  optional QualifiedConversation qualified_conversation_id = 3;
 }
 
 message MessageDelete {
