@@ -1,39 +1,60 @@
-import com.github.os72.protocjar.Protoc.runProtoc
+import protocbridge.Target
 
 name := "generic-message-proto"
 organization := "com.wire"
 
-version := "1.24.2"
+version := "1.28.1"
 
 crossPaths := false
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.12"
 
 licenses += ("GPL-3.0", url("https://opensource.org/licenses/GPL-3.0"))
-bintrayOrganization := Some("wire-android")
-bintrayRepository := "releases"
 
-lazy val generateSources = taskKey[Seq[File]]("generate-proto")
+libraryDependencies ++= Seq(
+  "com.google.protobuf" % "protobuf-java" % "3.14.0",
+  "com.google.protobuf" % "protobuf-javalite" % "3.14.0"
+)
 
-generateSources := {
-  val outDir = (sourceManaged in Compile).value / "compiled-proto"
-  val protoDir = baseDirectory.value.getParentFile / "proto"
+Compile / PB.protoSources := Seq(baseDirectory.value.getParentFile / "proto")
+Compile / PB.targets := Seq(
+  Target(PB.gens.java, (Compile / sourceManaged).value, Seq("lite"))
+)
+// Prevents the plugin from adding libraryDependencies to your project
+PB.additionalDependencies := Nil
+PB.deleteTargetDirectory := false
 
-  outDir.mkdirs()
+homepage := Some(url("https://github.com/wireapp/generic-message-proto"))
 
-  val exitCode = runProtoc(("-v300" +: s"--javanano_out=store_unknown_fields=true:${outDir.getAbsolutePath}" +: s"--proto_path=${protoDir.getAbsolutePath}" +: (protoDir * "*.proto").get.map(_.getAbsolutePath)).toArray)
-
-  if (exitCode != 0) sys.error(s"protoc failed with exit code $exitCode")
-
-  (outDir ** "*.java").get
+// based on http://caryrobbins.com/dev/sbt-publishing/
+publishMavenStyle := true
+pomIncludeRepository := { _ => false }
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
-sourceGenerators in Compile += generateSources.taskValue
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/wireapp/generic-message-proto"),
+    "scm:git:git@github.com:wireapp/generic-message-proto.git"
+  )
+)
 
-javacOptions ++= Seq("-source", "1.7", "-target", "1.7", "-encoding", "UTF-8")
-scalacOptions ++= Seq("-feature", "-target:jvm-1.7", "-Xfuture", "-deprecation", "-Yinline-warnings", "-encoding", "UTF-8")
+developers := List(
+  Developer("makingthematrix", "Maciej Gorywoda", "maciej.gorywoda@wire.com", url("https://github.com/makingthematrix"))
+)
 
-ivyLoggingLevel := UpdateLogging.Quiet // otherwise update logging will overwrite protoc compile errors after a "clean"
-libraryDependencies += "com.google.protobuf.nano" % "protobuf-javanano" % "3.0.0-alpha-5"
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("public"),
+  Resolver.mavenLocal
+)
 
-publishArtifact in (Compile, packageDoc) := false
-publishArtifact in (Compile, packageSrc) := false
+publishConfiguration      := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+publishM2Configuration    := publishM2Configuration.value.withOverwrite(true)
+
+usePgpKeyHex("4D4389633F8B177CCB25457391F612D8C344D422")

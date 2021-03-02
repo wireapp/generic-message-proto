@@ -1,5 +1,7 @@
-// syntax = "proto2";
+syntax = "proto2";
+package com.waz.model;
 option java_package = "com.waz.model";
+option optimize_for = LITE_RUNTIME;
 
 message GenericMessage {
   required string message_id = 1; // client generated random id, preferably UUID
