@@ -1,5 +1,5 @@
 syntax = "proto2";
-package com.waz.model;
+
 option java_package = "com.waz.model";
 option optimize_for = LITE_RUNTIME;
 
