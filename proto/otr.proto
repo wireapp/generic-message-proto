@@ -41,7 +41,7 @@ message NewOtrMessage {
     optional Priority    native_priority  = 5;
     optional bool        transient        = 6;
     repeated UserId      report_missing   = 7;
-    optional QualifiedId qualified_sender = 5;
+    optional QualifiedId qualified_sender = 8;
 }
 
 message OtrAssetMeta {
