@@ -19,10 +19,7 @@
 
 syntax = "proto2";
 
-option java_package = "com.waz.model";
-option optimize_for = LITE_RUNTIME;
-
 message QualifiedId {
-  required string id = 1;
+  required string id     = 1;
   required string domain = 2;
 }
