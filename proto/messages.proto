@@ -30,7 +30,7 @@ message GenericMessage {
   }
 }
 
-message QualifiedUser {
+message QualifiedId {
   required string id = 1;
   required string domain = 2;
 }
@@ -147,7 +147,7 @@ message Mention {
     string user_id = 3;
   }
   // only optional to maintain backwards compatibility.
-  optional QualifiedUser qualified_user_id = 4;
+  optional QualifiedId qualified_user_id = 4;
 }
 
 message LastRead {

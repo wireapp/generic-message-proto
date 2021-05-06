@@ -13,7 +13,7 @@ message ClientId {
 }
 
 message QualifiedId {
-    required UserId id     = 1;
+    required string id     = 1;
     required string domain = 2;
 }
 
