@@ -19,7 +19,7 @@
 
 syntax = "proto2";
 
-message QualifiedId {
+message QualifiedUserId {
   required string id     = 1;
   required string domain = 2;
 }

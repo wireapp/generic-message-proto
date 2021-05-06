@@ -27,31 +27,31 @@ import "common.proto";
 message GenericMessage {
   required string message_id = 1; // client generated random id, preferably UUID
   oneof content {
-    Text text = 2;
-    ImageAsset image = 3; // deprecated in favour of Asset
-    Knock knock = 4;
-    LastRead lastRead = 6;
-    Cleared cleared = 7;
-    External external = 8;
-    ClientAction clientAction = 9;
-    Calling calling = 10;
-    Asset asset = 11;
-    MessageHide hidden = 12;
-    Location location = 13;
-    MessageDelete deleted = 14;
-    MessageEdit edited = 15;
-    Confirmation confirmation = 16;
-    Reaction reaction = 17;
-    Ephemeral ephemeral = 18;
-    Availability availability = 19;
-    Composite composite = 20;
-    ButtonAction buttonAction = 21;
+    Text                     text = 2;
+    ImageAsset               image = 3; // deprecated in favour of Asset
+    Knock                    knock = 4;
+    LastRead                 lastRead = 6;
+    Cleared                  cleared = 7;
+    External                 external = 8;
+    ClientAction             clientAction = 9;
+    Calling                  calling = 10;
+    Asset                    asset = 11;
+    MessageHide              hidden = 12;
+    Location                 location = 13;
+    MessageDelete            deleted = 14;
+    MessageEdit              edited = 15;
+    Confirmation             confirmation = 16;
+    Reaction                 reaction = 17;
+    Ephemeral                ephemeral = 18;
+    Availability             availability = 19;
+    Composite                composite = 20;
+    ButtonAction             buttonAction = 21;
     ButtonActionConfirmation buttonActionConfirmation = 22;
-    DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
+    DataTransfer             dataTransfer = 23; // client-side synchronization across devices of the same user
   }
 }
 
-message QualifiedConversation {
+message QualifiedConversationId {
   required string id = 1;
   required string domain = 2;
 }
@@ -150,7 +150,7 @@ message Article {
   required string permanent_url = 1;
   optional string title = 2;
   optional string summary = 3;
-  optional Asset image = 4;
+  optional Asset  image = 4;
 }
 
 message Mention {
@@ -163,7 +163,7 @@ message Mention {
     string user_id = 3;
   }
   // only optional to maintain backwards compatibility.
-  optional QualifiedId qualified_user_id = 4;
+  optional QualifiedUserId qualified_user_id = 4;
 }
 
 message LastRead {
@@ -172,7 +172,7 @@ message LastRead {
   required string conversation_id = 1;
   required int64 last_read_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation_id = 3;
+  optional QualifiedConversationId qualified_conversation_id = 3;
 }
 
 message Cleared {
@@ -181,7 +181,7 @@ message Cleared {
   required string conversation_id = 1;
   required int64 cleared_timestamp = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation_id = 3;
+  optional QualifiedConversationId qualified_conversation_id = 3;
 }
 
 message MessageHide {
@@ -190,7 +190,7 @@ message MessageHide {
   required string conversation_id = 1;
   required string message_id = 2;
   // only optional to maintain backwards compatibility
-  optional QualifiedConversation qualified_conversation_id = 3;
+  optional QualifiedConversationId qualified_conversation_id = 3;
 }
 
 message MessageDelete {
