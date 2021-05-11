@@ -22,8 +22,6 @@ syntax = "proto2";
 option java_package = "com.waz.model";
 option optimize_for = LITE_RUNTIME;
 
-import "common.proto";
-
 message GenericMessage {
   required string message_id = 1; // client generated random id, preferably UUID
   oneof content {
@@ -49,6 +47,11 @@ message GenericMessage {
     ButtonActionConfirmation buttonActionConfirmation = 22;
     DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
   }
+}
+
+message QualifiedUserId {
+  required string id     = 1;
+  required string domain = 2;
 }
 
 message QualifiedConversationId {
