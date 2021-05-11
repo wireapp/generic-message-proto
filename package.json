@@ -23,5 +23,5 @@
     "preversion": "git checkout master && git pull && yarn && yarn dist && yarn test",
     "test": "tsc --noEmit"
   },
-  "version": "1.31.0"
+  "version": "1.32.0"
 }
