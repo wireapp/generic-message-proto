@@ -49,7 +49,7 @@ message UserEntry {
 
 message QualifiedUserEntry {
   required string domain = 1;
-  required UserEntry entry = 2;
+  repeated UserEntry entries = 2;
 }
 
 enum Priority {
