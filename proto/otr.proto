@@ -42,15 +42,14 @@ message ClientEntry {
     required bytes    text   = 2;
 }
 
-// deprecated, use QualifiedUserEntry
 message UserEntry {
     required UserId      user    = 1;
     repeated ClientEntry clients = 2;
 }
 
 message QualifiedUserEntry {
-  required QualifiedUserId user = 1;
-  repeated ClientEntry clients = 2;
+  required string domain = 1;
+  required UserEntry entry = 2;
 }
 
 enum Priority {
