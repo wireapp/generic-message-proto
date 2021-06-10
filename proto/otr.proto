@@ -19,6 +19,8 @@
 
 syntax = "proto2";
 
+package proteus;
+
 option java_package = "com.wire.messages";
 option java_outer_classname = "Otr";
 option optimize_for = LITE_RUNTIME;
