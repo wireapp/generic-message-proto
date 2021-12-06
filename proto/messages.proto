@@ -303,6 +303,7 @@ message Asset {
     optional string asset_id = 3;
     // optional bytes asset_token = 4; // deprecated - changed type to string
     optional string asset_token = 5;
+    optional string asset_domain = 7;
     optional EncryptionAlgorithm encryption = 6;
   }
 
