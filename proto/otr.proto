@@ -106,3 +106,27 @@ message OtrAssetMeta {
     optional bool      isInline    = 3 [default = false];
     optional bool      native_push = 4 [default = true];
 }
+
+enum GroupInfoType {
+    PUBLIC_GROUP_STATE = 1;
+    GROUP_INFO         = 2;
+    GROUP_INFO_JWE     = 3;
+};
+
+enum RatchetTreeType {
+    FULL      = 1;
+    DELTA     = 2;
+    REFERENCE = 3;
+};
+
+message GroupInfoBundle {
+    required GroupInfoType group_info_type           = 1;
+    required RatchetTreeType ratchet_tree_type       = 2;
+    required bytes group_info                        = 3;
+}
+
+message CommitBundle {
+    required bytes commit    = 1; // MlsMessage containing an MlsPlaintext Commit
+    optional bytes welcome   = 2; // MlsMessage containing a Welcome
+    required GroupInfoBundle = 3;
+}
