@@ -126,7 +126,7 @@ message GroupInfoBundle {
 }
 
 message CommitBundle {
-    required bytes commit    = 1; // MlsMessage containing an MlsPlaintext Commit
-    optional bytes welcome   = 2; // MlsMessage containing a Welcome
+    required bytes commit                      = 1; // MlsMessage containing an MlsPlaintext Commit
+    optional bytes welcome                     = 2; // MlsMessage containing a Welcome
     required GroupInfoBundle group_info_bundle = 3;
 }
