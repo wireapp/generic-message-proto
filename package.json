@@ -1,23 +1,21 @@
 {
-  "dependencies": {
-    "protobufjs": "7.1.2",
-    "protobufjs-cli": "1.0.2"
-  },
-  "devDependencies": {
-    "@types/node": "16.18.0",
-    "typescript": "4.8.4"
-  },
+  "name": "@wireapp/protocol-messaging",
+  "license": "GPL-3.0",
   "description": "Protocol definition for generic messages.",
+  "repository": "https://github.com/wireapp/generic-message-proto.git",
   "files": [
     "proto/*.proto",
     "web/*.d.ts",
     "web/*.js",
     "!web/compile.js"
   ],
-  "license": "GPL-3.0",
   "main": "web/messages.js",
-  "name": "@wireapp/protocol-messaging",
-  "repository": "https://github.com/wireapp/generic-message-proto.git",
+  "devDependencies": {
+    "@types/node": "16.18.0",
+    "typescript": "4.8.4",
+    "protobufjs": "7.1.2",
+    "protobufjs-cli": "1.0.2"
+  },
   "scripts": {
     "dist": "node web/compile.js",
     "postversion": "git push origin master --tags && npm publish",
