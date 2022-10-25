@@ -19,7 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const {pbjs, pbts} = require('protobufjs/cli');
+const { pbjs, pbts } = require('protobufjs-cli');
 
 const protoDir = path.join(__dirname, '../proto');
 const protoFiles = fs.readdirSync(protoDir).filter(fileName => fileName.endsWith('.proto'));
@@ -33,7 +33,8 @@ for (const protoFileName of protoFiles) {
     if (error) {
       throw error;
     }
-    fs.writeFileSync(jsOutput, output, {encoding: 'utf8'});
+    if (!output) return;
+    fs.writeFileSync(jsOutput, output, { encoding: 'utf8' });
     pbts.main(['--out', dtsOutput, '--no-comments', jsOutput]);
   });
 }

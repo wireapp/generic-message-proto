@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "protobufjs": "6.11.3"
+    "protobufjs": "7.1.2",
+    "protobufjs-cli": "1.0.2"
   },
   "devDependencies": {
-    "@types/node": "~12",
-    "typescript": "latest"
+    "@types/node": "16.18.0",
+    "typescript": "4.8.4"
   },
   "description": "Protocol definition for generic messages.",
   "files": [
