@@ -12,9 +12,9 @@
   "main": "web/messages.js",
   "devDependencies": {
     "@types/node": "16.18.0",
-    "typescript": "4.8.4",
     "protobufjs": "7.1.2",
-    "protobufjs-cli": "1.0.2"
+    "protobufjs-cli": "1.0.2",
+    "typescript": "4.8.4"
   },
   "scripts": {
     "dist": "node web/compile.js",
@@ -22,5 +22,5 @@
     "preversion": "git checkout master && git pull && yarn && yarn dist && yarn test",
     "test": "tsc --noEmit"
   },
-  "version": "1.40.0"
+  "version": "1.41.0"
 }
