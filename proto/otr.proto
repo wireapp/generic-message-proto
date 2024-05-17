@@ -35,7 +35,8 @@ message QualifiedUserId {
 }
 
 message ClientId {
-    required uint64 client = 1;
+    required uint64 client_legacy = 1;
+    required string client = 2;
 }
 
 message ClientEntry {
