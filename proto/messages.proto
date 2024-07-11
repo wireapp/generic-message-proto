@@ -46,6 +46,8 @@ message GenericMessage {
     ButtonAction buttonAction = 21;
     ButtonActionConfirmation buttonActionConfirmation = 22;
     DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
+    UserProfileAccessKey userProfileAccessKey = 24;
+    UserProfileAccessRequest userProfileAccessRequest = 25;
   }
 }
 
@@ -343,6 +345,14 @@ message DataTransfer {
 message TrackingIdentifier {
   required string identifier = 1;
 }
+
+message UserProfileAccessKey {
+  required bytes key = 1;
+  required int32 keyVersion = 2;
+  required int32 ciphersuite = 3;
+}
+
+message UserProfileAccessRequest {}
 
 // Enums have to come last because of an unresolved issue with jsdoc
 // https://github.com/jsdoc/jsdoc/pull/1686
