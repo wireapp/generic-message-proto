@@ -46,6 +46,7 @@ message GenericMessage {
     ButtonAction buttonAction = 21;
     ButtonActionConfirmation buttonActionConfirmation = 22;
     DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
+    InCallEmoji inCallEmoji = 24;
   }
 }
 
@@ -329,6 +330,10 @@ message Reaction {
   optional string emoji = 1; // some emoji reaction or the empty string to remove previous reaction(s)
   required string message_id = 2;
   optional LegalHoldStatus legal_hold_status = 3 [default = UNKNOWN]; // whether this message was sent to legal hold
+}
+
+message InCallEmoji {
+  map<string, int32> emojis = 1;
 }
 
 message Calling {
