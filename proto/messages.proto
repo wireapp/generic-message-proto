@@ -51,13 +51,13 @@ message GenericMessage {
     // Next field should be 26 ↓
   }
   optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
-}
 
-// See internal RFC: "2024-07-18 RFC Improve future-proofing for new OTR message types"
-enum UnknownStrategy {
-  IGNORE = 0;                 // Ignore the message completely. Trash. Bye
-  DISCARD_AND_WARN = 1;       // Warn the user, but discard the message, as it won't be helpful in the future.
-  WARN_USER_ALLOW_RETRY = 2;  // Warn the user. Client has freedom to store it and retry in the future.
+  // See internal RFC: "2024-07-18 RFC Improve future-proofing for new OTR message types"
+  enum UnknownStrategy {
+    IGNORE = 0;                 // Ignore the message completely. Trash. Bye
+    DISCARD_AND_WARN = 1;       // Warn the user, but discard the message, as it won't be helpful in the future.
+    WARN_USER_ALLOW_RETRY = 2;  // Warn the user. Client has freedom to store it and retry in the future.
+  }
 }
 
 message QualifiedUserId {
