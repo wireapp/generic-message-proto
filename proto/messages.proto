@@ -34,6 +34,10 @@ message GenericMessage {
     ClientAction clientAction = 9;
     Calling calling = 10;
     Asset asset = 11;
+    Multipart multipart = 27;
+    AttachmentAdd attachment_add = 28;
+    AttachmentEdit attachment_edit = 29;
+    AttachmentDelete attachment_delete = 30;
     MessageHide hidden = 12;
     Location location = 13;
     MessageDelete deleted = 14;
@@ -217,8 +221,27 @@ message MessageEdit {
   oneof content {
     Text text = 2;
     Composite composite = 3;
-    // Reply can also be edited, but the edit will only affect the Text part
+    Multipart multipart = 4; // Update a full multipart message at once
   }
+}
+
+// Edit an already sent attachment
+message AttachmentEdit {
+  required string multipart_message_id = 1;
+  required string replacing_attachment_id = 2;
+  required Attachment attachment = 3;
+}
+
+// Append a new attachment to a multipart
+message AttachmentAdd {
+  required string multipart_message_id = 1;
+  required Attachment attachment = 2;
+}
+
+// Delete an attachment from a multipart
+message AttachmentDelete {
+  required string multipart_message_id = 1;
+  required string delete_attachment_id = 2;
 }
 
 message Quote {
@@ -259,6 +282,49 @@ message ImageAsset {
   optional bytes mac_key = 9; // deprecated - use sha256
   optional bytes mac = 10; // deprecated - use sha256
   optional bytes sha256 = 11; // sha256 of ciphertext
+}
+
+// Attachment can attach different kind of assets to a Multipart message
+message Attachment {
+  oneof content {
+    Asset asset = 1;
+    CellAsset cell_asset = 2;
+    CellFolder cell_folder = 3;
+  }
+}
+
+// Multipart message combines optional text with multiple attachments
+message Multipart {
+  optional Text text = 1;
+  repeated Attachment attachments = 2;
+
+  // Standard flags for all message types
+  optional bool expects_read_confirmation = 3 [default = false];
+  optional LegalHoldStatus legal_hold_status = 4 [default = UNKNOWN];
+}
+
+// CellFolder represents a folder
+message CellFolder {
+  required string uuid = 1;
+
+  optional string known_path = 2;
+  optional int32 known_children_count = 3;
+}
+
+// CellAsset represents a file uploaded to a conversation cell
+message CellAsset {
+
+  // Required pydio backend reference
+  required string uuid = 1;
+  // known mime_type
+  required string content_type = 2;
+
+  // Fields below are used for optimistic display: they could have changed since first posting
+
+  // Path contains full path including name (last path part)
+  optional string known_path = 3;
+  // Size of the file
+  optional int64 known_size = 4;
 }
 
 message Asset {
