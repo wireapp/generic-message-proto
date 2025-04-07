@@ -34,6 +34,7 @@ message GenericMessage {
     ClientAction clientAction = 9;
     Calling calling = 10;
     Asset asset = 11;
+    Multipart multipart = 27;
     MessageHide hidden = 12;
     Location location = 13;
     MessageDelete deleted = 14;
@@ -217,7 +218,6 @@ message MessageEdit {
   oneof content {
     Text text = 2;
     Composite composite = 3;
-    // Reply can also be edited, but the edit will only affect the Text part
   }
 }
 
@@ -259,6 +259,63 @@ message ImageAsset {
   optional bytes mac_key = 9; // deprecated - use sha256
   optional bytes mac = 10; // deprecated - use sha256
   optional bytes sha256 = 11; // sha256 of ciphertext
+}
+
+// Attachment can attach different kind of assets to a Multipart message
+message Attachment {
+  oneof content {
+    Asset asset = 1;
+    CellAsset cell_asset = 2;
+  }
+}
+
+// Multipart message combines optional text with multiple attachments
+message Multipart {
+  optional Text text = 1;
+  repeated Attachment attachments = 2;
+
+  // Standard flags for all message types
+  optional bool expects_read_confirmation = 3 [default = false];
+  optional LegalHoldStatus legal_hold_status = 4 [default = UNKNOWN];
+}
+
+// CellAsset represents a file uploaded to a conversation cell
+message CellAsset {
+
+  // Required pydio backend reference
+  required string uuid = 1;
+  // known mime_type
+  required string content_type = 2;
+
+  // Fields below are used for optimistic display: they could have changed since first posting
+
+  // Path contains full path including name (last path part)
+  optional string initial_name = 3;
+  // Size of the file
+  optional int64 initial_size = 4;
+
+  message ImageMetaData {
+    required int32 width = 1;
+    required int32 height = 2;
+  }
+
+  message VideoMetaData {
+    optional int32 width = 1;
+    optional int32 height = 2;
+    optional uint64 duration_in_millis = 3;
+  }
+
+  message AudioMetaData {
+    optional uint64 duration_in_millis = 1;
+    optional bytes normalized_loudness = 2;
+  }
+
+  oneof initial_meta_data {
+    ImageMetaData image = 5;
+    VideoMetaData video = 6;
+    AudioMetaData audio = 7;
+  }
+
 }
 
 message Asset {
