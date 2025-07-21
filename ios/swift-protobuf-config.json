@@ -1,0 +1,14 @@
+{
+    "protocPath": "/opt/homebrew/bin/protoc",
+    "invocations": [
+        {
+            "protoFiles": [
+                "messages.proto",
+                "mls.proto",
+                "otr.proto"
+            ],
+            "visibility": "public",
+            "useAccessLevelOnImports": true
+        }
+    ]
+}
