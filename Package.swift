@@ -1,4 +1,4 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.0
 
 import PackageDescription
 
@@ -17,9 +17,17 @@ let package = Package(
                 .product(name: "SwiftProtobuf", package: "swift-protobuf")
             ],
             path: "ios",
+            exclude: [
+                "Tests"
+            ],
             plugins: [
                 .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
             ]
+        ),
+        .testTarget(
+            name: "GenericMessageProtocolTests",
+            dependencies: ["GenericMessageProtocol"],
+            path: "ios/Tests"
         )
     ],
     swiftLanguageModes: [.v6]

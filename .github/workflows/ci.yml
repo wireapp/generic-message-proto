@@ -37,3 +37,24 @@ jobs:
       - name: 'Release new version'
         if: env.BRANCH_NAME == 'master'
         run: yarn version --minor
+
+  run-ios-spm-tests:
+    name: Test Swift package on macOS
+    runs-on: macos-15
+
+    steps:
+      - name: Install swift-protobuf
+        run: brew install swift-protobuf
+
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: |
+          xcodebuild \
+            -workspace . \
+            -scheme GenericMessageProtocol \
+            -destination "platform=macOS,arch=arm64" \
+            -skipPackagePluginValidation \
+            -quiet \
+            clean test

@@ -1,5 +1,4 @@
 {
-    "protocPath": "/opt/homebrew/bin/protoc",
     "invocations": [
         {
             "protoFiles": [
