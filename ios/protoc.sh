@@ -22,20 +22,39 @@ set -Eeuo pipefail
 # By having this script in the Swift package, we can run protoc without
 # passing -skipPackagePluginValidation to xcodebuild.
 
-# Check if protoc is in PATH
+PROTOC_FALLBACK_PATH="/opt/homebrew/bin/protoc"
+PROTOC_DOWNLOAD_URL="https://github.com/protocolbuffers/protobuf/releases/download/v31.1/protoc-31.1-osx-universal_binary.zip"
+PROTOC_INSTALL_DIR="/usr/local/protoc-31.1"
+TMP_DIR=""
+TMP_DIR=""
+
+# Delete temporary directory
+cleanup() {
+    if [ -n "$TMP_DIR" ] && [ -d "$TMP_DIR" ]; then
+        echo "Cleaning up temporary files..."
+        rm -rf "$TMP_DIR"
+    fi
+}
+
+download_protoc() {
+    echo "Downloading protoc from $PROTOC_DOWNLOAD_URL..."
+    TMP_DIR=$(mktemp -d)
+    curl -sL "$PROTOC_DOWNLOAD_URL" -o "$TMP_DIR/protoc.zip" || { echo "Download failed"; exit 1; }
+    unzip -q "$TMP_DIR/protoc.zip" -d "$TMP_DIR/protoc"
+    PROTOC_CMD="$TMP_DIR/protoc/bin/protoc"
+}
+
+# Logic to find or install protoc
 if command -v protoc >/dev/null 2>&1; then
     PROTOC_CMD=$(command -v protoc)
+elif [ -x "$PROTOC_FALLBACK_PATH" ]; then
+    PROTOC_CMD="$PROTOC_FALLBACK_PATH"
 else
-    # Fallback to a specific path
-    if [ -x /opt/homebrew/bin/protoc ]; then
-        PROTOC_CMD="/opt/homebrew/bin/protoc"
-    else
-        echo "Error: protoc not found in PATH or /opt/homebrew/bin/protoc"
-        exit 1
-    fi
+    echo "protoc not found, proceeding to download and install."
+    download_protoc
 fi
 
 echo "Using protoc at: $PROTOC_CMD"
 
-# Example usage:
+# Run protoc with all arguments passed
 "$PROTOC_CMD" "$@"
