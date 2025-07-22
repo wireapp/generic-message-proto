@@ -20,6 +20,8 @@ import Testing
 
 @testable import GenericMessageProtocol
 
+/// Some basic tests, just for ensuring that Swift code is generated properly from all the .proto files.
+
 struct GenericMessageProtocolTests {
 
     @Test func testMessages() async throws {
