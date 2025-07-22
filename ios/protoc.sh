@@ -23,26 +23,6 @@ set -Eeuo pipefail
 # passing -skipPackagePluginValidation to xcodebuild.
 
 PROTOC_FALLBACK_PATH="/opt/homebrew/bin/protoc"
-PROTOC_DOWNLOAD_URL="https://github.com/protocolbuffers/protobuf/releases/download/v31.1/protoc-31.1-osx-universal_binary.zip"
-PROTOC_EXPECTED_SHA256="99ea004549c139f46da5638187a85bbe422d78939be0fa01af1aa8ab672e395f"
-TMP_DIR=""
-
-# Delete temporary directory
-cleanup() {
-    if [ -n "$TMP_DIR" ] && [ -d "$TMP_DIR" ]; then
-        echo "Cleaning up temporary files..."
-        rm -rf "$TMP_DIR"
-    fi
-}
-
-download_protoc() {
-    echo "Downloading protoc from $PROTOC_DOWNLOAD_URL..."
-    TMP_DIR=$(mktemp -d)
-    curl -sL "$PROTOC_DOWNLOAD_URL" -o "$TMP_DIR/protoc.zip" || { echo "Download failed"; exit 1; }
-    ( cd $TMP_DIR; echo "99ea004549c139f46da5638187a85bbe422d78939be0fa01af1aa8ab672e395f  protoc.zip" | shasum -a 256 -c - )    
-    unzip -q "$TMP_DIR/protoc.zip" -d "$TMP_DIR/protoc"
-    PROTOC_CMD="$TMP_DIR/protoc/bin/protoc"
-}
 
 # Logic to find or install protoc
 if command -v protoc >/dev/null 2>&1; then
@@ -50,8 +30,8 @@ if command -v protoc >/dev/null 2>&1; then
 elif [ -x "$PROTOC_FALLBACK_PATH" ]; then
     PROTOC_CMD="$PROTOC_FALLBACK_PATH"
 else
-    echo "protoc not found, proceeding to download and install."
-    download_protoc
+    echo "protoc not found"
+    exit 1
 fi
 
 echo "Using protoc at: $PROTOC_CMD"

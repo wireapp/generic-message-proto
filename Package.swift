@@ -18,7 +18,11 @@ let package = Package(
             ],
             path: "ios",
             exclude: [
-                "Tests"
+                "Tests",
+                "protoc.sh"
+            ],
+            resources: [
+                .process("swift-protobuf-config.json")
             ],
             plugins: [
                 .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
