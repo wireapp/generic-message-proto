@@ -1,5 +1,5 @@
 {
-    "protocPath": "ios/protoc",
+    "protocPath": "ios/protoc.sh",
     "invocations": [
         {
             "protoFiles": [

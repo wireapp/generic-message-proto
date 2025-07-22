@@ -22,4 +22,20 @@ set -Eeuo pipefail
 # By having this script in the Swift package, we can run protoc without
 # passing -skipPackagePluginValidation to xcodebuild.
 
-protoc "$@"
+# Check if protoc is in PATH
+if command -v protoc >/dev/null 2>&1; then
+    PROTOC_CMD=$(command -v protoc)
+else
+    # Fallback to a specific path
+    if [ -x /opt/homebrew/bin/protoc ]; then
+        PROTOC_CMD="/opt/homebrew/bin/protoc"
+    else
+        echo "Error: protoc not found in PATH or /opt/homebrew/bin/protoc"
+        exit 1
+    fi
+fi
+
+echo "Using protoc at: $PROTOC_CMD"
+
+# Example usage:
+"$PROTOC_CMD" "$@"
