@@ -24,8 +24,7 @@ set -Eeuo pipefail
 
 PROTOC_FALLBACK_PATH="/opt/homebrew/bin/protoc"
 PROTOC_DOWNLOAD_URL="https://github.com/protocolbuffers/protobuf/releases/download/v31.1/protoc-31.1-osx-universal_binary.zip"
-PROTOC_INSTALL_DIR="/usr/local/protoc-31.1"
-TMP_DIR=""
+PROTOC_EXPECTED_SHA256="99ea004549c139f46da5638187a85bbe422d78939be0fa01af1aa8ab672e395f"
 TMP_DIR=""
 
 # Delete temporary directory
@@ -40,6 +39,7 @@ download_protoc() {
     echo "Downloading protoc from $PROTOC_DOWNLOAD_URL..."
     TMP_DIR=$(mktemp -d)
     curl -sL "$PROTOC_DOWNLOAD_URL" -o "$TMP_DIR/protoc.zip" || { echo "Download failed"; exit 1; }
+    ( cd $TMP_DIR; echo "99ea004549c139f46da5638187a85bbe422d78939be0fa01af1aa8ab672e395f  protoc.zip" | shasum -a 256 -c - )    
     unzip -q "$TMP_DIR/protoc.zip" -d "$TMP_DIR/protoc"
     PROTOC_CMD="$TMP_DIR/protoc/bin/protoc"
 }
