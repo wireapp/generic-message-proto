@@ -55,5 +55,6 @@ jobs:
             -workspace . \
             -scheme GenericMessageProtocol \
             -destination "platform=macOS,arch=arm64" \
+            -skipPackagePluginValidation \
             -quiet \
             clean test
