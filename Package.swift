@@ -26,11 +26,11 @@ let package = Package(
                 "protoc.sh",
                 // don't exclude for automatic code generation using the SwiftProtobufPlugin
                 "swift-protobuf-config.json"
-            ],
+            ]
             // uncomment for automatic code generation (delete *.pb.swift files, create empty .swift file)
             // resources: [
             //     .process("swift-protobuf-config.json")
-            // ]
+            // ],
             // plugins: [
             //     .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
             // ]
