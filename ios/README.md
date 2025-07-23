@@ -3,6 +3,7 @@
 ## Updating the generated code
 
 ```sh
+brew install swift-protobuf
 cd ios
 ./protoc.sh --swift_opt=Visibility=Public --swift_opt=UseAccessLevelOnImports=true --swift_out=. *.proto
 ```
