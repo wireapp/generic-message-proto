@@ -111,9 +111,6 @@ public struct Mls_CommitBundle: @unchecked Sendable {
     get {return _commit ?? Data()}
     set {_commit = newValue}
   }
-
-// 
-
   /// Returns true if `commit` has been explicitly set.
   public var hasCommit: Bool {return self._commit != nil}
   /// Clears the value of `commit`. Subsequent reads from it will return its default value.

@@ -57,7 +57,7 @@ jobs:
 
           if ! git diff --quiet; then       # returns non-zero when there are changes
             echo "::error::Generated Swift sources are OUT OF DATE."
-            echo "Run the generator locally and commit the results."
+            echo "Run ./update.sh in the ios directory and commit the changes!"
             echo    # blank line for readability
             git --no-pager diff             # show the diff in the log (optional)
             exit 1
