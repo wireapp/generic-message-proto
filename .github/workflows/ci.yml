@@ -63,7 +63,10 @@ jobs:
             exit 1             # any non-zero exit code fails the step → job
           fi
 
-      - name: Run tests
+      - name: Run tests via swift test
+        run: swift test
+
+      - name: Run tests via xcodebuild
         run: |
           xcodebuild \
             -workspace . \

@@ -23,7 +23,7 @@ let package = Package(
                 "messages.proto",
                 "mls.proto",
                 "otr.proto",
-                "protoc.sh",
+                "update.sh",
                 // don't exclude for automatic code generation using the SwiftProtobufPlugin
                 "swift-protobuf-config.json"
             ]
