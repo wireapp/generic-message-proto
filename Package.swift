@@ -18,12 +18,16 @@ let package = Package(
             ],
             path: "ios",
             exclude: [
+                "README.md",
                 "Tests",
+                "messages.proto",
+                "mls.proto",
+                "otr.proto",
                 "protoc.sh"
             ],
             resources: [
                 .process("swift-protobuf-config.json")
-            ],
+            ]
             // uncomment for automatic code coneration (delete *.pb.swift files, create empty .swift file)
             // plugins: [
             //     .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
