@@ -49,6 +49,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      - name: Ensure generated code is up-to-date
+        run: |
+          set -Eeuo pipefail
+          cd ios
+          ./update.sh
+
+          if ! git diff --quiet; then       # returns non-zero when there are changes
+            echo "::error::Generated Swift sources are OUT OF DATE."
+            echo "Run the generator locally and commit the results."
+            echo    # blank line for readability
+            git --no-pager diff             # show the diff in the log (optional)
+            exit 1
+          fi
+
       - name: Run tests
         run: |
           xcodebuild \

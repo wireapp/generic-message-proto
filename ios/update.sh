@@ -36,5 +36,5 @@ fi
 
 echo "Using protoc at: $PROTOC_CMD"
 
-# Run protoc with all arguments passed
-"$PROTOC_CMD" "$@"
+# Run protoc
+"$PROTOC_CMD" --swift_opt=Visibility=Public --swift_opt=UseAccessLevelOnImports=true --swift_out=. *.proto
