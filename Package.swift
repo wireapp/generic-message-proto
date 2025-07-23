@@ -24,9 +24,10 @@ let package = Package(
             resources: [
                 .process("swift-protobuf-config.json")
             ],
-            plugins: [
-                .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
-            ]
+            // uncomment for automatic code coneration (delete *.pb.swift files, create empty .swift file)
+            // plugins: [
+            //     .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
+            // ]
         ),
         .testTarget(
             name: "GenericMessageProtocolTests",
