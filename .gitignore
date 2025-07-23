@@ -5,3 +5,9 @@ target/
 web/*.js
 web/*.d.ts
 !web/compile.js
+
+# Swift Package Manger
+.build
+.swiftpm
+DerivedData
+.DS_Store

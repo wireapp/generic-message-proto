@@ -1,0 +1,14 @@
+{
+    "protocPath": "ios/protoc.sh",
+    "invocations": [
+        {
+            "protoFiles": [
+                "messages.proto",
+                "mls.proto",
+                "otr.proto"
+            ],
+            "visibility": "public",
+            "useAccessLevelOnImports": true
+        }
+    ]
+}
