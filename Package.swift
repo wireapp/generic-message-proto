@@ -23,12 +23,14 @@ let package = Package(
                 "messages.proto",
                 "mls.proto",
                 "otr.proto",
-                "protoc.sh"
+                "protoc.sh",
+                // don't exclude for automatic code generation using the SwiftProtobufPlugin
+                "swift-protobuf-config.json"
             ],
-            resources: [
-                .process("swift-protobuf-config.json")
-            ]
-            // uncomment for automatic code coneration (delete *.pb.swift files, create empty .swift file)
+            // uncomment for automatic code generation (delete *.pb.swift files, create empty .swift file)
+            // resources: [
+            //     .process("swift-protobuf-config.json")
+            // ]
             // plugins: [
             //     .plugin(name: "SwiftProtobufPlugin", package: "swift-protobuf")
             // ]
