@@ -55,12 +55,12 @@ jobs:
           cd ios
           ./update.sh
 
-          if ! git diff --quiet; then       # returns non-zero when there are changes
-            echo "::error::Generated Swift sources are OUT OF DATE."
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "::error:: Working tree has uncommitted changes or untracked files:"
             echo "Run ./update.sh in the ios directory and commit the changes!"
             echo    # blank line for readability
-            git --no-pager diff             # show the diff in the log (optional)
-            exit 1
+            git status --porcelain
+            exit 1             # any non-zero exit code fails the step → job
           fi
 
       - name: Run tests
