@@ -25,9 +25,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 
-public impo
-somediff
-rt Foundation
+public import Foundation
 public import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
