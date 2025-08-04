@@ -2634,7 +2634,7 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   public static let protoMessageName: String = "GenericMessage"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "message_id"),
-    2: .same(proto: "text"),
+    28: .same(proto: "text"),
     3: .same(proto: "image"),
     4: .same(proto: "knock"),
     6: .same(proto: "lastRead"),
@@ -2658,7 +2658,7 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     23: .same(proto: "dataTransfer"),
     24: .same(proto: "inCallEmoji"),
     26: .same(proto: "inCallHandRaise"),
-    28: .same(proto: "temp"),
+    2: .same(proto: "temp"),
     25: .same(proto: "unknownStrategy"),
   ]
 
@@ -2680,12 +2680,12 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
         var hadOneofValue = false
         if let current = self.content {
           hadOneofValue = true
-          if case .text(let m) = current {v = m}
+          if case .temp(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.content = .text(v)
+          self.content = .temp(v)
         }
       }()
       case 3: try {
@@ -2988,12 +2988,12 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
         var hadOneofValue = false
         if let current = self.content {
           hadOneofValue = true
-          if case .temp(let m) = current {v = m}
+          if case .text(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.content = .temp(v)
+          self.content = .text(v)
         }
       }()
       default: break
@@ -3010,8 +3010,8 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     } }()
     switch self.content {
-    case .text?: try {
-      guard case .text(let v)? = self.content else { preconditionFailure() }
+    case .temp?: try {
+      guard case .temp(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .image?: try {
@@ -3112,8 +3112,8 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       guard case .multipart(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
     }()
-    case .temp?: try {
-      guard case .temp(let v)? = self.content else { preconditionFailure() }
+    case .text?: try {
+      guard case .text(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
     }()
     default: break

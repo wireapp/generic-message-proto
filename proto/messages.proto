@@ -25,7 +25,7 @@ option optimize_for = LITE_RUNTIME;
 message GenericMessage {
   required string message_id = 1; // client generated random id, preferably UUID
   oneof content {
-    Text text = 2;
+    Text text = 28;
     ImageAsset image = 3; // deprecated in favour of Asset
     Knock knock = 4;
     LastRead lastRead = 6;
@@ -51,7 +51,7 @@ message GenericMessage {
     // UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     // Next field should be 26 ↓
     InCallHandRaise inCallHandRaise = 26;
-    Text temp = 28;
+    Text temp = 2;
   }
   optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
 
