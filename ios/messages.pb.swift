@@ -281,6 +281,14 @@ public struct GenericMessage: Sendable {
     set {content = .inCallHandRaise(newValue)}
   }
 
+  public var temp: Text {
+    get {
+      if case .temp(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .temp(newValue)}
+  }
+
   public var unknownStrategy: GenericMessage.UnknownStrategy {
     get {return _unknownStrategy ?? .ignore}
     set {_unknownStrategy = newValue}
@@ -321,6 +329,7 @@ public struct GenericMessage: Sendable {
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
+    case temp(Text)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -413,6 +422,10 @@ public struct GenericMessage: Sendable {
       }()
       case .inCallHandRaise: return {
         guard case .inCallHandRaise(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .temp: return {
+        guard case .temp(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
       default: return true
@@ -2645,6 +2658,7 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     23: .same(proto: "dataTransfer"),
     24: .same(proto: "inCallEmoji"),
     26: .same(proto: "inCallHandRaise"),
+    28: .same(proto: "temp"),
     25: .same(proto: "unknownStrategy"),
   ]
 
@@ -2969,6 +2983,19 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.content = .multipart(v)
         }
       }()
+      case 28: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .temp(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .temp(v)
+        }
+      }()
       default: break
       }
     }
@@ -3084,6 +3111,10 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .multipart?: try {
       guard case .multipart(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
+    }()
+    case .temp?: try {
+      guard case .temp(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
     }()
     default: break
     }
