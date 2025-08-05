@@ -436,7 +436,7 @@ message HistoryClientAvailable {
     required HistoryClient client = 1;
 }
 
-// Sent in a conversation after you'be been added to conversation with history sharing enabled
+// Sent in a conversation after you've been added to conversation with history sharing enabled
 message HistoryClientRequest {}
 
 // Sent in a subconversation in response to a HistoryClientRequest
