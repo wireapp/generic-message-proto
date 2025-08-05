@@ -441,7 +441,7 @@ message HistoryClientRequest {}
 
 // Sent in a subconversation in response to a HistoryClientRequest
 message HistoryClientResponse {
-    required repeated HistoryClient clients = 1;
+    repeated HistoryClient clients = 1;
 }
 
 
