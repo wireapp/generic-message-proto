@@ -51,9 +51,10 @@ message GenericMessage {
     // UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     // Next field should be 26 ↓
     InCallHandRaise inCallHandRaise = 26;
-    HistoryClientAvailable historyClientAvailable = 27;
-    HistoryClientRequest historyClientRequest = 28;
-    HistoryClientResponse historyClientResponse = 29;
+    // 27: Reserverd for Multipart message type, already developed on Android.
+    HistoryClientAvailable historyClientAvailable = 28;
+    HistoryClientRequest historyClientRequest = 29;
+    HistoryClientResponse historyClientResponse = 30;
   }
   optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
 
