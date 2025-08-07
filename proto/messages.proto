@@ -53,7 +53,7 @@ message GenericMessage {
     InCallHandRaise inCallHandRaise = 26;
     Text temp = 2;
   }
-  optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
+  optional UnknownStrategy unknownStrategy = 25 [default = DISCARD_AND_WARN];
 
   // See internal RFC: "2024-07-18 RFC Improve future-proofing for new OTR message types"
   enum UnknownStrategy {
