@@ -281,6 +281,31 @@ public struct GenericMessage: Sendable {
     set {content = .inCallHandRaise(newValue)}
   }
 
+  /// 27: Reserverd for Multipart message type, already developed on Android.
+  public var historyClientAvailable: HistoryClientAvailable {
+    get {
+      if case .historyClientAvailable(let v)? = content {return v}
+      return HistoryClientAvailable()
+    }
+    set {content = .historyClientAvailable(newValue)}
+  }
+
+  public var historyClientRequest: HistoryClientRequest {
+    get {
+      if case .historyClientRequest(let v)? = content {return v}
+      return HistoryClientRequest()
+    }
+    set {content = .historyClientRequest(newValue)}
+  }
+
+  public var historyClientResponse: HistoryClientResponse {
+    get {
+      if case .historyClientResponse(let v)? = content {return v}
+      return HistoryClientResponse()
+    }
+    set {content = .historyClientResponse(newValue)}
+  }
+
   public var unknownStrategy: GenericMessage.UnknownStrategy {
     get {return _unknownStrategy ?? .ignore}
     set {_unknownStrategy = newValue}
@@ -321,6 +346,10 @@ public struct GenericMessage: Sendable {
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
+    /// 27: Reserverd for Multipart message type, already developed on Android.
+    case historyClientAvailable(HistoryClientAvailable)
+    case historyClientRequest(HistoryClientRequest)
+    case historyClientResponse(HistoryClientResponse)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -413,6 +442,14 @@ public struct GenericMessage: Sendable {
       }()
       case .inCallHandRaise: return {
         guard case .inCallHandRaise(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .historyClientAvailable: return {
+        guard case .historyClientAvailable(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .historyClientResponse: return {
+        guard case .historyClientResponse(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
       default: return true
@@ -2594,6 +2631,93 @@ public struct TrackingIdentifier: Sendable {
   fileprivate var _identifier: String? = nil
 }
 
+public struct HistoryClient: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var clientID: String {
+    get {return _clientID ?? String()}
+    set {_clientID = newValue}
+  }
+  /// Returns true if `clientID` has been explicitly set.
+  public var hasClientID: Bool {return self._clientID != nil}
+  /// Clears the value of `clientID`. Subsequent reads from it will return its default value.
+  public mutating func clearClientID() {self._clientID = nil}
+
+  public var createdAt: String {
+    get {return _createdAt ?? String()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {self._createdAt = nil}
+
+  public var secret: Data {
+    get {return _secret ?? Data()}
+    set {_secret = newValue}
+  }
+  /// Returns true if `secret` has been explicitly set.
+  public var hasSecret: Bool {return self._secret != nil}
+  /// Clears the value of `secret`. Subsequent reads from it will return its default value.
+  public mutating func clearSecret() {self._secret = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _clientID: String? = nil
+  fileprivate var _createdAt: String? = nil
+  fileprivate var _secret: Data? = nil
+}
+
+/// Sent in a conversation after new history client has been added
+public struct HistoryClientAvailable: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var client: HistoryClient {
+    get {return _client ?? HistoryClient()}
+    set {_client = newValue}
+  }
+  /// Returns true if `client` has been explicitly set.
+  public var hasClient: Bool {return self._client != nil}
+  /// Clears the value of `client`. Subsequent reads from it will return its default value.
+  public mutating func clearClient() {self._client = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _client: HistoryClient? = nil
+}
+
+/// Sent in a conversation after you've been added to conversation with history sharing enabled
+public struct HistoryClientRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// Sent in a subconversation in response to a HistoryClientRequest
+public struct HistoryClientResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var clients: [HistoryClient] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension ClientAction: SwiftProtobuf._ProtoNameProviding {
@@ -2645,6 +2769,9 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     23: .same(proto: "dataTransfer"),
     24: .same(proto: "inCallEmoji"),
     26: .same(proto: "inCallHandRaise"),
+    28: .same(proto: "historyClientAvailable"),
+    29: .same(proto: "historyClientRequest"),
+    30: .same(proto: "historyClientResponse"),
     25: .same(proto: "unknownStrategy"),
   ]
 
@@ -2969,6 +3096,45 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.content = .multipart(v)
         }
       }()
+      case 28: try {
+        var v: HistoryClientAvailable?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientAvailable(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientAvailable(v)
+        }
+      }()
+      case 29: try {
+        var v: HistoryClientRequest?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientRequest(v)
+        }
+      }()
+      case 30: try {
+        var v: HistoryClientResponse?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientResponse(v)
+        }
+      }()
       default: break
       }
     }
@@ -3084,6 +3250,18 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .multipart?: try {
       guard case .multipart(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
+    }()
+    case .historyClientAvailable?: try {
+      guard case .historyClientAvailable(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
+    }()
+    case .historyClientRequest?: try {
+      guard case .historyClientRequest(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
+    }()
+    case .historyClientResponse?: try {
+      guard case .historyClientResponse(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
     }()
     default: break
     }
@@ -5902,6 +6080,159 @@ extension TrackingIdentifier: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   public static func ==(lhs: TrackingIdentifier, rhs: TrackingIdentifier) -> Bool {
     if lhs._identifier != rhs._identifier {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension HistoryClient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClient"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "client_id"),
+    2: .standard(proto: "created_at"),
+    3: .same(proto: "secret"),
+  ]
+
+  public var isInitialized: Bool {
+    if self._clientID == nil {return false}
+    if self._createdAt == nil {return false}
+    if self._secret == nil {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._clientID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeSingularBytesField(value: &self._secret) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._clientID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._createdAt {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._secret {
+      try visitor.visitSingularBytesField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClient, rhs: HistoryClient) -> Bool {
+    if lhs._clientID != rhs._clientID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._secret != rhs._secret {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension HistoryClientAvailable: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientAvailable"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "client"),
+  ]
+
+  public var isInitialized: Bool {
+    if self._client == nil {return false}
+    if let v = self._client, !v.isInitialized {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._client) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._client {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientAvailable, rhs: HistoryClientAvailable) -> Bool {
+    if lhs._client != rhs._client {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension HistoryClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientRequest, rhs: HistoryClientRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension HistoryClientResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "clients"),
+  ]
+
+  public var isInitialized: Bool {
+    if !SwiftProtobuf.Internal.areAllInitialized(self.clients) {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.clients) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.clients.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.clients, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientResponse, rhs: HistoryClientResponse) -> Bool {
+    if lhs.clients != rhs.clients {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
