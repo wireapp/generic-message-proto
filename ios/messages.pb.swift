@@ -290,7 +290,7 @@ public struct GenericMessage: Sendable {
   }
 
   public var unknownStrategy: GenericMessage.UnknownStrategy {
-    get {return _unknownStrategy ?? .ignore}
+    get {return _unknownStrategy ?? .discardAndWarn}
     set {_unknownStrategy = newValue}
   }
   /// Returns true if `unknownStrategy` has been explicitly set.
