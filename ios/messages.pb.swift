@@ -452,7 +452,9 @@ public struct GenericMessage: Sendable {
 
   }
 
-  public init() {}
+  public init() {
+    print("GenericMessage.init")
+  }
 
   fileprivate var _messageID: String? = nil
   fileprivate var _unknownStrategy: GenericMessage.UnknownStrategy? = nil
