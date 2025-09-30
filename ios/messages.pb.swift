@@ -281,14 +281,6 @@ public struct GenericMessage: Sendable {
     set {content = .inCallHandRaise(newValue)}
   }
 
-  public var temp: Text {
-    get {
-      if case .temp(let v)? = content {return v}
-      return Text()
-    }
-    set {content = .temp(newValue)}
-  }
-
   public var unknownStrategy: GenericMessage.UnknownStrategy {
     get {return _unknownStrategy ?? .discardAndWarn}
     set {_unknownStrategy = newValue}
@@ -329,7 +321,6 @@ public struct GenericMessage: Sendable {
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
-    case temp(Text)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -424,10 +415,6 @@ public struct GenericMessage: Sendable {
         guard case .inCallHandRaise(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
-      case .temp: return {
-        guard case .temp(let v) = self else { preconditionFailure() }
-        return v.isInitialized
-      }()
       default: return true
       }
     }
@@ -452,9 +439,7 @@ public struct GenericMessage: Sendable {
 
   }
 
-  public init() {
-    print("GenericMessage.init")
-  }
+  public init() {}
 
   fileprivate var _messageID: String? = nil
   fileprivate var _unknownStrategy: GenericMessage.UnknownStrategy? = nil
@@ -2660,7 +2645,6 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     23: .same(proto: "dataTransfer"),
     24: .same(proto: "inCallEmoji"),
     26: .same(proto: "inCallHandRaise"),
-    2: .same(proto: "temp"),
     25: .same(proto: "unknownStrategy"),
   ]
 
@@ -2677,19 +2661,6 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self._messageID) }()
-      case 2: try {
-        var v: Text?
-        var hadOneofValue = false
-        if let current = self.content {
-          hadOneofValue = true
-          if case .temp(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.content = .temp(v)
-        }
-      }()
       case 3: try {
         var v: ImageAsset?
         var hadOneofValue = false
@@ -3012,10 +2983,6 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     } }()
     switch self.content {
-    case .temp?: try {
-      guard case .temp(let v)? = self.content else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }()
     case .image?: try {
       guard case .image(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)

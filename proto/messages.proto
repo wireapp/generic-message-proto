@@ -51,7 +51,7 @@ message GenericMessage {
     // UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     // Next field should be 26 ↓
     InCallHandRaise inCallHandRaise = 26;
-    Text temp = 2;
+    // Text temp = 2;
   }
   optional UnknownStrategy unknownStrategy = 25 [default = DISCARD_AND_WARN];
 
