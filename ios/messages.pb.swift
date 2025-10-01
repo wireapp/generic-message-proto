@@ -281,6 +281,230 @@ public struct GenericMessage: Sendable {
     set {content = .inCallHandRaise(newValue)}
   }
 
+  public var c28: Text {
+    get {
+      if case .c28(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c28(newValue)}
+  }
+
+  public var c29: Text {
+    get {
+      if case .c29(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c29(newValue)}
+  }
+
+  public var c30: Text {
+    get {
+      if case .c30(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c30(newValue)}
+  }
+
+  public var c31: Text {
+    get {
+      if case .c31(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c31(newValue)}
+  }
+
+  public var c32: Text {
+    get {
+      if case .c32(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c32(newValue)}
+  }
+
+  public var c33: Text {
+    get {
+      if case .c33(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c33(newValue)}
+  }
+
+  public var c34: Text {
+    get {
+      if case .c34(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c34(newValue)}
+  }
+
+  public var c35: Text {
+    get {
+      if case .c35(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c35(newValue)}
+  }
+
+  public var c36: Text {
+    get {
+      if case .c36(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c36(newValue)}
+  }
+
+  public var c37: Text {
+    get {
+      if case .c37(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c37(newValue)}
+  }
+
+  public var c38: Text {
+    get {
+      if case .c38(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c38(newValue)}
+  }
+
+  public var c39: Text {
+    get {
+      if case .c39(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c39(newValue)}
+  }
+
+  public var c40: Text {
+    get {
+      if case .c40(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c40(newValue)}
+  }
+
+  public var c41: Text {
+    get {
+      if case .c41(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c41(newValue)}
+  }
+
+  public var c42: Text {
+    get {
+      if case .c42(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c42(newValue)}
+  }
+
+  public var c43: Text {
+    get {
+      if case .c43(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c43(newValue)}
+  }
+
+  public var c44: Text {
+    get {
+      if case .c44(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c44(newValue)}
+  }
+
+  public var c45: Text {
+    get {
+      if case .c45(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c45(newValue)}
+  }
+
+  public var c46: Text {
+    get {
+      if case .c46(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c46(newValue)}
+  }
+
+  public var c47: Text {
+    get {
+      if case .c47(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c47(newValue)}
+  }
+
+  public var c48: Text {
+    get {
+      if case .c48(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c48(newValue)}
+  }
+
+  public var c49: Text {
+    get {
+      if case .c49(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c49(newValue)}
+  }
+
+  public var c50: Text {
+    get {
+      if case .c50(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c50(newValue)}
+  }
+
+  public var c51: Text {
+    get {
+      if case .c51(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c51(newValue)}
+  }
+
+  public var c52: Text {
+    get {
+      if case .c52(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c52(newValue)}
+  }
+
+  public var c53: Text {
+    get {
+      if case .c53(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c53(newValue)}
+  }
+
+  public var c54: Text {
+    get {
+      if case .c54(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c54(newValue)}
+  }
+
+  public var c55: Text {
+    get {
+      if case .c55(let v)? = content {return v}
+      return Text()
+    }
+    set {content = .c55(newValue)}
+  }
+
   public var unknownStrategy: GenericMessage.UnknownStrategy {
     get {return _unknownStrategy ?? .ignore}
     set {_unknownStrategy = newValue}
@@ -321,6 +545,34 @@ public struct GenericMessage: Sendable {
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
+    case c28(Text)
+    case c29(Text)
+    case c30(Text)
+    case c31(Text)
+    case c32(Text)
+    case c33(Text)
+    case c34(Text)
+    case c35(Text)
+    case c36(Text)
+    case c37(Text)
+    case c38(Text)
+    case c39(Text)
+    case c40(Text)
+    case c41(Text)
+    case c42(Text)
+    case c43(Text)
+    case c44(Text)
+    case c45(Text)
+    case c46(Text)
+    case c47(Text)
+    case c48(Text)
+    case c49(Text)
+    case c50(Text)
+    case c51(Text)
+    case c52(Text)
+    case c53(Text)
+    case c54(Text)
+    case c55(Text)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -413,6 +665,118 @@ public struct GenericMessage: Sendable {
       }()
       case .inCallHandRaise: return {
         guard case .inCallHandRaise(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c28: return {
+        guard case .c28(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c29: return {
+        guard case .c29(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c30: return {
+        guard case .c30(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c31: return {
+        guard case .c31(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c32: return {
+        guard case .c32(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c33: return {
+        guard case .c33(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c34: return {
+        guard case .c34(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c35: return {
+        guard case .c35(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c36: return {
+        guard case .c36(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c37: return {
+        guard case .c37(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c38: return {
+        guard case .c38(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c39: return {
+        guard case .c39(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c40: return {
+        guard case .c40(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c41: return {
+        guard case .c41(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c42: return {
+        guard case .c42(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c43: return {
+        guard case .c43(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c44: return {
+        guard case .c44(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c45: return {
+        guard case .c45(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c46: return {
+        guard case .c46(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c47: return {
+        guard case .c47(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c48: return {
+        guard case .c48(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c49: return {
+        guard case .c49(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c50: return {
+        guard case .c50(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c51: return {
+        guard case .c51(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c52: return {
+        guard case .c52(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c53: return {
+        guard case .c53(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c54: return {
+        guard case .c54(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .c55: return {
+        guard case .c55(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
       default: return true
@@ -2645,6 +3009,34 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     23: .same(proto: "dataTransfer"),
     24: .same(proto: "inCallEmoji"),
     26: .same(proto: "inCallHandRaise"),
+    28: .same(proto: "c28"),
+    29: .same(proto: "c29"),
+    30: .same(proto: "c30"),
+    31: .same(proto: "c31"),
+    32: .same(proto: "c32"),
+    33: .same(proto: "c33"),
+    34: .same(proto: "c34"),
+    35: .same(proto: "c35"),
+    36: .same(proto: "c36"),
+    37: .same(proto: "c37"),
+    38: .same(proto: "c38"),
+    39: .same(proto: "c39"),
+    40: .same(proto: "c40"),
+    41: .same(proto: "c41"),
+    42: .same(proto: "c42"),
+    43: .same(proto: "c43"),
+    44: .same(proto: "c44"),
+    45: .same(proto: "c45"),
+    46: .same(proto: "c46"),
+    47: .same(proto: "c47"),
+    48: .same(proto: "c48"),
+    49: .same(proto: "c49"),
+    50: .same(proto: "c50"),
+    51: .same(proto: "c51"),
+    52: .same(proto: "c52"),
+    53: .same(proto: "c53"),
+    54: .same(proto: "c54"),
+    55: .same(proto: "c55"),
     25: .same(proto: "unknownStrategy"),
   ]
 
@@ -2969,6 +3361,370 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.content = .multipart(v)
         }
       }()
+      case 28: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c28(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c28(v)
+        }
+      }()
+      case 29: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c29(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c29(v)
+        }
+      }()
+      case 30: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c30(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c30(v)
+        }
+      }()
+      case 31: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c31(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c31(v)
+        }
+      }()
+      case 32: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c32(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c32(v)
+        }
+      }()
+      case 33: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c33(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c33(v)
+        }
+      }()
+      case 34: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c34(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c34(v)
+        }
+      }()
+      case 35: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c35(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c35(v)
+        }
+      }()
+      case 36: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c36(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c36(v)
+        }
+      }()
+      case 37: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c37(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c37(v)
+        }
+      }()
+      case 38: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c38(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c38(v)
+        }
+      }()
+      case 39: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c39(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c39(v)
+        }
+      }()
+      case 40: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c40(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c40(v)
+        }
+      }()
+      case 41: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c41(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c41(v)
+        }
+      }()
+      case 42: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c42(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c42(v)
+        }
+      }()
+      case 43: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c43(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c43(v)
+        }
+      }()
+      case 44: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c44(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c44(v)
+        }
+      }()
+      case 45: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c45(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c45(v)
+        }
+      }()
+      case 46: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c46(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c46(v)
+        }
+      }()
+      case 47: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c47(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c47(v)
+        }
+      }()
+      case 48: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c48(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c48(v)
+        }
+      }()
+      case 49: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c49(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c49(v)
+        }
+      }()
+      case 50: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c50(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c50(v)
+        }
+      }()
+      case 51: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c51(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c51(v)
+        }
+      }()
+      case 52: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c52(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c52(v)
+        }
+      }()
+      case 53: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c53(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c53(v)
+        }
+      }()
+      case 54: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c54(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c54(v)
+        }
+      }()
+      case 55: try {
+        var v: Text?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .c55(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .c55(v)
+        }
+      }()
       default: break
       }
     }
@@ -3084,6 +3840,118 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .multipart?: try {
       guard case .multipart(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
+    }()
+    case .c28?: try {
+      guard case .c28(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
+    }()
+    case .c29?: try {
+      guard case .c29(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
+    }()
+    case .c30?: try {
+      guard case .c30(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+    }()
+    case .c31?: try {
+      guard case .c31(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
+    }()
+    case .c32?: try {
+      guard case .c32(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+    }()
+    case .c33?: try {
+      guard case .c33(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
+    }()
+    case .c34?: try {
+      guard case .c34(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 34)
+    }()
+    case .c35?: try {
+      guard case .c35(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 35)
+    }()
+    case .c36?: try {
+      guard case .c36(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 36)
+    }()
+    case .c37?: try {
+      guard case .c37(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 37)
+    }()
+    case .c38?: try {
+      guard case .c38(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 38)
+    }()
+    case .c39?: try {
+      guard case .c39(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 39)
+    }()
+    case .c40?: try {
+      guard case .c40(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 40)
+    }()
+    case .c41?: try {
+      guard case .c41(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 41)
+    }()
+    case .c42?: try {
+      guard case .c42(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 42)
+    }()
+    case .c43?: try {
+      guard case .c43(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 43)
+    }()
+    case .c44?: try {
+      guard case .c44(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 44)
+    }()
+    case .c45?: try {
+      guard case .c45(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 45)
+    }()
+    case .c46?: try {
+      guard case .c46(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 46)
+    }()
+    case .c47?: try {
+      guard case .c47(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 47)
+    }()
+    case .c48?: try {
+      guard case .c48(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 48)
+    }()
+    case .c49?: try {
+      guard case .c49(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 49)
+    }()
+    case .c50?: try {
+      guard case .c50(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 50)
+    }()
+    case .c51?: try {
+      guard case .c51(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 51)
+    }()
+    case .c52?: try {
+      guard case .c52(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 52)
+    }()
+    case .c53?: try {
+      guard case .c53(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 53)
+    }()
+    case .c54?: try {
+      guard case .c54(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 54)
+    }()
+    case .c55?: try {
+      guard case .c55(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 55)
     }()
     default: break
     }
