@@ -50,7 +50,7 @@ public enum Proteus_Priority: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public struct Proteus_UserId: @unchecked Sendable {
+public struct Proteus_UserId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -123,7 +123,7 @@ public struct Proteus_ClientId: Sendable {
   fileprivate var _client: UInt64? = nil
 }
 
-public struct Proteus_ClientEntry: @unchecked Sendable {
+public struct Proteus_ClientEntry: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -201,7 +201,7 @@ public struct Proteus_QualifiedUserEntry: Sendable {
 }
 
 /// deprecated, use QualifiedNewOtrMessage
-public struct Proteus_NewOtrMessage: @unchecked Sendable {
+public struct Proteus_NewOtrMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -266,7 +266,7 @@ public struct Proteus_NewOtrMessage: @unchecked Sendable {
   fileprivate var _transient: Bool? = nil
 }
 
-public struct Proteus_QualifiedNewOtrMessage: @unchecked Sendable {
+public struct Proteus_QualifiedNewOtrMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -494,17 +494,12 @@ public struct Proteus_OtrAssetMeta: Sendable {
 fileprivate let _protobuf_package = "proteus"
 
 extension Proteus_Priority: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "LOW_PRIORITY"),
-    2: .same(proto: "HIGH_PRIORITY"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LOW_PRIORITY\0\u{1}HIGH_PRIORITY\0")
 }
 
 extension Proteus_UserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserId"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "uuid"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0")
 
   public var isInitialized: Bool {
     if self._uuid == nil {return false}
@@ -543,10 +538,7 @@ extension Proteus_UserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
 extension Proteus_QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedUserId"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "domain"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
   public var isInitialized: Bool {
     if self._id == nil {return false}
@@ -591,9 +583,7 @@ extension Proteus_QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Proteus_ClientId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientId"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "client"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0")
 
   public var isInitialized: Bool {
     if self._client == nil {return false}
@@ -632,10 +622,7 @@ extension Proteus_ClientId: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
 extension Proteus_ClientEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientEntry"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "client"),
-    2: .same(proto: "text"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0\u{1}text\0")
 
   public var isInitialized: Bool {
     if self._client == nil {return false}
@@ -681,10 +668,7 @@ extension Proteus_ClientEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Proteus_UserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserEntry"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "user"),
-    2: .same(proto: "clients"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}user\0\u{1}clients\0")
 
   public var isInitialized: Bool {
     if self._user == nil {return false}
@@ -730,10 +714,7 @@ extension Proteus_UserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 
 extension Proteus_QualifiedUserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedUserEntry"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "domain"),
-    2: .same(proto: "entries"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}domain\0\u{1}entries\0")
 
   public var isInitialized: Bool {
     if self._domain == nil {return false}
@@ -778,15 +759,7 @@ extension Proteus_QualifiedUserEntry: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Proteus_NewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NewOtrMessage"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sender"),
-    2: .same(proto: "recipients"),
-    3: .standard(proto: "native_push"),
-    4: .same(proto: "blob"),
-    5: .standard(proto: "native_priority"),
-    6: .same(proto: "transient"),
-    7: .standard(proto: "report_missing"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{3}native_push\0\u{1}blob\0\u{3}native_priority\0\u{1}transient\0\u{3}report_missing\0")
 
   public var isInitialized: Bool {
     if self._sender == nil {return false}
@@ -858,18 +831,7 @@ extension Proteus_NewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
 extension Proteus_QualifiedNewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedNewOtrMessage"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sender"),
-    2: .same(proto: "recipients"),
-    3: .standard(proto: "native_push"),
-    4: .same(proto: "blob"),
-    5: .standard(proto: "native_priority"),
-    6: .same(proto: "transient"),
-    7: .standard(proto: "report_all"),
-    8: .standard(proto: "ignore_all"),
-    9: .standard(proto: "report_only"),
-    10: .standard(proto: "ignore_only"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{3}native_push\0\u{1}blob\0\u{3}native_priority\0\u{1}transient\0\u{3}report_all\0\u{3}ignore_all\0\u{3}report_only\0\u{3}ignore_only\0")
 
   public var isInitialized: Bool {
     if self._sender == nil {return false}
@@ -1065,9 +1027,7 @@ extension Proteus_ClientMismatchStrategy.IgnoreAll: SwiftProtobuf.Message, Swift
 
 extension Proteus_ClientMismatchStrategy.ReportOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".ReportOnly"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_ids"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_ids\0")
 
   public var isInitialized: Bool {
     if !SwiftProtobuf.Internal.areAllInitialized(self.userIds) {return false}
@@ -1102,9 +1062,7 @@ extension Proteus_ClientMismatchStrategy.ReportOnly: SwiftProtobuf.Message, Swif
 
 extension Proteus_ClientMismatchStrategy.IgnoreOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".IgnoreOnly"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_ids"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_ids\0")
 
   public var isInitialized: Bool {
     if !SwiftProtobuf.Internal.areAllInitialized(self.userIds) {return false}
@@ -1139,12 +1097,7 @@ extension Proteus_ClientMismatchStrategy.IgnoreOnly: SwiftProtobuf.Message, Swif
 
 extension Proteus_OtrAssetMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OtrAssetMeta"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sender"),
-    2: .same(proto: "recipients"),
-    3: .same(proto: "isInline"),
-    4: .standard(proto: "native_push"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{1}isInline\0\u{3}native_push\0")
 
   public var isInitialized: Bool {
     if self._sender == nil {return false}

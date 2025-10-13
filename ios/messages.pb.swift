@@ -1391,7 +1391,7 @@ public struct MessageEdit: Sendable {
   fileprivate var _replacingMessageID: String? = nil
 }
 
-public struct Quote: @unchecked Sendable {
+public struct Quote: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1541,7 +1541,7 @@ public struct Location: Sendable {
 }
 
 /// deprecated in favour of Asset.Original.ImageMetaData
-public struct ImageAsset: @unchecked Sendable {
+public struct ImageAsset: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1919,7 +1919,7 @@ public struct CellAsset: Sendable {
     fileprivate var _durationInMillis: UInt64? = nil
   }
 
-  public struct AudioMetaData: @unchecked Sendable {
+  public struct AudioMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -2291,7 +2291,7 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _durationInMillis: UInt64? = nil
   }
 
-  public struct AudioMetaData: @unchecked Sendable {
+  public struct AudioMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -2323,7 +2323,7 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _normalizedLoudness: Data? = nil
   }
 
-  public struct RemoteData: @unchecked Sendable {
+  public struct RemoteData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -2402,7 +2402,7 @@ public struct Asset: @unchecked Sendable {
 }
 
 /// Actual message is encrypted with AES and sent as additional data
-public struct External: @unchecked Sendable {
+public struct External: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2597,56 +2597,20 @@ public struct TrackingIdentifier: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension ClientAction: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "RESET_SESSION"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RESET_SESSION\0")
 }
 
 extension EncryptionAlgorithm: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "AES_CBC"),
-    1: .same(proto: "AES_GCM"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0AES_CBC\0\u{1}AES_GCM\0")
 }
 
 extension LegalHoldStatus: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNKNOWN"),
-    1: .same(proto: "DISABLED"),
-    2: .same(proto: "ENABLED"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}DISABLED\0\u{1}ENABLED\0")
 }
 
 extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "GenericMessage"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "message_id"),
-    2: .same(proto: "text"),
-    3: .same(proto: "image"),
-    4: .same(proto: "knock"),
-    6: .same(proto: "lastRead"),
-    7: .same(proto: "cleared"),
-    8: .same(proto: "external"),
-    9: .same(proto: "clientAction"),
-    10: .same(proto: "calling"),
-    11: .same(proto: "asset"),
-    27: .same(proto: "multipart"),
-    12: .same(proto: "hidden"),
-    13: .same(proto: "location"),
-    14: .same(proto: "deleted"),
-    15: .same(proto: "edited"),
-    16: .same(proto: "confirmation"),
-    17: .same(proto: "reaction"),
-    18: .same(proto: "ephemeral"),
-    19: .same(proto: "availability"),
-    20: .same(proto: "composite"),
-    21: .same(proto: "buttonAction"),
-    22: .same(proto: "buttonActionConfirmation"),
-    23: .same(proto: "dataTransfer"),
-    24: .same(proto: "inCallEmoji"),
-    26: .same(proto: "inCallHandRaise"),
-    25: .same(proto: "unknownStrategy"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{2}\u{2}lastRead\0\u{1}cleared\0\u{1}external\0\u{1}clientAction\0\u{1}calling\0\u{1}asset\0\u{1}hidden\0\u{1}location\0\u{1}deleted\0\u{1}edited\0\u{1}confirmation\0\u{1}reaction\0\u{1}ephemeral\0\u{1}availability\0\u{1}composite\0\u{1}buttonAction\0\u{1}buttonActionConfirmation\0\u{1}dataTransfer\0\u{1}inCallEmoji\0\u{1}unknownStrategy\0\u{1}inCallHandRaise\0\u{1}multipart\0")
 
   public var isInitialized: Bool {
     if self._messageID == nil {return false}
@@ -3100,19 +3064,12 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 }
 
 extension GenericMessage.UnknownStrategy: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "IGNORE"),
-    1: .same(proto: "DISCARD_AND_WARN"),
-    2: .same(proto: "WARN_USER_ALLOW_RETRY"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0IGNORE\0\u{1}DISCARD_AND_WARN\0\u{1}WARN_USER_ALLOW_RETRY\0")
 }
 
 extension QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "QualifiedUserId"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "domain"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
   public var isInitialized: Bool {
     if self._id == nil {return false}
@@ -3157,10 +3114,7 @@ extension QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
 extension QualifiedConversationId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "QualifiedConversationId"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "domain"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
   public var isInitialized: Bool {
     if self._id == nil {return false}
@@ -3205,11 +3159,7 @@ extension QualifiedConversationId: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Composite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Composite"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "items"),
-    2: .standard(proto: "expects_read_confirmation"),
-    3: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}items\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if !SwiftProtobuf.Internal.areAllInitialized(self.items) {return false}
@@ -3258,10 +3208,7 @@ extension Composite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 
 extension Composite.Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Composite.protoMessageName + ".Item"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "text"),
-    2: .same(proto: "button"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}button\0")
 
   public var isInitialized: Bool {
     if let v = self.content, !v.isInitialized {return false}
@@ -3333,10 +3280,7 @@ extension Composite.Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
 extension Button: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Button"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "text"),
-    2: .same(proto: "id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}id\0")
 
   public var isInitialized: Bool {
     if self._text == nil {return false}
@@ -3381,10 +3325,7 @@ extension Button: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
 
 extension ButtonAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ButtonAction"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "button_id"),
-    2: .standard(proto: "reference_message_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}button_id\0\u{3}reference_message_id\0")
 
   public var isInitialized: Bool {
     if self._buttonID == nil {return false}
@@ -3429,10 +3370,7 @@ extension ButtonAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
 extension ButtonActionConfirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ButtonActionConfirmation"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "reference_message_id"),
-    2: .standard(proto: "button_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}reference_message_id\0\u{3}button_id\0")
 
   public var isInitialized: Bool {
     if self._referenceMessageID == nil {return false}
@@ -3476,9 +3414,7 @@ extension ButtonActionConfirmation: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
 extension Availability: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Availability"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "type"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0")
 
   public var isInitialized: Bool {
     if self._type == nil {return false}
@@ -3516,24 +3452,12 @@ extension Availability: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 }
 
 extension Availability.TypeEnum: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "NONE"),
-    1: .same(proto: "AVAILABLE"),
-    2: .same(proto: "AWAY"),
-    3: .same(proto: "BUSY"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NONE\0\u{1}AVAILABLE\0\u{1}AWAY\0\u{1}BUSY\0")
 }
 
 extension Ephemeral: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Ephemeral"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "expire_after_millis"),
-    2: .same(proto: "text"),
-    3: .same(proto: "image"),
-    4: .same(proto: "knock"),
-    5: .same(proto: "asset"),
-    6: .same(proto: "location"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}expire_after_millis\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{1}asset\0\u{1}location\0")
 
   public var isInitialized: Bool {
     if self._expireAfterMillis == nil {return false}
@@ -3662,14 +3586,7 @@ extension Ephemeral: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 
 extension Text: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Text"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "content"),
-    3: .standard(proto: "link_preview"),
-    4: .same(proto: "mentions"),
-    5: .same(proto: "quote"),
-    6: .standard(proto: "expects_read_confirmation"),
-    7: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}content\0\u{4}\u{2}link_preview\0\u{1}mentions\0\u{1}quote\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if self._content == nil {return false}
@@ -3736,11 +3653,7 @@ extension Text: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
 
 extension Knock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Knock"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "hot_knock"),
-    2: .standard(proto: "expects_read_confirmation"),
-    3: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}hot_knock\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if self._hotKnock == nil {return false}
@@ -3789,16 +3702,7 @@ extension Knock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
 
 extension LinkPreview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "LinkPreview"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "url"),
-    2: .standard(proto: "url_offset"),
-    3: .same(proto: "article"),
-    5: .standard(proto: "permanent_url"),
-    6: .same(proto: "title"),
-    7: .same(proto: "summary"),
-    8: .same(proto: "image"),
-    9: .same(proto: "tweet"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}url\0\u{3}url_offset\0\u{1}article\0\u{4}\u{2}permanent_url\0\u{1}title\0\u{1}summary\0\u{1}image\0\u{1}tweet\0")
 
   public var isInitialized: Bool {
     if self._url == nil {return false}
@@ -3899,10 +3803,7 @@ extension LinkPreview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
 extension Tweet: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Tweet"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "author"),
-    2: .same(proto: "username"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}author\0\u{1}username\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3941,12 +3842,7 @@ extension Tweet: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
 
 extension Article: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Article"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "permanent_url"),
-    2: .same(proto: "title"),
-    3: .same(proto: "summary"),
-    4: .same(proto: "image"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}permanent_url\0\u{1}title\0\u{1}summary\0\u{1}image\0")
 
   public var isInitialized: Bool {
     if self._permanentURL == nil {return false}
@@ -4001,12 +3897,7 @@ extension Article: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
 
 extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Mention"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "start"),
-    2: .same(proto: "length"),
-    3: .standard(proto: "user_id"),
-    4: .standard(proto: "qualified_user_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}start\0\u{1}length\0\u{3}user_id\0\u{3}qualified_user_id\0")
 
   public var isInitialized: Bool {
     if self._start == nil {return false}
@@ -4069,11 +3960,7 @@ extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
 
 extension LastRead: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "LastRead"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "conversation_id"),
-    2: .standard(proto: "last_read_timestamp"),
-    3: .standard(proto: "qualified_conversation_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}last_read_timestamp\0\u{3}qualified_conversation_id\0")
 
   public var isInitialized: Bool {
     if self._conversationID == nil {return false}
@@ -4124,11 +4011,7 @@ extension LastRead: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
 
 extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Cleared"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "conversation_id"),
-    2: .standard(proto: "cleared_timestamp"),
-    3: .standard(proto: "qualified_conversation_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}cleared_timestamp\0\u{3}qualified_conversation_id\0")
 
   public var isInitialized: Bool {
     if self._conversationID == nil {return false}
@@ -4179,11 +4062,7 @@ extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
 
 extension MessageHide: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageHide"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "conversation_id"),
-    2: .standard(proto: "message_id"),
-    3: .standard(proto: "qualified_conversation_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}message_id\0\u{3}qualified_conversation_id\0")
 
   public var isInitialized: Bool {
     if self._conversationID == nil {return false}
@@ -4234,9 +4113,7 @@ extension MessageHide: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
 extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageDelete"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "message_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0")
 
   public var isInitialized: Bool {
     if self._messageID == nil {return false}
@@ -4275,11 +4152,7 @@ extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
 
 extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageEdit"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "replacing_message_id"),
-    2: .same(proto: "text"),
-    3: .same(proto: "composite"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}replacing_message_id\0\u{1}text\0\u{1}composite\0")
 
   public var isInitialized: Bool {
     if self._replacingMessageID == nil {return false}
@@ -4357,10 +4230,7 @@ extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
 extension Quote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Quote"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "quoted_message_id"),
-    2: .standard(proto: "quoted_message_sha256"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}quoted_message_id\0\u{3}quoted_message_sha256\0")
 
   public var isInitialized: Bool {
     if self._quotedMessageID == nil {return false}
@@ -4404,11 +4274,7 @@ extension Quote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
 
 extension Confirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Confirmation"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    2: .same(proto: "type"),
-    1: .standard(proto: "first_message_id"),
-    3: .standard(proto: "more_message_ids"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}first_message_id\0\u{1}type\0\u{3}more_message_ids\0")
 
   public var isInitialized: Bool {
     if self._type == nil {return false}
@@ -4457,22 +4323,12 @@ extension Confirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 }
 
 extension Confirmation.TypeEnum: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "DELIVERED"),
-    1: .same(proto: "READ"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0DELIVERED\0\u{1}READ\0")
 }
 
 extension Location: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Location"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "longitude"),
-    2: .same(proto: "latitude"),
-    3: .same(proto: "name"),
-    4: .same(proto: "zoom"),
-    5: .standard(proto: "expects_read_confirmation"),
-    6: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}longitude\0\u{1}latitude\0\u{1}name\0\u{1}zoom\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if self._longitude == nil {return false}
@@ -4537,19 +4393,7 @@ extension Location: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
 
 extension ImageAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ImageAsset"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "tag"),
-    2: .same(proto: "width"),
-    3: .same(proto: "height"),
-    4: .standard(proto: "original_width"),
-    5: .standard(proto: "original_height"),
-    6: .standard(proto: "mime_type"),
-    7: .same(proto: "size"),
-    8: .standard(proto: "otr_key"),
-    9: .standard(proto: "mac_key"),
-    10: .same(proto: "mac"),
-    11: .same(proto: "sha256"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tag\0\u{1}width\0\u{1}height\0\u{3}original_width\0\u{3}original_height\0\u{3}mime_type\0\u{1}size\0\u{3}otr_key\0\u{3}mac_key\0\u{1}mac\0\u{1}sha256\0")
 
   public var isInitialized: Bool {
     if self._tag == nil {return false}
@@ -4644,10 +4488,7 @@ extension ImageAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
 
 extension Attachment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Attachment"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "asset"),
-    2: .standard(proto: "cell_asset"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}asset\0\u{3}cell_asset\0")
 
   public var isInitialized: Bool {
     if let v = self.content, !v.isInitialized {return false}
@@ -4719,12 +4560,7 @@ extension Attachment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
 
 extension Multipart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Multipart"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "text"),
-    2: .same(proto: "attachments"),
-    3: .standard(proto: "expects_read_confirmation"),
-    4: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}attachments\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if let v = self._text, !v.isInitialized {return false}
@@ -4779,15 +4615,7 @@ extension Multipart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 
 extension CellAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "CellAsset"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "uuid"),
-    2: .standard(proto: "content_type"),
-    3: .standard(proto: "initial_name"),
-    4: .standard(proto: "initial_size"),
-    5: .same(proto: "image"),
-    6: .same(proto: "video"),
-    7: .same(proto: "audio"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{3}content_type\0\u{3}initial_name\0\u{3}initial_size\0\u{1}image\0\u{1}video\0\u{1}audio\0")
 
   public var isInitialized: Bool {
     if self._uuid == nil {return false}
@@ -4898,10 +4726,7 @@ extension CellAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 
 extension CellAsset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".ImageMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "width"),
-    2: .same(proto: "height"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0")
 
   public var isInitialized: Bool {
     if self._width == nil {return false}
@@ -4946,11 +4771,7 @@ extension CellAsset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension CellAsset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".VideoMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "width"),
-    2: .same(proto: "height"),
-    3: .standard(proto: "duration_in_millis"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{3}duration_in_millis\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4994,10 +4815,7 @@ extension CellAsset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension CellAsset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".AudioMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "duration_in_millis"),
-    2: .standard(proto: "normalized_loudness"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}duration_in_millis\0\u{3}normalized_loudness\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -5036,14 +4854,7 @@ extension CellAsset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Asset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Asset"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "original"),
-    3: .standard(proto: "not_uploaded"),
-    4: .same(proto: "uploaded"),
-    5: .same(proto: "preview"),
-    6: .standard(proto: "expects_read_confirmation"),
-    7: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}original\0\u{4}\u{2}not_uploaded\0\u{1}uploaded\0\u{1}preview\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
   fileprivate class _StorageClass {
     var _original: Asset.Original? = nil
@@ -5177,24 +4988,12 @@ extension Asset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
 }
 
 extension Asset.NotUploaded: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "CANCELLED"),
-    1: .same(proto: "FAILED"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CANCELLED\0\u{1}FAILED\0")
 }
 
 extension Asset.Original: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".Original"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "mime_type"),
-    2: .same(proto: "size"),
-    3: .same(proto: "name"),
-    4: .same(proto: "image"),
-    5: .same(proto: "video"),
-    6: .same(proto: "audio"),
-    7: .same(proto: "source"),
-    8: .same(proto: "caption"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}mime_type\0\u{1}size\0\u{1}name\0\u{1}image\0\u{1}video\0\u{1}audio\0\u{1}source\0\u{1}caption\0")
 
   public var isInitialized: Bool {
     if self._mimeType == nil {return false}
@@ -5310,12 +5109,7 @@ extension Asset.Original: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
 extension Asset.Preview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".Preview"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "mime_type"),
-    2: .same(proto: "size"),
-    3: .same(proto: "remote"),
-    4: .same(proto: "image"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}mime_type\0\u{1}size\0\u{1}remote\0\u{1}image\0")
 
   public var isInitialized: Bool {
     if self._mimeType == nil {return false}
@@ -5384,11 +5178,7 @@ extension Asset.Preview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
 
 extension Asset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".ImageMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "width"),
-    2: .same(proto: "height"),
-    3: .same(proto: "tag"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{1}tag\0")
 
   public var isInitialized: Bool {
     if self._width == nil {return false}
@@ -5438,11 +5228,7 @@ extension Asset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Asset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".VideoMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "width"),
-    2: .same(proto: "height"),
-    3: .standard(proto: "duration_in_millis"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{3}duration_in_millis\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -5486,10 +5272,7 @@ extension Asset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Asset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".AudioMetaData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "duration_in_millis"),
-    3: .standard(proto: "normalized_loudness"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}duration_in_millis\0\u{4}\u{2}normalized_loudness\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -5528,14 +5311,7 @@ extension Asset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Asset.RemoteData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".RemoteData"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "otr_key"),
-    2: .same(proto: "sha256"),
-    3: .standard(proto: "asset_id"),
-    5: .standard(proto: "asset_token"),
-    7: .standard(proto: "asset_domain"),
-    6: .same(proto: "encryption"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}otr_key\0\u{1}sha256\0\u{3}asset_id\0\u{4}\u{2}asset_token\0\u{1}encryption\0\u{3}asset_domain\0")
 
   public var isInitialized: Bool {
     if self._otrKey == nil {return false}
@@ -5600,11 +5376,7 @@ extension Asset.RemoteData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
 extension External: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "External"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "otr_key"),
-    2: .same(proto: "sha256"),
-    3: .same(proto: "encryption"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}otr_key\0\u{1}sha256\0\u{1}encryption\0")
 
   public var isInitialized: Bool {
     if self._otrKey == nil {return false}
@@ -5653,11 +5425,7 @@ extension External: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
 
 extension Reaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Reaction"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "emoji"),
-    2: .standard(proto: "message_id"),
-    3: .standard(proto: "legal_hold_status"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}emoji\0\u{3}message_id\0\u{3}legal_hold_status\0")
 
   public var isInitialized: Bool {
     if self._messageID == nil {return false}
@@ -5706,9 +5474,7 @@ extension Reaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
 
 extension InCallEmoji: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "InCallEmoji"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "emojis"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}emojis\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -5738,9 +5504,7 @@ extension InCallEmoji: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
 extension InCallHandRaise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "InCallHandRaise"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "is_hand_up"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}is_hand_up\0")
 
   public var isInitialized: Bool {
     if self._isHandUp == nil {return false}
@@ -5779,10 +5543,7 @@ extension InCallHandRaise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
 extension Calling: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Calling"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "content"),
-    2: .standard(proto: "qualified_conversation_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}content\0\u{3}qualified_conversation_id\0")
 
   public var isInitialized: Bool {
     if self._content == nil {return false}
@@ -5827,9 +5588,7 @@ extension Calling: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
 
 extension DataTransfer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "DataTransfer"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "trackingIdentifier"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trackingIdentifier\0")
 
   public var isInitialized: Bool {
     if let v = self._trackingIdentifier, !v.isInitialized {return false}
@@ -5868,9 +5627,7 @@ extension DataTransfer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
 extension TrackingIdentifier: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "TrackingIdentifier"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "identifier"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0")
 
   public var isInitialized: Bool {
     if self._identifier == nil {return false}
