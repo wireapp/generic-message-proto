@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 
 import PackageDescription
 
@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "GenericMessageProtocol", targets: ["GenericMessageProtocol"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.30.0"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.32.0"),
     ],
     targets: [
         .target(
@@ -46,7 +46,9 @@ let package = Package(
 
 for target in package.targets {
     target.swiftSettings = (target.swiftSettings ?? []) + [
+        .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("ExistentialAny")
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("StrictMemorySafety"),
     ]
 }
