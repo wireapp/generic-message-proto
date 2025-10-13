@@ -29,8 +29,10 @@ jobs:
 
       - name: 'Authenticate with npm registry (to publish new version)'
         if: env.BRANCH_NAME == 'master'
+        env:
+          NPM_TOKEN: ${{ secrets.WEBTEAM_NPM_TOKEN }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{secrets.WEBTEAM_NPM_TOKEN}}" >> "${HOME}/.npmrc"
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> "${HOME}/.npmrc"
           git config --global user.email webapp+travis@wire.com
           git config --global user.name "Wire Travis CI"
 
