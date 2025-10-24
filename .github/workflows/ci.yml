@@ -6,37 +6,44 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   test_build_deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout repository'
-        uses: actions/checkout@v2
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: 'Extend environment variables'
+      - name: "Set up Node.js (for build/test and npm publish)"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: "Update npm to latest (Trusted Publishers requires npm >= 11.5.1)"
+        run: npm install -g npm@latest
+
+      - name: "Extend environment variables"
         run: |
           echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
-      - name: 'Build & Test'
+      - name: "Build & Test"
         run: yarn && yarn dist && yarn test
 
-      - name: 'Authenticate with GitHub (to commit new tag)'
+      # No npm token needed for publish; OIDC is handled automatically by npm Trusted Publishers
+      - name: "Configure Git identity"
         if: env.BRANCH_NAME == 'master'
-        env:
-          GH_TOKEN: ${{secrets.OTTO_THE_BOT_GH_TOKEN}}
-        run: echo -e "machine github.com\n  login ${GH_TOKEN}" > ~/.netrc
-
-      - name: 'Authenticate with npm registry (to publish new version)'
-        if: env.BRANCH_NAME == 'master'
-        env:
-          NPM_TOKEN: ${{ secrets.WEBTEAM_NPM_TOKEN }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> "${HOME}/.npmrc"
           git config --global user.email webapp+travis@wire.com
           git config --global user.name "Wire Travis CI"
 
-      - name: 'Release new version'
+      - name: "Release new version"
         if: env.BRANCH_NAME == 'master'
         run: yarn version --minor
 
