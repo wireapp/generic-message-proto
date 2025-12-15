@@ -49,7 +49,7 @@ Message sent to recall previously sent message, can be only sent by original aut
 
 ### MessageEdit
 If the content of a previously sent message should be edited, a generic message of type `MessageEdit` has to be sent.
-It should reference the new content (for now only type `Text` can be edited) as well as the nonce of the message it is replacing. If an edit message is received which is referencing a non existent nonce it should be discarded.
+It should reference the new content (for now only type `Text` and `Multipart` can be edited) as well as the nonce of the message it is replacing. If an edit message is received which is referencing a non existent nonce it should be discarded.
 
 ### Confirmation
 If the reception of a previously sent message should be confirmed, a generic message of type `Confirmation` has to be sent. It should reference the message to be confirmed. Currently the confirmation comes in two flavours: `Read` and `Delivered`.

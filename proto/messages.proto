@@ -218,6 +218,7 @@ message MessageEdit {
   oneof content {
     Text text = 2;
     Composite composite = 3;
+    Multipart multipart = 4;
   }
 }
 
