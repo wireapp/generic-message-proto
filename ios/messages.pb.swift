@@ -1362,11 +1362,20 @@ public struct MessageEdit: Sendable {
     set {content = .composite(newValue)}
   }
 
+  public var multipart: Multipart {
+    get {
+      if case .multipart(let v)? = content {return v}
+      return Multipart()
+    }
+    set {content = .multipart(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Content: Equatable, Sendable {
     case text(Text)
     case composite(Composite)
+    case multipart(Multipart)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -1379,6 +1388,10 @@ public struct MessageEdit: Sendable {
       }()
       case .composite: return {
         guard case .composite(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .multipart: return {
+        guard case .multipart(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
       }
@@ -4152,7 +4165,7 @@ extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
 
 extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageEdit"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}replacing_message_id\0\u{1}text\0\u{1}composite\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}replacing_message_id\0\u{1}text\0\u{1}composite\0\u{1}multipart\0")
 
   public var isInitialized: Bool {
     if self._replacingMessageID == nil {return false}
@@ -4193,6 +4206,19 @@ extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
           self.content = .composite(v)
         }
       }()
+      case 4: try {
+        var v: Multipart?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .multipart(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .multipart(v)
+        }
+      }()
       default: break
       }
     }
@@ -4214,6 +4240,10 @@ extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     case .composite?: try {
       guard case .composite(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .multipart?: try {
+      guard case .multipart(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case nil: break
     }
