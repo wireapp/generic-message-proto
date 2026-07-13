@@ -7,11 +7,36 @@ on:
     branches: [master]
 
 permissions:
-  id-token: write
-  contents: write
+  contents: read
 
 jobs:
-  test_build_deploy:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Set up Node.js for build and test"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: "Build & Test"
+        run: yarn && yarn dist && yarn test
+
+  release:
+    name: Release package
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs:
+      - build-and-test
+    permissions:
+      contents: write
+      packages: write
     runs-on: ubuntu-latest
 
     steps:
@@ -20,36 +45,60 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Set up Node.js (for build/test and npm publish)"
+      - name: "Set up Node.js for build"
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: "Update npm to latest (Trusted Publishers requires npm >= 11.5.1)"
-        run: npm install -g npm@latest
-
-      - name: "Extend environment variables"
-        run: |
-          echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
-
-      - name: "Build & Test"
+      - name: "Build and test release contents"
         run: yarn && yarn dist && yarn test
 
-      # No npm token needed for publish; OIDC is handled automatically by npm Trusted Publishers
       - name: "Configure Git identity"
-        if: env.BRANCH_NAME == 'master'
         run: |
           git config --global user.email webapp+travis@wire.com
           git config --global user.name "Wire Travis CI"
 
+      - name: "Configure Node.js for GitHub Packages"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@wireapp"
+
+      - name: "Publish current version if missing from GitHub Packages"
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          PACKAGE_REFERENCE="${PACKAGE_NAME}@${PACKAGE_VERSION}"
+
+          if npm view \
+            "$PACKAGE_REFERENCE" \
+            version \
+            --registry=https://npm.pkg.github.com \
+            >/dev/null 2>&1; then
+            echo "📦 ${PACKAGE_REFERENCE} already exists in GitHub Packages."
+            exit 0
+          fi
+
+          echo "📦 Publishing existing ${PACKAGE_REFERENCE} to GitHub Packages..."
+          npm publish --registry=https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: "Release new version"
-        if: env.BRANCH_NAME == 'master'
         run: yarn version --minor
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-ios-spm-tests:
     name: Test Swift package on macOS
     runs-on: macos-26
+    permissions:
+      contents: read
 
     steps:
       - name: Install swift-protobuf
