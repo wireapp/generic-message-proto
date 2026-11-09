@@ -1,6 +1,6 @@
 # TEMPORARY – remove before merging
 
-Working notes for adding `GenericMessage.client_created_at_millis` (field 28).
+Working notes for adding `GenericMessage.client_created_at_millis` (field 33).
 Move anything that should outlive this branch into an RFC / Confluence page.
 
 ## Goal
@@ -26,9 +26,13 @@ the (E2E-encrypted) payload.
   consistent with `expire_after_millis` and `last_read_timestamp`.
 - **Type:** `optional int64`, milliseconds since Unix epoch (UTC). No
   `google.protobuf.Timestamp` (no well-known-type imports, `LITE_RUNTIME`).
-- **Field number:** 28. Numbers are shared between the `oneof` and the
+- **Field number:** 33. Numbers are shared between the `oneof` and the
   enclosing message: 25 = unknownStrategy, 26 = inCallHandRaise,
-  27 = multipart. Updated the stale "Next field should be 26" comment to 29.
+  27 = multipart, 28–32 = history client / poll messages that Android
+  (Kalium) already ships (PR #108). Originally 28; moved to 33 after the
+  clash with #108. Before allocating numbers, check Kalium's own proto copy
+  (`wireapp/kalium` → `tools/protobuf-codegen/src/main/proto/messages.proto`),
+  which can be ahead of this repo. "Next field" comment now says 34.
 - **Backward compatibility:** optional proto2 field, so old clients skip it
   silently. No `UnknownStrategy` implications.
 
@@ -75,4 +79,8 @@ the (E2E-encrypted) payload.
       where irrelevant).
 - [ ] Run `yarn dist && yarn test` (not run while drafting: no node toolchain
       on that machine) and check the Android/iOS builds.
+- [ ] This branch currently contains PR #108 (merged from
+      `feat/protocol-update-from-android`, not yet on master). Once #108 lands
+      on master, merge master in again and confirm the numbers 28–32 haven't
+      changed. If #108 is squash-merged, expect conflicts on its lines.
 - [ ] Remove this file before merging.

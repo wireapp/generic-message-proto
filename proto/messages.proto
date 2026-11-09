@@ -34,7 +34,6 @@ message GenericMessage {
     ClientAction clientAction = 9;
     Calling calling = 10;
     Asset asset = 11;
-    Multipart multipart = 27;
     MessageHide hidden = 12;
     Location location = 13;
     MessageDelete deleted = 14;
@@ -50,8 +49,14 @@ message GenericMessage {
     InCallEmoji inCallEmoji = 24;
     // UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     InCallHandRaise inCallHandRaise = 26;
-    // int64 client_created_at_millis = 28; -- Defined outside the oneof
-    // Next field should be 29 ↓ (field numbers are shared with fields outside the oneof)
+    Multipart multipart = 27;
+    HistoryClientAvailable historyClientAvailable = 28;
+    HistoryClientRequest historyClientRequest = 29;
+    HistoryClientResponse historyClientResponse = 30;
+    Poll poll = 31;
+    PollVote pollVote = 32;
+    // int64 client_created_at_millis = 33; -- Defined outside the oneof
+    // Next field should be 34 ↓ (field numbers are shared with fields outside the oneof)
   }
   optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
 
@@ -62,7 +67,7 @@ message GenericMessage {
   // Informational only: receivers MUST NOT use it for ordering, read state or
   // expiry, and SHOULD ignore values later than the server timestamp.
   // For External messages, set it on the inner (encrypted) GenericMessage.
-  optional int64 client_created_at_millis = 28;
+  optional int64 client_created_at_millis = 33;
 
   // See internal RFC: "2024-07-18 RFC Improve future-proofing for new OTR message types"
   enum UnknownStrategy {
@@ -108,6 +113,29 @@ message ButtonAction {
 message ButtonActionConfirmation {
   required string reference_message_id = 1;
   optional string button_id = 2; // if not present, no button is accepted
+}
+
+// A native poll. The GenericMessage id is the poll id. Votes are never anonymous:
+// every client sees the sender of each encrypted PollVote.
+message Poll {
+  required string question = 1;
+  repeated PollOption options = 2;
+  optional bool allow_multiple_answers = 3 [default = false];
+  // Standard flags for all message types
+  optional bool expects_read_confirmation = 4 [default = false];
+  optional LegalHoldStatus legal_hold_status = 5 [default = UNKNOWN];
+}
+
+message PollOption {
+  required string id = 1;
+  required string text = 2;
+}
+
+// The sender's complete current selection for a poll. It replaces any earlier vote from the
+// same user. An empty selection retracts the vote.
+message PollVote {
+  required string reference_message_id = 1;
+  repeated string selected_option_ids = 2;
 }
 
 message Availability {
@@ -190,6 +218,9 @@ message Mention {
   }
   // only optional to maintain backwards compatibility.
   optional QualifiedUserId qualified_user_id = 4;
+  // Explicit group-wide mention. Send without user_id or qualified_user_id.
+  // Older clients ignore this field and continue to display the literal text.
+  optional bool everyone = 5;
 }
 
 message LastRead {
@@ -208,6 +239,7 @@ message Cleared {
   required int64 cleared_timestamp = 2;
   // only optional to maintain backwards compatibility
   optional QualifiedConversationId qualified_conversation_id = 3;
+  optional bool needToRemoveLocally = 4 [default = false];
 }
 
 message MessageHide {
@@ -229,6 +261,7 @@ message MessageEdit {
     Text text = 2;
     Composite composite = 3;
     Multipart multipart = 4;
+    // Reply can also be edited, but the edit will only affect the Text part
   }
 }
 
@@ -430,6 +463,25 @@ message DataTransfer {
 
 message TrackingIdentifier {
   required string identifier = 1;
+}
+
+message HistoryClient {
+  required string client_id = 1;
+  required string created_at = 2;
+  required bytes secret = 3;
+}
+
+// Sent in a conversation after new history client has been added
+message HistoryClientAvailable {
+  required HistoryClient client = 1;
+}
+
+// Sent in a conversation after you've been added to conversation with history sharing enabled
+message HistoryClientRequest {}
+
+// Sent in a subconversation in response to a HistoryClientRequest
+message HistoryClientResponse {
+  repeated HistoryClient clients = 1;
 }
 
 // Enums have to come last because of an unresolved issue with jsdoc
