@@ -25,7 +25,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 
+#if canImport(FoundationEssentials)
+public import FoundationEssentials
+#else
 public import Foundation
+#endif
 public import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -33,12 +37,12 @@ public import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public enum Mls_GroupInfoType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum Mls_GroupInfoType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case publicGroupState = 1
   case groupInfo = 2
   case groupInfoJwe = 3
@@ -49,7 +53,7 @@ public enum Mls_GroupInfoType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public enum Mls_RatchetTreeType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum Mls_RatchetTreeType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case full = 1
   case delta = 2
   case reference = 3
@@ -60,35 +64,35 @@ public enum Mls_RatchetTreeType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public struct Mls_GroupInfoBundle: Sendable {
+public nonisolated struct Mls_GroupInfoBundle: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var groupInfoType: Mls_GroupInfoType {
-    get {return _groupInfoType ?? .publicGroupState}
+    get {_groupInfoType ?? .publicGroupState}
     set {_groupInfoType = newValue}
   }
   /// Returns true if `groupInfoType` has been explicitly set.
-  public var hasGroupInfoType: Bool {return self._groupInfoType != nil}
+  public var hasGroupInfoType: Bool {self._groupInfoType != nil}
   /// Clears the value of `groupInfoType`. Subsequent reads from it will return its default value.
   public mutating func clearGroupInfoType() {self._groupInfoType = nil}
 
   public var ratchetTreeType: Mls_RatchetTreeType {
-    get {return _ratchetTreeType ?? .full}
+    get {_ratchetTreeType ?? .full}
     set {_ratchetTreeType = newValue}
   }
   /// Returns true if `ratchetTreeType` has been explicitly set.
-  public var hasRatchetTreeType: Bool {return self._ratchetTreeType != nil}
+  public var hasRatchetTreeType: Bool {self._ratchetTreeType != nil}
   /// Clears the value of `ratchetTreeType`. Subsequent reads from it will return its default value.
   public mutating func clearRatchetTreeType() {self._ratchetTreeType = nil}
 
   public var groupInfo: Data {
-    get {return _groupInfo ?? Data()}
+    get {_groupInfo ?? Data()}
     set {_groupInfo = newValue}
   }
   /// Returns true if `groupInfo` has been explicitly set.
-  public var hasGroupInfo: Bool {return self._groupInfo != nil}
+  public var hasGroupInfo: Bool {self._groupInfo != nil}
   /// Clears the value of `groupInfo`. Subsequent reads from it will return its default value.
   public mutating func clearGroupInfo() {self._groupInfo = nil}
 
@@ -101,37 +105,37 @@ public struct Mls_GroupInfoBundle: Sendable {
   fileprivate var _groupInfo: Data? = nil
 }
 
-public struct Mls_CommitBundle: Sendable {
+public nonisolated struct Mls_CommitBundle: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// MlsMessage containing an MlsPlaintext Commit
   public var commit: Data {
-    get {return _commit ?? Data()}
+    get {_commit ?? Data()}
     set {_commit = newValue}
   }
   /// Returns true if `commit` has been explicitly set.
-  public var hasCommit: Bool {return self._commit != nil}
+  public var hasCommit: Bool {self._commit != nil}
   /// Clears the value of `commit`. Subsequent reads from it will return its default value.
   public mutating func clearCommit() {self._commit = nil}
 
   /// MlsMessage containing a Welcome
   public var welcome: Data {
-    get {return _welcome ?? Data()}
+    get {_welcome ?? Data()}
     set {_welcome = newValue}
   }
   /// Returns true if `welcome` has been explicitly set.
-  public var hasWelcome: Bool {return self._welcome != nil}
+  public var hasWelcome: Bool {self._welcome != nil}
   /// Clears the value of `welcome`. Subsequent reads from it will return its default value.
   public mutating func clearWelcome() {self._welcome = nil}
 
   public var groupInfoBundle: Mls_GroupInfoBundle {
-    get {return _groupInfoBundle ?? Mls_GroupInfoBundle()}
+    get {_groupInfoBundle ?? Mls_GroupInfoBundle()}
     set {_groupInfoBundle = newValue}
   }
   /// Returns true if `groupInfoBundle` has been explicitly set.
-  public var hasGroupInfoBundle: Bool {return self._groupInfoBundle != nil}
+  public var hasGroupInfoBundle: Bool {self._groupInfoBundle != nil}
   /// Clears the value of `groupInfoBundle`. Subsequent reads from it will return its default value.
   public mutating func clearGroupInfoBundle() {self._groupInfoBundle = nil}
 
@@ -146,17 +150,17 @@ public struct Mls_CommitBundle: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "mls"
+fileprivate nonisolated let _protobuf_package = "mls"
 
-extension Mls_GroupInfoType: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Mls_GroupInfoType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}PUBLIC_GROUP_STATE\0\u{1}GROUP_INFO\0\u{1}GROUP_INFO_JWE\0")
 }
 
-extension Mls_RatchetTreeType: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Mls_RatchetTreeType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}FULL\0\u{1}DELTA\0\u{1}REFERENCE\0")
 }
 
-extension Mls_GroupInfoBundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Mls_GroupInfoBundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GroupInfoBundle"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}group_info_type\0\u{3}ratchet_tree_type\0\u{3}group_info\0")
 
@@ -207,7 +211,7 @@ extension Mls_GroupInfoBundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Mls_CommitBundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Mls_CommitBundle: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CommitBundle"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}commit\0\u{1}welcome\0\u{3}group_info_bundle\0")
 
