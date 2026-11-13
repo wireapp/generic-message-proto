@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Keeps the SHA-pinned actions (and their "# vX.Y.Z" comments) up to date,
+  # in the workflows and in the local composite actions.
+  - package-ecosystem: github-actions
+    directories:
+      - "/"
+      - "/.github/actions/*"
+    schedule:
+      interval: weekly
+    # Don't propose releases younger than a week, so compromised releases are
+    # more likely to be caught and pulled before we adopt them.
+    cooldown:
+      default-days: 7
