@@ -1363,8 +1363,10 @@ public nonisolated struct Mention: Sendable {
   /// Compatibility with clients that don't know this field (they see a mention
   /// without any user id):
   /// - Web drops only the invalid mention and displays the literal text.
-  /// - iOS rejects the whole Text message, so the message is NOT displayed.
-  ///   Senders must take this into account until iOS supports this field.
+  /// - The native iOS app (wire-ios) rejects the whole Text message, so the
+  ///   message is NOT displayed. Senders must take this into account until
+  ///   wire-ios supports this field.
+  /// Kalium-based clients (Android, Wire Prism iOS) support this field.
   public var everyone: Bool {
     get {_everyone ?? false}
     set {_everyone = newValue}
