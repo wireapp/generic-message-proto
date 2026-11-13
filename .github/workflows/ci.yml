@@ -11,66 +11,71 @@ permissions:
   contents: read
 
 jobs:
-  test_build_deploy:
+  # Runs for pull requests and pushes. Read-only: no write access, no OIDC token.
+  test_build:
+    name: Test & Build
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # push version commit and tag on release
-      id-token: write # npm Trusted Publishing (OIDC)
 
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          persist-credentials: false
 
-      - name: "Set up Node.js (for build/test and npm publish)"
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: "26"
-
-      # Use the npm bundled with Node instead of downloading another version.
-      - name: "Verify npm version (Trusted Publishers requires npm >= 11.5.1)"
-        run: |
-          v=$(npm --version)
-          echo "npm $v"
-          if [ "$(printf '%s\n' 11.5.1 "$v" | sort -V | head -n1)" != "11.5.1" ]; then
-            echo "::error::npm >= 11.5.1 is required for Trusted Publishing, found $v"
-            exit 1
-          fi
-
-      # Don't rely on a Yarn pre-installed on the runner: fetch the exact version from
-      # package.json's "packageManager" field, verify its SHA-512 and install it into
-      # the job's temp dir (nothing is installed globally on the runner).
-      - name: "Install Yarn (version and checksum from packageManager)"
-        run: |
-          set -euo pipefail
-          spec=$(node -p "require('./package.json').packageManager")
-          [[ "$spec" =~ ^yarn@([0-9.]+)\+sha512\.([0-9a-f]{128})$ ]] || { echo "::error::Unexpected packageManager: $spec"; exit 1; }
-          version="${BASH_REMATCH[1]}"; sha512="${BASH_REMATCH[2]}"
-          dir="$RUNNER_TEMP/yarn"; mkdir -p "$dir"
-          curl -fsSL -o "$dir/yarn.tgz" "https://registry.npmjs.org/yarn/-/yarn-$version.tgz"
-          echo "$sha512  $dir/yarn.tgz" | sha512sum -c -
-          tar -xzf "$dir/yarn.tgz" -C "$dir"
-          echo "$dir/package/bin" >> "$GITHUB_PATH"
-
-      - name: "Extend environment variables"
-        run: |
-          echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
+      - name: "Set up toolchain"
+        uses: ./.github/actions/setup-toolchain
 
       - name: "Build & Test"
         run: |
           echo "Using yarn $(yarn --version) from $(command -v yarn)"
           yarn --frozen-lockfile && yarn dist && yarn test
 
-      # No npm token needed for publish; OIDC is handled automatically by npm Trusted Publishers
-      - name: "Configure Git identity"
-        if: env.BRANCH_NAME == 'master'
-        run: |
-          git config --global user.email webapp+travis@wire.com
-          git config --global user.name "Wire Travis CI"
+  # Only runs for pushes to master, after all tests passed. The "release" environment
+  # is restricted to master and required by the npm Trusted Publisher config, so no
+  # other branch or pull request can obtain publishing rights.
+  release:
+    name: Release
+    needs: [test_build, run-ios-spm-tests]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    environment: release
+    concurrency:
+      group: release
+      cancel-in-progress: false
+    permissions:
+      contents: write # push version commit and tag
+      id-token: write # npm Trusted Publishing (OIDC)
 
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # credentials are kept: `yarn version` pushes the release commit and tag
+
+      - name: "Set up toolchain"
+        uses: ./.github/actions/setup-toolchain
+
+      # Use the npm bundled with Node instead of downloading another version.
+      - name: "Verify npm version (Trusted Publishers requires npm >= 11.5.1)"
+        run: |
+          node -e '
+            const v = require("node:child_process").execSync("npm --version").toString().trim();
+            const [a, b, c] = v.split(".").map(Number), [x, y, z] = [11, 5, 1];
+            console.log(`npm ${v}`);
+            if (a < x || (a === x && (b < y || (b === y && c < z)))) {
+              console.log(`::error::npm >= 11.5.1 is required for Trusted Publishing, found ${v}`);
+              process.exit(1);
+            }
+          '
+
+      # Repo-local config, so nothing leaks into the runner's global git config.
+      - name: "Configure Git identity"
+        run: |
+          git config user.email webapp+travis@wire.com
+          git config user.name "Wire Travis CI"
+
+      # preversion builds & tests, postversion pushes and runs `npm publish` (OIDC, no token).
       - name: "Release new version"
-        if: env.BRANCH_NAME == 'master'
         run: yarn version --minor
 
   run-ios-spm-tests:
