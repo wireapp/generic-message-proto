@@ -50,13 +50,28 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0 # credentials are kept: `yarn version` pushes the release commit and tag
+          fetch-depth: 0 # credentials are kept: this job pushes the release commit and tag
+
+      # Only release the exact commit that passed all tests. If master has moved on in the
+      # meantime, the run for the newer commit releases instead, after its own tests passed.
+      - name: "Check that this commit is still the tip of master"
+        id: tip
+        run: |
+          remote_sha=$(git ls-remote origin refs/heads/master | cut -f1)
+          if [ "$remote_sha" = "$GITHUB_SHA" ]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Skipping release: master moved from $GITHUB_SHA to $remote_sha"
+            echo "current=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: "Set up toolchain"
+        if: steps.tip.outputs.current == 'true'
         uses: ./.github/actions/setup-toolchain
 
       # Use the npm bundled with Node instead of downloading another version.
       - name: "Verify npm version (Trusted Publishers requires npm >= 11.5.1)"
+        if: steps.tip.outputs.current == 'true'
         run: |
           node -e '
             const v = require("node:child_process").execSync("npm --version").toString().trim();
@@ -70,13 +85,32 @@ jobs:
 
       # Repo-local config, so nothing leaks into the runner's global git config.
       - name: "Configure Git identity"
+        if: steps.tip.outputs.current == 'true'
         run: |
           git config user.email webapp+travis@wire.com
           git config user.name "Wire Travis CI"
 
-      # preversion builds & tests, postversion pushes and runs `npm publish` (OIDC, no token).
-      - name: "Release new version"
-        run: yarn version --minor
+      # Build from the checked-out (tested) commit; nothing is pulled from master.
+      - name: "Build & Test"
+        if: steps.tip.outputs.current == 'true'
+        run: yarn --frozen-lockfile && yarn dist && yarn test
+
+      - name: "Bump minor version (commit and tag)"
+        if: steps.tip.outputs.current == 'true'
+        run: npm version minor --ignore-scripts --message "v%s"
+
+      # Atomic: the commit and tag are pushed together or not at all. If master moved
+      # since the check above, the push is rejected and nothing gets published.
+      - name: "Push release commit and tag"
+        if: steps.tip.outputs.current == 'true'
+        run: |
+          version=$(node -p "require('./package.json').version")
+          git push --atomic origin "HEAD:refs/heads/master" "refs/tags/v$version"
+
+      # Authenticates via OIDC (npm Trusted Publishers), no token needed.
+      - name: "Publish to npm"
+        if: steps.tip.outputs.current == 'true'
+        run: npm publish
 
   run-ios-spm-tests:
     name: Test Swift package on macOS
