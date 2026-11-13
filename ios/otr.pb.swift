@@ -25,7 +25,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 
+#if canImport(FoundationEssentials)
+public import FoundationEssentials
+#else
 public import Foundation
+#endif
 public import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -33,12 +37,12 @@ public import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public enum Proteus_Priority: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum Proteus_Priority: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
   /// 0 is reserved for errors
   case lowPriority = 1
@@ -50,17 +54,17 @@ public enum Proteus_Priority: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public struct Proteus_UserId: Sendable {
+public nonisolated struct Proteus_UserId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var uuid: Data {
-    get {return _uuid ?? Data()}
+    get {_uuid ?? Data()}
     set {_uuid = newValue}
   }
   /// Returns true if `uuid` has been explicitly set.
-  public var hasUuid: Bool {return self._uuid != nil}
+  public var hasUuid: Bool {self._uuid != nil}
   /// Clears the value of `uuid`. Subsequent reads from it will return its default value.
   public mutating func clearUuid() {self._uuid = nil}
 
@@ -71,26 +75,26 @@ public struct Proteus_UserId: Sendable {
   fileprivate var _uuid: Data? = nil
 }
 
-public struct Proteus_QualifiedUserId: Sendable {
+public nonisolated struct Proteus_QualifiedUserId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {return _id ?? String()}
+    get {_id ?? String()}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
   public mutating func clearID() {self._id = nil}
 
   public var domain: String {
-    get {return _domain ?? String()}
+    get {_domain ?? String()}
     set {_domain = newValue}
   }
   /// Returns true if `domain` has been explicitly set.
-  public var hasDomain: Bool {return self._domain != nil}
+  public var hasDomain: Bool {self._domain != nil}
   /// Clears the value of `domain`. Subsequent reads from it will return its default value.
   public mutating func clearDomain() {self._domain = nil}
 
@@ -102,17 +106,17 @@ public struct Proteus_QualifiedUserId: Sendable {
   fileprivate var _domain: String? = nil
 }
 
-public struct Proteus_ClientId: Sendable {
+public nonisolated struct Proteus_ClientId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var client: UInt64 {
-    get {return _client ?? 0}
+    get {_client ?? 0}
     set {_client = newValue}
   }
   /// Returns true if `client` has been explicitly set.
-  public var hasClient: Bool {return self._client != nil}
+  public var hasClient: Bool {self._client != nil}
   /// Clears the value of `client`. Subsequent reads from it will return its default value.
   public mutating func clearClient() {self._client = nil}
 
@@ -123,26 +127,26 @@ public struct Proteus_ClientId: Sendable {
   fileprivate var _client: UInt64? = nil
 }
 
-public struct Proteus_ClientEntry: Sendable {
+public nonisolated struct Proteus_ClientEntry: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var client: Proteus_ClientId {
-    get {return _client ?? Proteus_ClientId()}
+    get {_client ?? Proteus_ClientId()}
     set {_client = newValue}
   }
   /// Returns true if `client` has been explicitly set.
-  public var hasClient: Bool {return self._client != nil}
+  public var hasClient: Bool {self._client != nil}
   /// Clears the value of `client`. Subsequent reads from it will return its default value.
   public mutating func clearClient() {self._client = nil}
 
   public var text: Data {
-    get {return _text ?? Data()}
+    get {_text ?? Data()}
     set {_text = newValue}
   }
   /// Returns true if `text` has been explicitly set.
-  public var hasText: Bool {return self._text != nil}
+  public var hasText: Bool {self._text != nil}
   /// Clears the value of `text`. Subsequent reads from it will return its default value.
   public mutating func clearText() {self._text = nil}
 
@@ -154,17 +158,17 @@ public struct Proteus_ClientEntry: Sendable {
   fileprivate var _text: Data? = nil
 }
 
-public struct Proteus_UserEntry: Sendable {
+public nonisolated struct Proteus_UserEntry: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var user: Proteus_UserId {
-    get {return _user ?? Proteus_UserId()}
+    get {_user ?? Proteus_UserId()}
     set {_user = newValue}
   }
   /// Returns true if `user` has been explicitly set.
-  public var hasUser: Bool {return self._user != nil}
+  public var hasUser: Bool {self._user != nil}
   /// Clears the value of `user`. Subsequent reads from it will return its default value.
   public mutating func clearUser() {self._user = nil}
 
@@ -177,17 +181,17 @@ public struct Proteus_UserEntry: Sendable {
   fileprivate var _user: Proteus_UserId? = nil
 }
 
-public struct Proteus_QualifiedUserEntry: Sendable {
+public nonisolated struct Proteus_QualifiedUserEntry: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var domain: String {
-    get {return _domain ?? String()}
+    get {_domain ?? String()}
     set {_domain = newValue}
   }
   /// Returns true if `domain` has been explicitly set.
-  public var hasDomain: Bool {return self._domain != nil}
+  public var hasDomain: Bool {self._domain != nil}
   /// Clears the value of `domain`. Subsequent reads from it will return its default value.
   public mutating func clearDomain() {self._domain = nil}
 
@@ -201,55 +205,55 @@ public struct Proteus_QualifiedUserEntry: Sendable {
 }
 
 /// deprecated, use QualifiedNewOtrMessage
-public struct Proteus_NewOtrMessage: Sendable {
+public nonisolated struct Proteus_NewOtrMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var sender: Proteus_ClientId {
-    get {return _sender ?? Proteus_ClientId()}
+    get {_sender ?? Proteus_ClientId()}
     set {_sender = newValue}
   }
   /// Returns true if `sender` has been explicitly set.
-  public var hasSender: Bool {return self._sender != nil}
+  public var hasSender: Bool {self._sender != nil}
   /// Clears the value of `sender`. Subsequent reads from it will return its default value.
   public mutating func clearSender() {self._sender = nil}
 
   public var recipients: [Proteus_UserEntry] = []
 
   public var nativePush: Bool {
-    get {return _nativePush ?? true}
+    get {_nativePush ?? true}
     set {_nativePush = newValue}
   }
   /// Returns true if `nativePush` has been explicitly set.
-  public var hasNativePush: Bool {return self._nativePush != nil}
+  public var hasNativePush: Bool {self._nativePush != nil}
   /// Clears the value of `nativePush`. Subsequent reads from it will return its default value.
   public mutating func clearNativePush() {self._nativePush = nil}
 
   public var blob: Data {
-    get {return _blob ?? Data()}
+    get {_blob ?? Data()}
     set {_blob = newValue}
   }
   /// Returns true if `blob` has been explicitly set.
-  public var hasBlob: Bool {return self._blob != nil}
+  public var hasBlob: Bool {self._blob != nil}
   /// Clears the value of `blob`. Subsequent reads from it will return its default value.
   public mutating func clearBlob() {self._blob = nil}
 
   public var nativePriority: Proteus_Priority {
-    get {return _nativePriority ?? .lowPriority}
+    get {_nativePriority ?? .lowPriority}
     set {_nativePriority = newValue}
   }
   /// Returns true if `nativePriority` has been explicitly set.
-  public var hasNativePriority: Bool {return self._nativePriority != nil}
+  public var hasNativePriority: Bool {self._nativePriority != nil}
   /// Clears the value of `nativePriority`. Subsequent reads from it will return its default value.
   public mutating func clearNativePriority() {self._nativePriority = nil}
 
   public var transient: Bool {
-    get {return _transient ?? false}
+    get {_transient ?? false}
     set {_transient = newValue}
   }
   /// Returns true if `transient` has been explicitly set.
-  public var hasTransient: Bool {return self._transient != nil}
+  public var hasTransient: Bool {self._transient != nil}
   /// Clears the value of `transient`. Subsequent reads from it will return its default value.
   public mutating func clearTransient() {self._transient = nil}
 
@@ -266,55 +270,55 @@ public struct Proteus_NewOtrMessage: Sendable {
   fileprivate var _transient: Bool? = nil
 }
 
-public struct Proteus_QualifiedNewOtrMessage: Sendable {
+public nonisolated struct Proteus_QualifiedNewOtrMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var sender: Proteus_ClientId {
-    get {return _sender ?? Proteus_ClientId()}
+    get {_sender ?? Proteus_ClientId()}
     set {_sender = newValue}
   }
   /// Returns true if `sender` has been explicitly set.
-  public var hasSender: Bool {return self._sender != nil}
+  public var hasSender: Bool {self._sender != nil}
   /// Clears the value of `sender`. Subsequent reads from it will return its default value.
   public mutating func clearSender() {self._sender = nil}
 
   public var recipients: [Proteus_QualifiedUserEntry] = []
 
   public var nativePush: Bool {
-    get {return _nativePush ?? true}
+    get {_nativePush ?? true}
     set {_nativePush = newValue}
   }
   /// Returns true if `nativePush` has been explicitly set.
-  public var hasNativePush: Bool {return self._nativePush != nil}
+  public var hasNativePush: Bool {self._nativePush != nil}
   /// Clears the value of `nativePush`. Subsequent reads from it will return its default value.
   public mutating func clearNativePush() {self._nativePush = nil}
 
   public var blob: Data {
-    get {return _blob ?? Data()}
+    get {_blob ?? Data()}
     set {_blob = newValue}
   }
   /// Returns true if `blob` has been explicitly set.
-  public var hasBlob: Bool {return self._blob != nil}
+  public var hasBlob: Bool {self._blob != nil}
   /// Clears the value of `blob`. Subsequent reads from it will return its default value.
   public mutating func clearBlob() {self._blob = nil}
 
   public var nativePriority: Proteus_Priority {
-    get {return _nativePriority ?? .lowPriority}
+    get {_nativePriority ?? .lowPriority}
     set {_nativePriority = newValue}
   }
   /// Returns true if `nativePriority` has been explicitly set.
-  public var hasNativePriority: Bool {return self._nativePriority != nil}
+  public var hasNativePriority: Bool {self._nativePriority != nil}
   /// Clears the value of `nativePriority`. Subsequent reads from it will return its default value.
   public mutating func clearNativePriority() {self._nativePriority = nil}
 
   public var transient: Bool {
-    get {return _transient ?? false}
+    get {_transient ?? false}
     set {_transient = newValue}
   }
   /// Returns true if `transient` has been explicitly set.
-  public var hasTransient: Bool {return self._transient != nil}
+  public var hasTransient: Bool {self._transient != nil}
   /// Clears the value of `transient`. Subsequent reads from it will return its default value.
   public mutating func clearTransient() {self._transient = nil}
 
@@ -358,7 +362,7 @@ public struct Proteus_QualifiedNewOtrMessage: Sendable {
 
   /// For more details please refer to backend swagger at
   /// https://staging-nginz-https.zinfra.io/api/swagger-ui/
-  public enum OneOf_ClientMismatchStrategy: Equatable, Sendable {
+  public nonisolated enum OneOf_ClientMismatchStrategy: Equatable, Sendable {
     case reportAll(Proteus_ClientMismatchStrategy.ReportAll)
     case ignoreAll(Proteus_ClientMismatchStrategy.IgnoreAll)
     case reportOnly(Proteus_ClientMismatchStrategy.ReportOnly)
@@ -392,14 +396,14 @@ public struct Proteus_QualifiedNewOtrMessage: Sendable {
   fileprivate var _transient: Bool? = nil
 }
 
-public struct Proteus_ClientMismatchStrategy: Sendable {
+public nonisolated struct Proteus_ClientMismatchStrategy: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public struct ReportAll: Sendable {
+  public nonisolated struct ReportAll: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -409,7 +413,7 @@ public struct Proteus_ClientMismatchStrategy: Sendable {
     public init() {}
   }
 
-  public struct IgnoreAll: Sendable {
+  public nonisolated struct IgnoreAll: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -419,7 +423,7 @@ public struct Proteus_ClientMismatchStrategy: Sendable {
     public init() {}
   }
 
-  public struct ReportOnly: Sendable {
+  public nonisolated struct ReportOnly: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -431,7 +435,7 @@ public struct Proteus_ClientMismatchStrategy: Sendable {
     public init() {}
   }
 
-  public struct IgnoreOnly: Sendable {
+  public nonisolated struct IgnoreOnly: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -446,37 +450,37 @@ public struct Proteus_ClientMismatchStrategy: Sendable {
   public init() {}
 }
 
-public struct Proteus_OtrAssetMeta: Sendable {
+public nonisolated struct Proteus_OtrAssetMeta: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var sender: Proteus_ClientId {
-    get {return _sender ?? Proteus_ClientId()}
+    get {_sender ?? Proteus_ClientId()}
     set {_sender = newValue}
   }
   /// Returns true if `sender` has been explicitly set.
-  public var hasSender: Bool {return self._sender != nil}
+  public var hasSender: Bool {self._sender != nil}
   /// Clears the value of `sender`. Subsequent reads from it will return its default value.
   public mutating func clearSender() {self._sender = nil}
 
   public var recipients: [Proteus_UserEntry] = []
 
   public var isInline: Bool {
-    get {return _isInline ?? false}
+    get {_isInline ?? false}
     set {_isInline = newValue}
   }
   /// Returns true if `isInline` has been explicitly set.
-  public var hasIsInline: Bool {return self._isInline != nil}
+  public var hasIsInline: Bool {self._isInline != nil}
   /// Clears the value of `isInline`. Subsequent reads from it will return its default value.
   public mutating func clearIsInline() {self._isInline = nil}
 
   public var nativePush: Bool {
-    get {return _nativePush ?? true}
+    get {_nativePush ?? true}
     set {_nativePush = newValue}
   }
   /// Returns true if `nativePush` has been explicitly set.
-  public var hasNativePush: Bool {return self._nativePush != nil}
+  public var hasNativePush: Bool {self._nativePush != nil}
   /// Clears the value of `nativePush`. Subsequent reads from it will return its default value.
   public mutating func clearNativePush() {self._nativePush = nil}
 
@@ -491,13 +495,13 @@ public struct Proteus_OtrAssetMeta: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "proteus"
+fileprivate nonisolated let _protobuf_package = "proteus"
 
-extension Proteus_Priority: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_Priority: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LOW_PRIORITY\0\u{1}HIGH_PRIORITY\0")
 }
 
-extension Proteus_UserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_UserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserId"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0")
 
@@ -536,7 +540,7 @@ extension Proteus_UserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension Proteus_QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedUserId"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
@@ -581,7 +585,7 @@ extension Proteus_QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Proteus_ClientId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientId"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0")
 
@@ -620,7 +624,7 @@ extension Proteus_ClientId: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension Proteus_ClientEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientEntry"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0\u{1}text\0")
 
@@ -666,7 +670,7 @@ extension Proteus_ClientEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Proteus_UserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_UserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UserEntry"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}user\0\u{1}clients\0")
 
@@ -712,7 +716,7 @@ extension Proteus_UserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 }
 
-extension Proteus_QualifiedUserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_QualifiedUserEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedUserEntry"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}domain\0\u{1}entries\0")
 
@@ -757,7 +761,7 @@ extension Proteus_QualifiedUserEntry: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Proteus_NewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_NewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".NewOtrMessage"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{3}native_push\0\u{1}blob\0\u{3}native_priority\0\u{1}transient\0\u{3}report_missing\0")
 
@@ -829,7 +833,7 @@ extension Proteus_NewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension Proteus_QualifiedNewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_QualifiedNewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QualifiedNewOtrMessage"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{3}native_push\0\u{1}blob\0\u{3}native_priority\0\u{1}transient\0\u{3}report_all\0\u{3}ignore_all\0\u{3}report_only\0\u{3}ignore_only\0")
 
@@ -968,7 +972,7 @@ extension Proteus_QualifiedNewOtrMessage: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Proteus_ClientMismatchStrategy: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientMismatchStrategy: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientMismatchStrategy"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -987,7 +991,7 @@ extension Proteus_ClientMismatchStrategy: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Proteus_ClientMismatchStrategy.ReportAll: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientMismatchStrategy.ReportAll: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".ReportAll"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1006,7 +1010,7 @@ extension Proteus_ClientMismatchStrategy.ReportAll: SwiftProtobuf.Message, Swift
   }
 }
 
-extension Proteus_ClientMismatchStrategy.IgnoreAll: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientMismatchStrategy.IgnoreAll: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".IgnoreAll"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -1025,7 +1029,7 @@ extension Proteus_ClientMismatchStrategy.IgnoreAll: SwiftProtobuf.Message, Swift
   }
 }
 
-extension Proteus_ClientMismatchStrategy.ReportOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientMismatchStrategy.ReportOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".ReportOnly"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_ids\0")
 
@@ -1060,7 +1064,7 @@ extension Proteus_ClientMismatchStrategy.ReportOnly: SwiftProtobuf.Message, Swif
   }
 }
 
-extension Proteus_ClientMismatchStrategy.IgnoreOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_ClientMismatchStrategy.IgnoreOnly: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Proteus_ClientMismatchStrategy.protoMessageName + ".IgnoreOnly"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}user_ids\0")
 
@@ -1095,7 +1099,7 @@ extension Proteus_ClientMismatchStrategy.IgnoreOnly: SwiftProtobuf.Message, Swif
   }
 }
 
-extension Proteus_OtrAssetMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Proteus_OtrAssetMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OtrAssetMeta"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sender\0\u{1}recipients\0\u{1}isInline\0\u{3}native_push\0")
 
