@@ -25,7 +25,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 
+#if canImport(FoundationEssentials)
+public import FoundationEssentials
+#else
 public import Foundation
+#endif
 public import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -33,12 +37,12 @@ public import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public enum ClientAction: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum ClientAction: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case resetSession = 0
 
   public init() {
@@ -47,7 +51,7 @@ public enum ClientAction: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public enum EncryptionAlgorithm: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum EncryptionAlgorithm: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case aesCbc = 0
   case aesGcm = 1
 
@@ -57,7 +61,7 @@ public enum EncryptionAlgorithm: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public enum LegalHoldStatus: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum LegalHoldStatus: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case unknown = 0
   case disabled = 1
   case enabled = 2
@@ -68,18 +72,18 @@ public enum LegalHoldStatus: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-public struct GenericMessage: Sendable {
+public nonisolated struct GenericMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// client generated random id, preferably UUID
   public var messageID: String {
-    get {return _messageID ?? String()}
+    get {_messageID ?? String()}
     set {_messageID = newValue}
   }
   /// Returns true if `messageID` has been explicitly set.
-  public var hasMessageID: Bool {return self._messageID != nil}
+  public var hasMessageID: Bool {self._messageID != nil}
   /// Clears the value of `messageID`. Subsequent reads from it will return its default value.
   public mutating func clearMessageID() {self._messageID = nil}
 
@@ -156,14 +160,6 @@ public struct GenericMessage: Sendable {
       return Asset()
     }
     set {content = .asset(newValue)}
-  }
-
-  public var multipart: Multipart {
-    get {
-      if case .multipart(let v)? = content {return v}
-      return Multipart()
-    }
-    set {content = .multipart(newValue)}
   }
 
   public var hidden: MessageHide {
@@ -281,18 +277,66 @@ public struct GenericMessage: Sendable {
     set {content = .inCallHandRaise(newValue)}
   }
 
+  public var multipart: Multipart {
+    get {
+      if case .multipart(let v)? = content {return v}
+      return Multipart()
+    }
+    set {content = .multipart(newValue)}
+  }
+
+  public var historyClientAvailable: HistoryClientAvailable {
+    get {
+      if case .historyClientAvailable(let v)? = content {return v}
+      return HistoryClientAvailable()
+    }
+    set {content = .historyClientAvailable(newValue)}
+  }
+
+  public var historyClientRequest: HistoryClientRequest {
+    get {
+      if case .historyClientRequest(let v)? = content {return v}
+      return HistoryClientRequest()
+    }
+    set {content = .historyClientRequest(newValue)}
+  }
+
+  public var historyClientResponse: HistoryClientResponse {
+    get {
+      if case .historyClientResponse(let v)? = content {return v}
+      return HistoryClientResponse()
+    }
+    set {content = .historyClientResponse(newValue)}
+  }
+
+  public var poll: Poll {
+    get {
+      if case .poll(let v)? = content {return v}
+      return Poll()
+    }
+    set {content = .poll(newValue)}
+  }
+
+  public var pollVote: PollVote {
+    get {
+      if case .pollVote(let v)? = content {return v}
+      return PollVote()
+    }
+    set {content = .pollVote(newValue)}
+  }
+
   public var unknownStrategy: GenericMessage.UnknownStrategy {
-    get {return _unknownStrategy ?? .ignore}
+    get {_unknownStrategy ?? .ignore}
     set {_unknownStrategy = newValue}
   }
   /// Returns true if `unknownStrategy` has been explicitly set.
-  public var hasUnknownStrategy: Bool {return self._unknownStrategy != nil}
+  public var hasUnknownStrategy: Bool {self._unknownStrategy != nil}
   /// Clears the value of `unknownStrategy`. Subsequent reads from it will return its default value.
   public mutating func clearUnknownStrategy() {self._unknownStrategy = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_Content: Equatable, Sendable {
+  public nonisolated enum OneOf_Content: Equatable, Sendable {
     case text(Text)
     /// deprecated in favour of Asset
     case image(ImageAsset)
@@ -303,7 +347,6 @@ public struct GenericMessage: Sendable {
     case clientAction(ClientAction)
     case calling(Calling)
     case asset(Asset)
-    case multipart(Multipart)
     case hidden(MessageHide)
     case location(Location)
     case deleted(MessageDelete)
@@ -321,6 +364,12 @@ public struct GenericMessage: Sendable {
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
     /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
+    case multipart(Multipart)
+    case historyClientAvailable(HistoryClientAvailable)
+    case historyClientRequest(HistoryClientRequest)
+    case historyClientResponse(HistoryClientResponse)
+    case poll(Poll)
+    case pollVote(PollVote)
 
     fileprivate var isInitialized: Bool {
       // The use of inline closures is to circumvent an issue where the compiler
@@ -357,10 +406,6 @@ public struct GenericMessage: Sendable {
       }()
       case .asset: return {
         guard case .asset(let v) = self else { preconditionFailure() }
-        return v.isInitialized
-      }()
-      case .multipart: return {
-        guard case .multipart(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
       case .hidden: return {
@@ -415,6 +460,26 @@ public struct GenericMessage: Sendable {
         guard case .inCallHandRaise(let v) = self else { preconditionFailure() }
         return v.isInitialized
       }()
+      case .multipart: return {
+        guard case .multipart(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .historyClientAvailable: return {
+        guard case .historyClientAvailable(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .historyClientResponse: return {
+        guard case .historyClientResponse(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .poll: return {
+        guard case .poll(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
+      case .pollVote: return {
+        guard case .pollVote(let v) = self else { preconditionFailure() }
+        return v.isInitialized
+      }()
       default: return true
       }
     }
@@ -422,7 +487,7 @@ public struct GenericMessage: Sendable {
   }
 
   /// See internal RFC: "2024-07-18 RFC Improve future-proofing for new OTR message types"
-  public enum UnknownStrategy: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum UnknownStrategy: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
     /// Ignore the message completely. Trash. Bye
     case ignore = 0
@@ -445,26 +510,26 @@ public struct GenericMessage: Sendable {
   fileprivate var _unknownStrategy: GenericMessage.UnknownStrategy? = nil
 }
 
-public struct QualifiedUserId: Sendable {
+public nonisolated struct QualifiedUserId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {return _id ?? String()}
+    get {_id ?? String()}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
   public mutating func clearID() {self._id = nil}
 
   public var domain: String {
-    get {return _domain ?? String()}
+    get {_domain ?? String()}
     set {_domain = newValue}
   }
   /// Returns true if `domain` has been explicitly set.
-  public var hasDomain: Bool {return self._domain != nil}
+  public var hasDomain: Bool {self._domain != nil}
   /// Clears the value of `domain`. Subsequent reads from it will return its default value.
   public mutating func clearDomain() {self._domain = nil}
 
@@ -476,26 +541,26 @@ public struct QualifiedUserId: Sendable {
   fileprivate var _domain: String? = nil
 }
 
-public struct QualifiedConversationId: Sendable {
+public nonisolated struct QualifiedConversationId: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var id: String {
-    get {return _id ?? String()}
+    get {_id ?? String()}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
   public mutating func clearID() {self._id = nil}
 
   public var domain: String {
-    get {return _domain ?? String()}
+    get {_domain ?? String()}
     set {_domain = newValue}
   }
   /// Returns true if `domain` has been explicitly set.
-  public var hasDomain: Bool {return self._domain != nil}
+  public var hasDomain: Bool {self._domain != nil}
   /// Clears the value of `domain`. Subsequent reads from it will return its default value.
   public mutating func clearDomain() {self._domain = nil}
 
@@ -507,7 +572,7 @@ public struct QualifiedConversationId: Sendable {
   fileprivate var _domain: String? = nil
 }
 
-public struct Composite: Sendable {
+public nonisolated struct Composite: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -515,26 +580,26 @@ public struct Composite: Sendable {
   public var items: [Composite.Item] = []
 
   public var expectsReadConfirmation: Bool {
-    get {return _expectsReadConfirmation ?? false}
+    get {_expectsReadConfirmation ?? false}
     set {_expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return self._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
 
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public struct Item: Sendable {
+  public nonisolated struct Item: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
@@ -559,7 +624,7 @@ public struct Composite: Sendable {
 
     public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-    public enum OneOf_Content: Equatable, Sendable {
+    public nonisolated enum OneOf_Content: Equatable, Sendable {
       case text(Text)
       case button(Button)
 
@@ -590,26 +655,26 @@ public struct Composite: Sendable {
   fileprivate var _legalHoldStatus: LegalHoldStatus? = nil
 }
 
-public struct Button: Sendable {
+public nonisolated struct Button: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var text: String {
-    get {return _text ?? String()}
+    get {_text ?? String()}
     set {_text = newValue}
   }
   /// Returns true if `text` has been explicitly set.
-  public var hasText: Bool {return self._text != nil}
+  public var hasText: Bool {self._text != nil}
   /// Clears the value of `text`. Subsequent reads from it will return its default value.
   public mutating func clearText() {self._text = nil}
 
   public var id: String {
-    get {return _id ?? String()}
+    get {_id ?? String()}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
   public mutating func clearID() {self._id = nil}
 
@@ -621,26 +686,26 @@ public struct Button: Sendable {
   fileprivate var _id: String? = nil
 }
 
-public struct ButtonAction: Sendable {
+public nonisolated struct ButtonAction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var buttonID: String {
-    get {return _buttonID ?? String()}
+    get {_buttonID ?? String()}
     set {_buttonID = newValue}
   }
   /// Returns true if `buttonID` has been explicitly set.
-  public var hasButtonID: Bool {return self._buttonID != nil}
+  public var hasButtonID: Bool {self._buttonID != nil}
   /// Clears the value of `buttonID`. Subsequent reads from it will return its default value.
   public mutating func clearButtonID() {self._buttonID = nil}
 
   public var referenceMessageID: String {
-    get {return _referenceMessageID ?? String()}
+    get {_referenceMessageID ?? String()}
     set {_referenceMessageID = newValue}
   }
   /// Returns true if `referenceMessageID` has been explicitly set.
-  public var hasReferenceMessageID: Bool {return self._referenceMessageID != nil}
+  public var hasReferenceMessageID: Bool {self._referenceMessageID != nil}
   /// Clears the value of `referenceMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearReferenceMessageID() {self._referenceMessageID = nil}
 
@@ -652,27 +717,27 @@ public struct ButtonAction: Sendable {
   fileprivate var _referenceMessageID: String? = nil
 }
 
-public struct ButtonActionConfirmation: Sendable {
+public nonisolated struct ButtonActionConfirmation: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var referenceMessageID: String {
-    get {return _referenceMessageID ?? String()}
+    get {_referenceMessageID ?? String()}
     set {_referenceMessageID = newValue}
   }
   /// Returns true if `referenceMessageID` has been explicitly set.
-  public var hasReferenceMessageID: Bool {return self._referenceMessageID != nil}
+  public var hasReferenceMessageID: Bool {self._referenceMessageID != nil}
   /// Clears the value of `referenceMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearReferenceMessageID() {self._referenceMessageID = nil}
 
   /// if not present, no button is accepted
   public var buttonID: String {
-    get {return _buttonID ?? String()}
+    get {_buttonID ?? String()}
     set {_buttonID = newValue}
   }
   /// Returns true if `buttonID` has been explicitly set.
-  public var hasButtonID: Bool {return self._buttonID != nil}
+  public var hasButtonID: Bool {self._buttonID != nil}
   /// Clears the value of `buttonID`. Subsequent reads from it will return its default value.
   public mutating func clearButtonID() {self._buttonID = nil}
 
@@ -684,23 +749,135 @@ public struct ButtonActionConfirmation: Sendable {
   fileprivate var _buttonID: String? = nil
 }
 
-public struct Availability: Sendable {
+/// A native poll. The GenericMessage id is the poll id. Votes are never anonymous:
+/// every client sees the sender of each encrypted PollVote.
+public nonisolated struct Poll: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var question: String {
+    get {_question ?? String()}
+    set {_question = newValue}
+  }
+  /// Returns true if `question` has been explicitly set.
+  public var hasQuestion: Bool {self._question != nil}
+  /// Clears the value of `question`. Subsequent reads from it will return its default value.
+  public mutating func clearQuestion() {self._question = nil}
+
+  public var options: [PollOption] = []
+
+  public var allowMultipleAnswers: Bool {
+    get {_allowMultipleAnswers ?? false}
+    set {_allowMultipleAnswers = newValue}
+  }
+  /// Returns true if `allowMultipleAnswers` has been explicitly set.
+  public var hasAllowMultipleAnswers: Bool {self._allowMultipleAnswers != nil}
+  /// Clears the value of `allowMultipleAnswers`. Subsequent reads from it will return its default value.
+  public mutating func clearAllowMultipleAnswers() {self._allowMultipleAnswers = nil}
+
+  /// Standard flags for all message types
+  public var expectsReadConfirmation: Bool {
+    get {_expectsReadConfirmation ?? false}
+    set {_expectsReadConfirmation = newValue}
+  }
+  /// Returns true if `expectsReadConfirmation` has been explicitly set.
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
+  /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
+  public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
+
+  public var legalHoldStatus: LegalHoldStatus {
+    get {_legalHoldStatus ?? .unknown}
+    set {_legalHoldStatus = newValue}
+  }
+  /// Returns true if `legalHoldStatus` has been explicitly set.
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
+  /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
+  public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _question: String? = nil
+  fileprivate var _allowMultipleAnswers: Bool? = nil
+  fileprivate var _expectsReadConfirmation: Bool? = nil
+  fileprivate var _legalHoldStatus: LegalHoldStatus? = nil
+}
+
+public nonisolated struct PollOption: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String {
+    get {_id ?? String()}
+    set {_id = newValue}
+  }
+  /// Returns true if `id` has been explicitly set.
+  public var hasID: Bool {self._id != nil}
+  /// Clears the value of `id`. Subsequent reads from it will return its default value.
+  public mutating func clearID() {self._id = nil}
+
+  public var text: String {
+    get {_text ?? String()}
+    set {_text = newValue}
+  }
+  /// Returns true if `text` has been explicitly set.
+  public var hasText: Bool {self._text != nil}
+  /// Clears the value of `text`. Subsequent reads from it will return its default value.
+  public mutating func clearText() {self._text = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _id: String? = nil
+  fileprivate var _text: String? = nil
+}
+
+/// The sender's complete current selection for a poll. It replaces any earlier vote from the
+/// same user. An empty selection retracts the vote.
+public nonisolated struct PollVote: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var referenceMessageID: String {
+    get {_referenceMessageID ?? String()}
+    set {_referenceMessageID = newValue}
+  }
+  /// Returns true if `referenceMessageID` has been explicitly set.
+  public var hasReferenceMessageID: Bool {self._referenceMessageID != nil}
+  /// Clears the value of `referenceMessageID`. Subsequent reads from it will return its default value.
+  public mutating func clearReferenceMessageID() {self._referenceMessageID = nil}
+
+  public var selectedOptionIds: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _referenceMessageID: String? = nil
+}
+
+public nonisolated struct Availability: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var type: Availability.TypeEnum {
-    get {return _type ?? .none}
+    get {_type ?? .none}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  public var hasType: Bool {return self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
   public mutating func clearType() {self._type = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case available = 1
     case away = 2
@@ -717,17 +894,17 @@ public struct Availability: Sendable {
   fileprivate var _type: Availability.TypeEnum? = nil
 }
 
-public struct Ephemeral: Sendable {
+public nonisolated struct Ephemeral: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var expireAfterMillis: Int64 {
-    get {return _expireAfterMillis ?? 0}
+    get {_expireAfterMillis ?? 0}
     set {_expireAfterMillis = newValue}
   }
   /// Returns true if `expireAfterMillis` has been explicitly set.
-  public var hasExpireAfterMillis: Bool {return self._expireAfterMillis != nil}
+  public var hasExpireAfterMillis: Bool {self._expireAfterMillis != nil}
   /// Clears the value of `expireAfterMillis`. Subsequent reads from it will return its default value.
   public mutating func clearExpireAfterMillis() {self._expireAfterMillis = nil}
 
@@ -776,7 +953,7 @@ public struct Ephemeral: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_Content: Equatable, Sendable {
+  public nonisolated enum OneOf_Content: Equatable, Sendable {
     case text(Text)
     /// deprecated in favour of Asset
     case image(ImageAsset)
@@ -819,17 +996,17 @@ public struct Ephemeral: Sendable {
   fileprivate var _expireAfterMillis: Int64? = nil
 }
 
-public struct Text: Sendable {
+public nonisolated struct Text: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var content: String {
-    get {return _content ?? String()}
+    get {_content ?? String()}
     set {_content = newValue}
   }
   /// Returns true if `content` has been explicitly set.
-  public var hasContent: Bool {return self._content != nil}
+  public var hasContent: Bool {self._content != nil}
   /// Clears the value of `content`. Subsequent reads from it will return its default value.
   public mutating func clearContent() {self._content = nil}
 
@@ -840,31 +1017,31 @@ public struct Text: Sendable {
 
   /// if this Text is part of a MessageEdit, this field is ignored
   public var quote: Quote {
-    get {return _quote ?? Quote()}
+    get {_quote ?? Quote()}
     set {_quote = newValue}
   }
   /// Returns true if `quote` has been explicitly set.
-  public var hasQuote: Bool {return self._quote != nil}
+  public var hasQuote: Bool {self._quote != nil}
   /// Clears the value of `quote`. Subsequent reads from it will return its default value.
   public mutating func clearQuote() {self._quote = nil}
 
   /// whether the sender is expecting to receive a read confirmation
   public var expectsReadConfirmation: Bool {
-    get {return _expectsReadConfirmation ?? false}
+    get {_expectsReadConfirmation ?? false}
     set {_expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return self._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
 
   /// whether this message was sent to legal hold
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
@@ -878,37 +1055,37 @@ public struct Text: Sendable {
   fileprivate var _legalHoldStatus: LegalHoldStatus? = nil
 }
 
-public struct Knock: Sendable {
+public nonisolated struct Knock: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var hotKnock: Bool {
-    get {return _hotKnock ?? false}
+    get {_hotKnock ?? false}
     set {_hotKnock = newValue}
   }
   /// Returns true if `hotKnock` has been explicitly set.
-  public var hasHotKnock: Bool {return self._hotKnock != nil}
+  public var hasHotKnock: Bool {self._hotKnock != nil}
   /// Clears the value of `hotKnock`. Subsequent reads from it will return its default value.
   public mutating func clearHotKnock() {self._hotKnock = nil}
 
   /// whether the sender is expecting to receive a read confirmation
   public var expectsReadConfirmation: Bool {
-    get {return _expectsReadConfirmation ?? false}
+    get {_expectsReadConfirmation ?? false}
     set {_expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return self._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
 
   /// whether this message was sent to legal hold
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
@@ -921,27 +1098,27 @@ public struct Knock: Sendable {
   fileprivate var _legalHoldStatus: LegalHoldStatus? = nil
 }
 
-public struct LinkPreview: Sendable {
+public nonisolated struct LinkPreview: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var url: String {
-    get {return _url ?? String()}
+    get {_url ?? String()}
     set {_url = newValue}
   }
   /// Returns true if `url` has been explicitly set.
-  public var hasURL: Bool {return self._url != nil}
+  public var hasURL: Bool {self._url != nil}
   /// Clears the value of `url`. Subsequent reads from it will return its default value.
   public mutating func clearURL() {self._url = nil}
 
   /// url offset from beginning of text message
   public var urlOffset: Int32 {
-    get {return _urlOffset ?? 0}
+    get {_urlOffset ?? 0}
     set {_urlOffset = newValue}
   }
   /// Returns true if `urlOffset` has been explicitly set.
-  public var hasURLOffset: Bool {return self._urlOffset != nil}
+  public var hasURLOffset: Bool {self._urlOffset != nil}
   /// Clears the value of `urlOffset`. Subsequent reads from it will return its default value.
   public mutating func clearURLOffset() {self._urlOffset = nil}
 
@@ -957,38 +1134,38 @@ public struct LinkPreview: Sendable {
   }
 
   public var permanentURL: String {
-    get {return _permanentURL ?? String()}
+    get {_permanentURL ?? String()}
     set {_permanentURL = newValue}
   }
   /// Returns true if `permanentURL` has been explicitly set.
-  public var hasPermanentURL: Bool {return self._permanentURL != nil}
+  public var hasPermanentURL: Bool {self._permanentURL != nil}
   /// Clears the value of `permanentURL`. Subsequent reads from it will return its default value.
   public mutating func clearPermanentURL() {self._permanentURL = nil}
 
   public var title: String {
-    get {return _title ?? String()}
+    get {_title ?? String()}
     set {_title = newValue}
   }
   /// Returns true if `title` has been explicitly set.
-  public var hasTitle: Bool {return self._title != nil}
+  public var hasTitle: Bool {self._title != nil}
   /// Clears the value of `title`. Subsequent reads from it will return its default value.
   public mutating func clearTitle() {self._title = nil}
 
   public var summary: String {
-    get {return _summary ?? String()}
+    get {_summary ?? String()}
     set {_summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {return self._summary != nil}
+  public var hasSummary: Bool {self._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
   public mutating func clearSummary() {self._summary = nil}
 
   public var image: Asset {
-    get {return _image ?? Asset()}
+    get {_image ?? Asset()}
     set {_image = newValue}
   }
   /// Returns true if `image` has been explicitly set.
-  public var hasImage: Bool {return self._image != nil}
+  public var hasImage: Bool {self._image != nil}
   /// Clears the value of `image`. Subsequent reads from it will return its default value.
   public mutating func clearImage() {self._image = nil}
 
@@ -1004,7 +1181,7 @@ public struct LinkPreview: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_Preview: Equatable, Sendable {
+  public nonisolated enum OneOf_Preview: Equatable, Sendable {
     /// deprecated - use meta_data
     case article(Article)
 
@@ -1015,7 +1192,7 @@ public struct LinkPreview: Sendable {
 
   }
 
-  public enum OneOf_MetaData: Equatable, Sendable {
+  public nonisolated enum OneOf_MetaData: Equatable, Sendable {
     case tweet(Tweet)
 
   }
@@ -1030,26 +1207,26 @@ public struct LinkPreview: Sendable {
   fileprivate var _image: Asset? = nil
 }
 
-public struct Tweet: Sendable {
+public nonisolated struct Tweet: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var author: String {
-    get {return _author ?? String()}
+    get {_author ?? String()}
     set {_author = newValue}
   }
   /// Returns true if `author` has been explicitly set.
-  public var hasAuthor: Bool {return self._author != nil}
+  public var hasAuthor: Bool {self._author != nil}
   /// Clears the value of `author`. Subsequent reads from it will return its default value.
   public mutating func clearAuthor() {self._author = nil}
 
   public var username: String {
-    get {return _username ?? String()}
+    get {_username ?? String()}
     set {_username = newValue}
   }
   /// Returns true if `username` has been explicitly set.
-  public var hasUsername: Bool {return self._username != nil}
+  public var hasUsername: Bool {self._username != nil}
   /// Clears the value of `username`. Subsequent reads from it will return its default value.
   public mutating func clearUsername() {self._username = nil}
 
@@ -1062,44 +1239,44 @@ public struct Tweet: Sendable {
 }
 
 /// deprecated - use the additional fields in LinkPreview
-public struct Article: Sendable {
+public nonisolated struct Article: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var permanentURL: String {
-    get {return _permanentURL ?? String()}
+    get {_permanentURL ?? String()}
     set {_permanentURL = newValue}
   }
   /// Returns true if `permanentURL` has been explicitly set.
-  public var hasPermanentURL: Bool {return self._permanentURL != nil}
+  public var hasPermanentURL: Bool {self._permanentURL != nil}
   /// Clears the value of `permanentURL`. Subsequent reads from it will return its default value.
   public mutating func clearPermanentURL() {self._permanentURL = nil}
 
   public var title: String {
-    get {return _title ?? String()}
+    get {_title ?? String()}
     set {_title = newValue}
   }
   /// Returns true if `title` has been explicitly set.
-  public var hasTitle: Bool {return self._title != nil}
+  public var hasTitle: Bool {self._title != nil}
   /// Clears the value of `title`. Subsequent reads from it will return its default value.
   public mutating func clearTitle() {self._title = nil}
 
   public var summary: String {
-    get {return _summary ?? String()}
+    get {_summary ?? String()}
     set {_summary = newValue}
   }
   /// Returns true if `summary` has been explicitly set.
-  public var hasSummary: Bool {return self._summary != nil}
+  public var hasSummary: Bool {self._summary != nil}
   /// Clears the value of `summary`. Subsequent reads from it will return its default value.
   public mutating func clearSummary() {self._summary = nil}
 
   public var image: Asset {
-    get {return _image ?? Asset()}
+    get {_image ?? Asset()}
     set {_image = newValue}
   }
   /// Returns true if `image` has been explicitly set.
-  public var hasImage: Bool {return self._image != nil}
+  public var hasImage: Bool {self._image != nil}
   /// Clears the value of `image`. Subsequent reads from it will return its default value.
   public mutating func clearImage() {self._image = nil}
 
@@ -1113,27 +1290,27 @@ public struct Article: Sendable {
   fileprivate var _image: Asset? = nil
 }
 
-public struct Mention: Sendable {
+public nonisolated struct Mention: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// offset from beginning of the message counting in utf16 characters
   public var start: Int32 {
-    get {return _start ?? 0}
+    get {_start ?? 0}
     set {_start = newValue}
   }
   /// Returns true if `start` has been explicitly set.
-  public var hasStart: Bool {return self._start != nil}
+  public var hasStart: Bool {self._start != nil}
   /// Clears the value of `start`. Subsequent reads from it will return its default value.
   public mutating func clearStart() {self._start = nil}
 
   public var length: Int32 {
-    get {return _length ?? 0}
+    get {_length ?? 0}
     set {_length = newValue}
   }
   /// Returns true if `length` has been explicitly set.
-  public var hasLength: Bool {return self._length != nil}
+  public var hasLength: Bool {self._length != nil}
   /// Clears the value of `length`. Subsequent reads from it will return its default value.
   public mutating func clearLength() {self._length = nil}
 
@@ -1152,17 +1329,28 @@ public struct Mention: Sendable {
 
   /// only optional to maintain backwards compatibility.
   public var qualifiedUserID: QualifiedUserId {
-    get {return _qualifiedUserID ?? QualifiedUserId()}
+    get {_qualifiedUserID ?? QualifiedUserId()}
     set {_qualifiedUserID = newValue}
   }
   /// Returns true if `qualifiedUserID` has been explicitly set.
-  public var hasQualifiedUserID: Bool {return self._qualifiedUserID != nil}
+  public var hasQualifiedUserID: Bool {self._qualifiedUserID != nil}
   /// Clears the value of `qualifiedUserID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedUserID() {self._qualifiedUserID = nil}
 
+  /// Explicit group-wide mention. Send without user_id or qualified_user_id.
+  /// Older clients ignore this field and continue to display the literal text.
+  public var everyone: Bool {
+    get {_everyone ?? false}
+    set {_everyone = newValue}
+  }
+  /// Returns true if `everyone` has been explicitly set.
+  public var hasEveryone: Bool {self._everyone != nil}
+  /// Clears the value of `everyone`. Subsequent reads from it will return its default value.
+  public mutating func clearEveryone() {self._everyone = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_MentionType: Equatable, Sendable {
+  public nonisolated enum OneOf_MentionType: Equatable, Sendable {
     /// deprecated. Should be set such that old clients always fail when looking
     /// up the user. Ideally, this should not be a problem, as a non-federation
     /// aware user should never be part of a federated conversation.
@@ -1175,9 +1363,10 @@ public struct Mention: Sendable {
   fileprivate var _start: Int32? = nil
   fileprivate var _length: Int32? = nil
   fileprivate var _qualifiedUserID: QualifiedUserId? = nil
+  fileprivate var _everyone: Bool? = nil
 }
 
-public struct LastRead: Sendable {
+public nonisolated struct LastRead: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1185,30 +1374,30 @@ public struct LastRead: Sendable {
   /// deprecated. Should be set such that old clients always fail when looking up
   /// the conversation.
   public var conversationID: String {
-    get {return _conversationID ?? String()}
+    get {_conversationID ?? String()}
     set {_conversationID = newValue}
   }
   /// Returns true if `conversationID` has been explicitly set.
-  public var hasConversationID: Bool {return self._conversationID != nil}
+  public var hasConversationID: Bool {self._conversationID != nil}
   /// Clears the value of `conversationID`. Subsequent reads from it will return its default value.
   public mutating func clearConversationID() {self._conversationID = nil}
 
   public var lastReadTimestamp: Int64 {
-    get {return _lastReadTimestamp ?? 0}
+    get {_lastReadTimestamp ?? 0}
     set {_lastReadTimestamp = newValue}
   }
   /// Returns true if `lastReadTimestamp` has been explicitly set.
-  public var hasLastReadTimestamp: Bool {return self._lastReadTimestamp != nil}
+  public var hasLastReadTimestamp: Bool {self._lastReadTimestamp != nil}
   /// Clears the value of `lastReadTimestamp`. Subsequent reads from it will return its default value.
   public mutating func clearLastReadTimestamp() {self._lastReadTimestamp = nil}
 
   /// only optional to maintain backwards compatibility
   public var qualifiedConversationID: QualifiedConversationId {
-    get {return _qualifiedConversationID ?? QualifiedConversationId()}
+    get {_qualifiedConversationID ?? QualifiedConversationId()}
     set {_qualifiedConversationID = newValue}
   }
   /// Returns true if `qualifiedConversationID` has been explicitly set.
-  public var hasQualifiedConversationID: Bool {return self._qualifiedConversationID != nil}
+  public var hasQualifiedConversationID: Bool {self._qualifiedConversationID != nil}
   /// Clears the value of `qualifiedConversationID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedConversationID() {self._qualifiedConversationID = nil}
 
@@ -1221,7 +1410,7 @@ public struct LastRead: Sendable {
   fileprivate var _qualifiedConversationID: QualifiedConversationId? = nil
 }
 
-public struct Cleared: Sendable {
+public nonisolated struct Cleared: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1229,32 +1418,41 @@ public struct Cleared: Sendable {
   /// deprecated. Should be set such that old clients always fail when looking up
   /// the conversation.
   public var conversationID: String {
-    get {return _conversationID ?? String()}
+    get {_conversationID ?? String()}
     set {_conversationID = newValue}
   }
   /// Returns true if `conversationID` has been explicitly set.
-  public var hasConversationID: Bool {return self._conversationID != nil}
+  public var hasConversationID: Bool {self._conversationID != nil}
   /// Clears the value of `conversationID`. Subsequent reads from it will return its default value.
   public mutating func clearConversationID() {self._conversationID = nil}
 
   public var clearedTimestamp: Int64 {
-    get {return _clearedTimestamp ?? 0}
+    get {_clearedTimestamp ?? 0}
     set {_clearedTimestamp = newValue}
   }
   /// Returns true if `clearedTimestamp` has been explicitly set.
-  public var hasClearedTimestamp: Bool {return self._clearedTimestamp != nil}
+  public var hasClearedTimestamp: Bool {self._clearedTimestamp != nil}
   /// Clears the value of `clearedTimestamp`. Subsequent reads from it will return its default value.
   public mutating func clearClearedTimestamp() {self._clearedTimestamp = nil}
 
   /// only optional to maintain backwards compatibility
   public var qualifiedConversationID: QualifiedConversationId {
-    get {return _qualifiedConversationID ?? QualifiedConversationId()}
+    get {_qualifiedConversationID ?? QualifiedConversationId()}
     set {_qualifiedConversationID = newValue}
   }
   /// Returns true if `qualifiedConversationID` has been explicitly set.
-  public var hasQualifiedConversationID: Bool {return self._qualifiedConversationID != nil}
+  public var hasQualifiedConversationID: Bool {self._qualifiedConversationID != nil}
   /// Clears the value of `qualifiedConversationID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedConversationID() {self._qualifiedConversationID = nil}
+
+  public var needToRemoveLocally: Bool {
+    get {_needToRemoveLocally ?? false}
+    set {_needToRemoveLocally = newValue}
+  }
+  /// Returns true if `needToRemoveLocally` has been explicitly set.
+  public var hasNeedToRemoveLocally: Bool {self._needToRemoveLocally != nil}
+  /// Clears the value of `needToRemoveLocally`. Subsequent reads from it will return its default value.
+  public mutating func clearNeedToRemoveLocally() {self._needToRemoveLocally = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1263,9 +1461,10 @@ public struct Cleared: Sendable {
   fileprivate var _conversationID: String? = nil
   fileprivate var _clearedTimestamp: Int64? = nil
   fileprivate var _qualifiedConversationID: QualifiedConversationId? = nil
+  fileprivate var _needToRemoveLocally: Bool? = nil
 }
 
-public struct MessageHide: Sendable {
+public nonisolated struct MessageHide: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1273,30 +1472,30 @@ public struct MessageHide: Sendable {
   /// deprecated. Should be set such that old clients always fail when looking up
   /// the conversation.
   public var conversationID: String {
-    get {return _conversationID ?? String()}
+    get {_conversationID ?? String()}
     set {_conversationID = newValue}
   }
   /// Returns true if `conversationID` has been explicitly set.
-  public var hasConversationID: Bool {return self._conversationID != nil}
+  public var hasConversationID: Bool {self._conversationID != nil}
   /// Clears the value of `conversationID`. Subsequent reads from it will return its default value.
   public mutating func clearConversationID() {self._conversationID = nil}
 
   public var messageID: String {
-    get {return _messageID ?? String()}
+    get {_messageID ?? String()}
     set {_messageID = newValue}
   }
   /// Returns true if `messageID` has been explicitly set.
-  public var hasMessageID: Bool {return self._messageID != nil}
+  public var hasMessageID: Bool {self._messageID != nil}
   /// Clears the value of `messageID`. Subsequent reads from it will return its default value.
   public mutating func clearMessageID() {self._messageID = nil}
 
   /// only optional to maintain backwards compatibility
   public var qualifiedConversationID: QualifiedConversationId {
-    get {return _qualifiedConversationID ?? QualifiedConversationId()}
+    get {_qualifiedConversationID ?? QualifiedConversationId()}
     set {_qualifiedConversationID = newValue}
   }
   /// Returns true if `qualifiedConversationID` has been explicitly set.
-  public var hasQualifiedConversationID: Bool {return self._qualifiedConversationID != nil}
+  public var hasQualifiedConversationID: Bool {self._qualifiedConversationID != nil}
   /// Clears the value of `qualifiedConversationID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedConversationID() {self._qualifiedConversationID = nil}
 
@@ -1309,17 +1508,17 @@ public struct MessageHide: Sendable {
   fileprivate var _qualifiedConversationID: QualifiedConversationId? = nil
 }
 
-public struct MessageDelete: Sendable {
+public nonisolated struct MessageDelete: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var messageID: String {
-    get {return _messageID ?? String()}
+    get {_messageID ?? String()}
     set {_messageID = newValue}
   }
   /// Returns true if `messageID` has been explicitly set.
-  public var hasMessageID: Bool {return self._messageID != nil}
+  public var hasMessageID: Bool {self._messageID != nil}
   /// Clears the value of `messageID`. Subsequent reads from it will return its default value.
   public mutating func clearMessageID() {self._messageID = nil}
 
@@ -1330,17 +1529,17 @@ public struct MessageDelete: Sendable {
   fileprivate var _messageID: String? = nil
 }
 
-public struct MessageEdit: Sendable {
+public nonisolated struct MessageEdit: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var replacingMessageID: String {
-    get {return _replacingMessageID ?? String()}
+    get {_replacingMessageID ?? String()}
     set {_replacingMessageID = newValue}
   }
   /// Returns true if `replacingMessageID` has been explicitly set.
-  public var hasReplacingMessageID: Bool {return self._replacingMessageID != nil}
+  public var hasReplacingMessageID: Bool {self._replacingMessageID != nil}
   /// Clears the value of `replacingMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearReplacingMessageID() {self._replacingMessageID = nil}
 
@@ -1362,6 +1561,7 @@ public struct MessageEdit: Sendable {
     set {content = .composite(newValue)}
   }
 
+  /// Reply can also be edited, but the edit will only affect the Text part
   public var multipart: Multipart {
     get {
       if case .multipart(let v)? = content {return v}
@@ -1372,9 +1572,10 @@ public struct MessageEdit: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_Content: Equatable, Sendable {
+  public nonisolated enum OneOf_Content: Equatable, Sendable {
     case text(Text)
     case composite(Composite)
+    /// Reply can also be edited, but the edit will only affect the Text part
     case multipart(Multipart)
 
     fileprivate var isInitialized: Bool {
@@ -1404,26 +1605,26 @@ public struct MessageEdit: Sendable {
   fileprivate var _replacingMessageID: String? = nil
 }
 
-public struct Quote: Sendable {
+public nonisolated struct Quote: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var quotedMessageID: String {
-    get {return _quotedMessageID ?? String()}
+    get {_quotedMessageID ?? String()}
     set {_quotedMessageID = newValue}
   }
   /// Returns true if `quotedMessageID` has been explicitly set.
-  public var hasQuotedMessageID: Bool {return self._quotedMessageID != nil}
+  public var hasQuotedMessageID: Bool {self._quotedMessageID != nil}
   /// Clears the value of `quotedMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearQuotedMessageID() {self._quotedMessageID = nil}
 
   public var quotedMessageSha256: Data {
-    get {return _quotedMessageSha256 ?? Data()}
+    get {_quotedMessageSha256 ?? Data()}
     set {_quotedMessageSha256 = newValue}
   }
   /// Returns true if `quotedMessageSha256` has been explicitly set.
-  public var hasQuotedMessageSha256: Bool {return self._quotedMessageSha256 != nil}
+  public var hasQuotedMessageSha256: Bool {self._quotedMessageSha256 != nil}
   /// Clears the value of `quotedMessageSha256`. Subsequent reads from it will return its default value.
   public mutating func clearQuotedMessageSha256() {self._quotedMessageSha256 = nil}
 
@@ -1435,26 +1636,26 @@ public struct Quote: Sendable {
   fileprivate var _quotedMessageSha256: Data? = nil
 }
 
-public struct Confirmation: Sendable {
+public nonisolated struct Confirmation: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var type: Confirmation.TypeEnum {
-    get {return _type ?? .delivered}
+    get {_type ?? .delivered}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  public var hasType: Bool {return self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
   public mutating func clearType() {self._type = nil}
 
   public var firstMessageID: String {
-    get {return _firstMessageID ?? String()}
+    get {_firstMessageID ?? String()}
     set {_firstMessageID = newValue}
   }
   /// Returns true if `firstMessageID` has been explicitly set.
-  public var hasFirstMessageID: Bool {return self._firstMessageID != nil}
+  public var hasFirstMessageID: Bool {self._firstMessageID != nil}
   /// Clears the value of `firstMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearFirstMessageID() {self._firstMessageID = nil}
 
@@ -1462,7 +1663,7 @@ public struct Confirmation: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case delivered = 0
     case read = 1
 
@@ -1478,66 +1679,66 @@ public struct Confirmation: Sendable {
   fileprivate var _firstMessageID: String? = nil
 }
 
-public struct Location: Sendable {
+public nonisolated struct Location: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var longitude: Float {
-    get {return _longitude ?? 0}
+    get {_longitude ?? 0}
     set {_longitude = newValue}
   }
   /// Returns true if `longitude` has been explicitly set.
-  public var hasLongitude: Bool {return self._longitude != nil}
+  public var hasLongitude: Bool {self._longitude != nil}
   /// Clears the value of `longitude`. Subsequent reads from it will return its default value.
   public mutating func clearLongitude() {self._longitude = nil}
 
   public var latitude: Float {
-    get {return _latitude ?? 0}
+    get {_latitude ?? 0}
     set {_latitude = newValue}
   }
   /// Returns true if `latitude` has been explicitly set.
-  public var hasLatitude: Bool {return self._latitude != nil}
+  public var hasLatitude: Bool {self._latitude != nil}
   /// Clears the value of `latitude`. Subsequent reads from it will return its default value.
   public mutating func clearLatitude() {self._latitude = nil}
 
   /// location description/name
   public var name: String {
-    get {return _name ?? String()}
+    get {_name ?? String()}
     set {_name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  public var hasName: Bool {return self._name != nil}
+  public var hasName: Bool {self._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
   public mutating func clearName() {self._name = nil}
 
   /// google maps zoom level (check maps api documentation)
   public var zoom: Int32 {
-    get {return _zoom ?? 0}
+    get {_zoom ?? 0}
     set {_zoom = newValue}
   }
   /// Returns true if `zoom` has been explicitly set.
-  public var hasZoom: Bool {return self._zoom != nil}
+  public var hasZoom: Bool {self._zoom != nil}
   /// Clears the value of `zoom`. Subsequent reads from it will return its default value.
   public mutating func clearZoom() {self._zoom = nil}
 
   /// whether the sender is expecting to receive a read confirmation
   public var expectsReadConfirmation: Bool {
-    get {return _expectsReadConfirmation ?? false}
+    get {_expectsReadConfirmation ?? false}
     set {_expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return self._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
 
   /// whether this message was sent to legal hold
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
@@ -1554,110 +1755,110 @@ public struct Location: Sendable {
 }
 
 /// deprecated in favour of Asset.Original.ImageMetaData
-public struct ImageAsset: Sendable {
+public nonisolated struct ImageAsset: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var tag: String {
-    get {return _tag ?? String()}
+    get {_tag ?? String()}
     set {_tag = newValue}
   }
   /// Returns true if `tag` has been explicitly set.
-  public var hasTag: Bool {return self._tag != nil}
+  public var hasTag: Bool {self._tag != nil}
   /// Clears the value of `tag`. Subsequent reads from it will return its default value.
   public mutating func clearTag() {self._tag = nil}
 
   public var width: Int32 {
-    get {return _width ?? 0}
+    get {_width ?? 0}
     set {_width = newValue}
   }
   /// Returns true if `width` has been explicitly set.
-  public var hasWidth: Bool {return self._width != nil}
+  public var hasWidth: Bool {self._width != nil}
   /// Clears the value of `width`. Subsequent reads from it will return its default value.
   public mutating func clearWidth() {self._width = nil}
 
   public var height: Int32 {
-    get {return _height ?? 0}
+    get {_height ?? 0}
     set {_height = newValue}
   }
   /// Returns true if `height` has been explicitly set.
-  public var hasHeight: Bool {return self._height != nil}
+  public var hasHeight: Bool {self._height != nil}
   /// Clears the value of `height`. Subsequent reads from it will return its default value.
   public mutating func clearHeight() {self._height = nil}
 
   public var originalWidth: Int32 {
-    get {return _originalWidth ?? 0}
+    get {_originalWidth ?? 0}
     set {_originalWidth = newValue}
   }
   /// Returns true if `originalWidth` has been explicitly set.
-  public var hasOriginalWidth: Bool {return self._originalWidth != nil}
+  public var hasOriginalWidth: Bool {self._originalWidth != nil}
   /// Clears the value of `originalWidth`. Subsequent reads from it will return its default value.
   public mutating func clearOriginalWidth() {self._originalWidth = nil}
 
   public var originalHeight: Int32 {
-    get {return _originalHeight ?? 0}
+    get {_originalHeight ?? 0}
     set {_originalHeight = newValue}
   }
   /// Returns true if `originalHeight` has been explicitly set.
-  public var hasOriginalHeight: Bool {return self._originalHeight != nil}
+  public var hasOriginalHeight: Bool {self._originalHeight != nil}
   /// Clears the value of `originalHeight`. Subsequent reads from it will return its default value.
   public mutating func clearOriginalHeight() {self._originalHeight = nil}
 
   public var mimeType: String {
-    get {return _mimeType ?? String()}
+    get {_mimeType ?? String()}
     set {_mimeType = newValue}
   }
   /// Returns true if `mimeType` has been explicitly set.
-  public var hasMimeType: Bool {return self._mimeType != nil}
+  public var hasMimeType: Bool {self._mimeType != nil}
   /// Clears the value of `mimeType`. Subsequent reads from it will return its default value.
   public mutating func clearMimeType() {self._mimeType = nil}
 
   public var size: Int32 {
-    get {return _size ?? 0}
+    get {_size ?? 0}
     set {_size = newValue}
   }
   /// Returns true if `size` has been explicitly set.
-  public var hasSize: Bool {return self._size != nil}
+  public var hasSize: Bool {self._size != nil}
   /// Clears the value of `size`. Subsequent reads from it will return its default value.
   public mutating func clearSize() {self._size = nil}
 
   public var otrKey: Data {
-    get {return _otrKey ?? Data()}
+    get {_otrKey ?? Data()}
     set {_otrKey = newValue}
   }
   /// Returns true if `otrKey` has been explicitly set.
-  public var hasOtrKey: Bool {return self._otrKey != nil}
+  public var hasOtrKey: Bool {self._otrKey != nil}
   /// Clears the value of `otrKey`. Subsequent reads from it will return its default value.
   public mutating func clearOtrKey() {self._otrKey = nil}
 
   /// deprecated - use sha256
   public var macKey: Data {
-    get {return _macKey ?? Data()}
+    get {_macKey ?? Data()}
     set {_macKey = newValue}
   }
   /// Returns true if `macKey` has been explicitly set.
-  public var hasMacKey: Bool {return self._macKey != nil}
+  public var hasMacKey: Bool {self._macKey != nil}
   /// Clears the value of `macKey`. Subsequent reads from it will return its default value.
   public mutating func clearMacKey() {self._macKey = nil}
 
   /// deprecated - use sha256
   public var mac: Data {
-    get {return _mac ?? Data()}
+    get {_mac ?? Data()}
     set {_mac = newValue}
   }
   /// Returns true if `mac` has been explicitly set.
-  public var hasMac: Bool {return self._mac != nil}
+  public var hasMac: Bool {self._mac != nil}
   /// Clears the value of `mac`. Subsequent reads from it will return its default value.
   public mutating func clearMac() {self._mac = nil}
 
   /// sha256 of ciphertext
   public var sha256: Data {
-    get {return _sha256 ?? Data()}
+    get {_sha256 ?? Data()}
     set {_sha256 = newValue}
   }
   /// Returns true if `sha256` has been explicitly set.
-  public var hasSha256: Bool {return self._sha256 != nil}
+  public var hasSha256: Bool {self._sha256 != nil}
   /// Clears the value of `sha256`. Subsequent reads from it will return its default value.
   public mutating func clearSha256() {self._sha256 = nil}
 
@@ -1679,7 +1880,7 @@ public struct ImageAsset: Sendable {
 }
 
 /// Attachment can attach different kind of assets to a Multipart message
-public struct Attachment: Sendable {
+public nonisolated struct Attachment: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1704,7 +1905,7 @@ public struct Attachment: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_Content: Equatable, Sendable {
+  public nonisolated enum OneOf_Content: Equatable, Sendable {
     case asset(Asset)
     case cellAsset(CellAsset)
 
@@ -1730,17 +1931,17 @@ public struct Attachment: Sendable {
 }
 
 /// Multipart message combines optional text with multiple attachments
-public struct Multipart: Sendable {
+public nonisolated struct Multipart: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var text: Text {
-    get {return _text ?? Text()}
+    get {_text ?? Text()}
     set {_text = newValue}
   }
   /// Returns true if `text` has been explicitly set.
-  public var hasText: Bool {return self._text != nil}
+  public var hasText: Bool {self._text != nil}
   /// Clears the value of `text`. Subsequent reads from it will return its default value.
   public mutating func clearText() {self._text = nil}
 
@@ -1748,20 +1949,20 @@ public struct Multipart: Sendable {
 
   /// Standard flags for all message types
   public var expectsReadConfirmation: Bool {
-    get {return _expectsReadConfirmation ?? false}
+    get {_expectsReadConfirmation ?? false}
     set {_expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return self._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {self._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {self._expectsReadConfirmation = nil}
 
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
@@ -1775,48 +1976,48 @@ public struct Multipart: Sendable {
 }
 
 /// CellAsset represents a file uploaded to a conversation cell
-public struct CellAsset: Sendable {
+public nonisolated struct CellAsset: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Required pydio backend reference
   public var uuid: String {
-    get {return _uuid ?? String()}
+    get {_uuid ?? String()}
     set {_uuid = newValue}
   }
   /// Returns true if `uuid` has been explicitly set.
-  public var hasUuid: Bool {return self._uuid != nil}
+  public var hasUuid: Bool {self._uuid != nil}
   /// Clears the value of `uuid`. Subsequent reads from it will return its default value.
   public mutating func clearUuid() {self._uuid = nil}
 
   /// known mime_type
   public var contentType: String {
-    get {return _contentType ?? String()}
+    get {_contentType ?? String()}
     set {_contentType = newValue}
   }
   /// Returns true if `contentType` has been explicitly set.
-  public var hasContentType: Bool {return self._contentType != nil}
+  public var hasContentType: Bool {self._contentType != nil}
   /// Clears the value of `contentType`. Subsequent reads from it will return its default value.
   public mutating func clearContentType() {self._contentType = nil}
 
   /// Path contains full path including name (last path part)
   public var initialName: String {
-    get {return _initialName ?? String()}
+    get {_initialName ?? String()}
     set {_initialName = newValue}
   }
   /// Returns true if `initialName` has been explicitly set.
-  public var hasInitialName: Bool {return self._initialName != nil}
+  public var hasInitialName: Bool {self._initialName != nil}
   /// Clears the value of `initialName`. Subsequent reads from it will return its default value.
   public mutating func clearInitialName() {self._initialName = nil}
 
   /// Size of the file
   public var initialSize: Int64 {
-    get {return _initialSize ?? 0}
+    get {_initialSize ?? 0}
     set {_initialSize = newValue}
   }
   /// Returns true if `initialSize` has been explicitly set.
-  public var hasInitialSize: Bool {return self._initialSize != nil}
+  public var hasInitialSize: Bool {self._initialSize != nil}
   /// Clears the value of `initialSize`. Subsequent reads from it will return its default value.
   public mutating func clearInitialSize() {self._initialSize = nil}
 
@@ -1848,7 +2049,7 @@ public struct CellAsset: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_InitialMetaData: Equatable, Sendable {
+  public nonisolated enum OneOf_InitialMetaData: Equatable, Sendable {
     case image(CellAsset.ImageMetaData)
     case video(CellAsset.VideoMetaData)
     case audio(CellAsset.AudioMetaData)
@@ -1860,26 +2061,26 @@ public struct CellAsset: Sendable {
 
   }
 
-  public struct ImageMetaData: Sendable {
+  public nonisolated struct ImageMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var width: Int32 {
-      get {return _width ?? 0}
+      get {_width ?? 0}
       set {_width = newValue}
     }
     /// Returns true if `width` has been explicitly set.
-    public var hasWidth: Bool {return self._width != nil}
+    public var hasWidth: Bool {self._width != nil}
     /// Clears the value of `width`. Subsequent reads from it will return its default value.
     public mutating func clearWidth() {self._width = nil}
 
     public var height: Int32 {
-      get {return _height ?? 0}
+      get {_height ?? 0}
       set {_height = newValue}
     }
     /// Returns true if `height` has been explicitly set.
-    public var hasHeight: Bool {return self._height != nil}
+    public var hasHeight: Bool {self._height != nil}
     /// Clears the value of `height`. Subsequent reads from it will return its default value.
     public mutating func clearHeight() {self._height = nil}
 
@@ -1891,35 +2092,35 @@ public struct CellAsset: Sendable {
     fileprivate var _height: Int32? = nil
   }
 
-  public struct VideoMetaData: Sendable {
+  public nonisolated struct VideoMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var width: Int32 {
-      get {return _width ?? 0}
+      get {_width ?? 0}
       set {_width = newValue}
     }
     /// Returns true if `width` has been explicitly set.
-    public var hasWidth: Bool {return self._width != nil}
+    public var hasWidth: Bool {self._width != nil}
     /// Clears the value of `width`. Subsequent reads from it will return its default value.
     public mutating func clearWidth() {self._width = nil}
 
     public var height: Int32 {
-      get {return _height ?? 0}
+      get {_height ?? 0}
       set {_height = newValue}
     }
     /// Returns true if `height` has been explicitly set.
-    public var hasHeight: Bool {return self._height != nil}
+    public var hasHeight: Bool {self._height != nil}
     /// Clears the value of `height`. Subsequent reads from it will return its default value.
     public mutating func clearHeight() {self._height = nil}
 
     public var durationInMillis: UInt64 {
-      get {return _durationInMillis ?? 0}
+      get {_durationInMillis ?? 0}
       set {_durationInMillis = newValue}
     }
     /// Returns true if `durationInMillis` has been explicitly set.
-    public var hasDurationInMillis: Bool {return self._durationInMillis != nil}
+    public var hasDurationInMillis: Bool {self._durationInMillis != nil}
     /// Clears the value of `durationInMillis`. Subsequent reads from it will return its default value.
     public mutating func clearDurationInMillis() {self._durationInMillis = nil}
 
@@ -1932,26 +2133,26 @@ public struct CellAsset: Sendable {
     fileprivate var _durationInMillis: UInt64? = nil
   }
 
-  public struct AudioMetaData: Sendable {
+  public nonisolated struct AudioMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var durationInMillis: UInt64 {
-      get {return _durationInMillis ?? 0}
+      get {_durationInMillis ?? 0}
       set {_durationInMillis = newValue}
     }
     /// Returns true if `durationInMillis` has been explicitly set.
-    public var hasDurationInMillis: Bool {return self._durationInMillis != nil}
+    public var hasDurationInMillis: Bool {self._durationInMillis != nil}
     /// Clears the value of `durationInMillis`. Subsequent reads from it will return its default value.
     public mutating func clearDurationInMillis() {self._durationInMillis = nil}
 
     public var normalizedLoudness: Data {
-      get {return _normalizedLoudness ?? Data()}
+      get {_normalizedLoudness ?? Data()}
       set {_normalizedLoudness = newValue}
     }
     /// Returns true if `normalizedLoudness` has been explicitly set.
-    public var hasNormalizedLoudness: Bool {return self._normalizedLoudness != nil}
+    public var hasNormalizedLoudness: Bool {self._normalizedLoudness != nil}
     /// Clears the value of `normalizedLoudness`. Subsequent reads from it will return its default value.
     public mutating func clearNormalizedLoudness() {self._normalizedLoudness = nil}
 
@@ -1971,17 +2172,17 @@ public struct CellAsset: Sendable {
   fileprivate var _initialSize: Int64? = nil
 }
 
-public struct Asset: @unchecked Sendable {
+public nonisolated struct Asset: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var original: Asset.Original {
-    get {return _storage._original ?? Asset.Original()}
+    get {_storage._original ?? Asset.Original()}
     set {_uniqueStorage()._original = newValue}
   }
   /// Returns true if `original` has been explicitly set.
-  public var hasOriginal: Bool {return _storage._original != nil}
+  public var hasOriginal: Bool {_storage._original != nil}
   /// Clears the value of `original`. Subsequent reads from it will return its default value.
   public mutating func clearOriginal() {_uniqueStorage()._original = nil}
 
@@ -2008,38 +2209,38 @@ public struct Asset: @unchecked Sendable {
   }
 
   public var preview: Asset.Preview {
-    get {return _storage._preview ?? Asset.Preview()}
+    get {_storage._preview ?? Asset.Preview()}
     set {_uniqueStorage()._preview = newValue}
   }
   /// Returns true if `preview` has been explicitly set.
-  public var hasPreview: Bool {return _storage._preview != nil}
+  public var hasPreview: Bool {_storage._preview != nil}
   /// Clears the value of `preview`. Subsequent reads from it will return its default value.
   public mutating func clearPreview() {_uniqueStorage()._preview = nil}
 
   /// whether the sender is expecting to receive a read confirmation
   public var expectsReadConfirmation: Bool {
-    get {return _storage._expectsReadConfirmation ?? false}
+    get {_storage._expectsReadConfirmation ?? false}
     set {_uniqueStorage()._expectsReadConfirmation = newValue}
   }
   /// Returns true if `expectsReadConfirmation` has been explicitly set.
-  public var hasExpectsReadConfirmation: Bool {return _storage._expectsReadConfirmation != nil}
+  public var hasExpectsReadConfirmation: Bool {_storage._expectsReadConfirmation != nil}
   /// Clears the value of `expectsReadConfirmation`. Subsequent reads from it will return its default value.
   public mutating func clearExpectsReadConfirmation() {_uniqueStorage()._expectsReadConfirmation = nil}
 
   /// whether this message was sent to legal hold
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _storage._legalHoldStatus ?? .unknown}
+    get {_storage._legalHoldStatus ?? .unknown}
     set {_uniqueStorage()._legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return _storage._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {_storage._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {_uniqueStorage()._legalHoldStatus = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// optional Preview preview = 2;  // deprecated - preview was completely replaced
-  public enum OneOf_Status: Equatable, Sendable {
+  public nonisolated enum OneOf_Status: Equatable, Sendable {
     case notUploaded(Asset.NotUploaded)
     case uploaded(Asset.RemoteData)
 
@@ -2050,7 +2251,7 @@ public struct Asset: @unchecked Sendable {
 
   }
 
-  public enum NotUploaded: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum NotUploaded: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case cancelled = 0
     case failed = 1
 
@@ -2060,35 +2261,35 @@ public struct Asset: @unchecked Sendable {
 
   }
 
-  public struct Original: Sendable {
+  public nonisolated struct Original: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var mimeType: String {
-      get {return _mimeType ?? String()}
+      get {_mimeType ?? String()}
       set {_mimeType = newValue}
     }
     /// Returns true if `mimeType` has been explicitly set.
-    public var hasMimeType: Bool {return self._mimeType != nil}
+    public var hasMimeType: Bool {self._mimeType != nil}
     /// Clears the value of `mimeType`. Subsequent reads from it will return its default value.
     public mutating func clearMimeType() {self._mimeType = nil}
 
     public var size: UInt64 {
-      get {return _size ?? 0}
+      get {_size ?? 0}
       set {_size = newValue}
     }
     /// Returns true if `size` has been explicitly set.
-    public var hasSize: Bool {return self._size != nil}
+    public var hasSize: Bool {self._size != nil}
     /// Clears the value of `size`. Subsequent reads from it will return its default value.
     public mutating func clearSize() {self._size = nil}
 
     public var name: String {
-      get {return _name ?? String()}
+      get {_name ?? String()}
       set {_name = newValue}
     }
     /// Returns true if `name` has been explicitly set.
-    public var hasName: Bool {return self._name != nil}
+    public var hasName: Bool {self._name != nil}
     /// Clears the value of `name`. Subsequent reads from it will return its default value.
     public mutating func clearName() {self._name = nil}
 
@@ -2120,27 +2321,27 @@ public struct Asset: @unchecked Sendable {
 
     /// link to source e.g. http://giphy.com/234245
     public var source: String {
-      get {return _source ?? String()}
+      get {_source ?? String()}
       set {_source = newValue}
     }
     /// Returns true if `source` has been explicitly set.
-    public var hasSource: Bool {return self._source != nil}
+    public var hasSource: Bool {self._source != nil}
     /// Clears the value of `source`. Subsequent reads from it will return its default value.
     public mutating func clearSource() {self._source = nil}
 
     /// caption of the asset, e.g. "dog" for a Giphy "dog" search result
     public var caption: String {
-      get {return _caption ?? String()}
+      get {_caption ?? String()}
       set {_caption = newValue}
     }
     /// Returns true if `caption` has been explicitly set.
-    public var hasCaption: Bool {return self._caption != nil}
+    public var hasCaption: Bool {self._caption != nil}
     /// Clears the value of `caption`. Subsequent reads from it will return its default value.
     public mutating func clearCaption() {self._caption = nil}
 
     public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-    public enum OneOf_MetaData: Equatable, Sendable {
+    public nonisolated enum OneOf_MetaData: Equatable, Sendable {
       case image(Asset.ImageMetaData)
       case video(Asset.VideoMetaData)
       case audio(Asset.AudioMetaData)
@@ -2161,35 +2362,35 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _caption: String? = nil
   }
 
-  public struct Preview: Sendable {
+  public nonisolated struct Preview: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var mimeType: String {
-      get {return _mimeType ?? String()}
+      get {_mimeType ?? String()}
       set {_mimeType = newValue}
     }
     /// Returns true if `mimeType` has been explicitly set.
-    public var hasMimeType: Bool {return self._mimeType != nil}
+    public var hasMimeType: Bool {self._mimeType != nil}
     /// Clears the value of `mimeType`. Subsequent reads from it will return its default value.
     public mutating func clearMimeType() {self._mimeType = nil}
 
     public var size: UInt64 {
-      get {return _size ?? 0}
+      get {_size ?? 0}
       set {_size = newValue}
     }
     /// Returns true if `size` has been explicitly set.
-    public var hasSize: Bool {return self._size != nil}
+    public var hasSize: Bool {self._size != nil}
     /// Clears the value of `size`. Subsequent reads from it will return its default value.
     public mutating func clearSize() {self._size = nil}
 
     public var remote: Asset.RemoteData {
-      get {return _remote ?? Asset.RemoteData()}
+      get {_remote ?? Asset.RemoteData()}
       set {_remote = newValue}
     }
     /// Returns true if `remote` has been explicitly set.
-    public var hasRemote: Bool {return self._remote != nil}
+    public var hasRemote: Bool {self._remote != nil}
     /// Clears the value of `remote`. Subsequent reads from it will return its default value.
     public mutating func clearRemote() {self._remote = nil}
 
@@ -2205,7 +2406,7 @@ public struct Asset: @unchecked Sendable {
 
     public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-    public enum OneOf_MetaData: Equatable, Sendable {
+    public nonisolated enum OneOf_MetaData: Equatable, Sendable {
       case image(Asset.ImageMetaData)
 
       fileprivate var isInitialized: Bool {
@@ -2222,35 +2423,35 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _remote: Asset.RemoteData? = nil
   }
 
-  public struct ImageMetaData: Sendable {
+  public nonisolated struct ImageMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var width: Int32 {
-      get {return _width ?? 0}
+      get {_width ?? 0}
       set {_width = newValue}
     }
     /// Returns true if `width` has been explicitly set.
-    public var hasWidth: Bool {return self._width != nil}
+    public var hasWidth: Bool {self._width != nil}
     /// Clears the value of `width`. Subsequent reads from it will return its default value.
     public mutating func clearWidth() {self._width = nil}
 
     public var height: Int32 {
-      get {return _height ?? 0}
+      get {_height ?? 0}
       set {_height = newValue}
     }
     /// Returns true if `height` has been explicitly set.
-    public var hasHeight: Bool {return self._height != nil}
+    public var hasHeight: Bool {self._height != nil}
     /// Clears the value of `height`. Subsequent reads from it will return its default value.
     public mutating func clearHeight() {self._height = nil}
 
     public var tag: String {
-      get {return _tag ?? String()}
+      get {_tag ?? String()}
       set {_tag = newValue}
     }
     /// Returns true if `tag` has been explicitly set.
-    public var hasTag: Bool {return self._tag != nil}
+    public var hasTag: Bool {self._tag != nil}
     /// Clears the value of `tag`. Subsequent reads from it will return its default value.
     public mutating func clearTag() {self._tag = nil}
 
@@ -2263,35 +2464,35 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _tag: String? = nil
   }
 
-  public struct VideoMetaData: Sendable {
+  public nonisolated struct VideoMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var width: Int32 {
-      get {return _width ?? 0}
+      get {_width ?? 0}
       set {_width = newValue}
     }
     /// Returns true if `width` has been explicitly set.
-    public var hasWidth: Bool {return self._width != nil}
+    public var hasWidth: Bool {self._width != nil}
     /// Clears the value of `width`. Subsequent reads from it will return its default value.
     public mutating func clearWidth() {self._width = nil}
 
     public var height: Int32 {
-      get {return _height ?? 0}
+      get {_height ?? 0}
       set {_height = newValue}
     }
     /// Returns true if `height` has been explicitly set.
-    public var hasHeight: Bool {return self._height != nil}
+    public var hasHeight: Bool {self._height != nil}
     /// Clears the value of `height`. Subsequent reads from it will return its default value.
     public mutating func clearHeight() {self._height = nil}
 
     public var durationInMillis: UInt64 {
-      get {return _durationInMillis ?? 0}
+      get {_durationInMillis ?? 0}
       set {_durationInMillis = newValue}
     }
     /// Returns true if `durationInMillis` has been explicitly set.
-    public var hasDurationInMillis: Bool {return self._durationInMillis != nil}
+    public var hasDurationInMillis: Bool {self._durationInMillis != nil}
     /// Clears the value of `durationInMillis`. Subsequent reads from it will return its default value.
     public mutating func clearDurationInMillis() {self._durationInMillis = nil}
 
@@ -2304,27 +2505,27 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _durationInMillis: UInt64? = nil
   }
 
-  public struct AudioMetaData: Sendable {
+  public nonisolated struct AudioMetaData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var durationInMillis: UInt64 {
-      get {return _durationInMillis ?? 0}
+      get {_durationInMillis ?? 0}
       set {_durationInMillis = newValue}
     }
     /// Returns true if `durationInMillis` has been explicitly set.
-    public var hasDurationInMillis: Bool {return self._durationInMillis != nil}
+    public var hasDurationInMillis: Bool {self._durationInMillis != nil}
     /// Clears the value of `durationInMillis`. Subsequent reads from it will return its default value.
     public mutating func clearDurationInMillis() {self._durationInMillis = nil}
 
     /// repeated float normalized_loudness = 2 [packed=true]; // deprecated - Switched to bytes instead
     public var normalizedLoudness: Data {
-      get {return _normalizedLoudness ?? Data()}
+      get {_normalizedLoudness ?? Data()}
       set {_normalizedLoudness = newValue}
     }
     /// Returns true if `normalizedLoudness` has been explicitly set.
-    public var hasNormalizedLoudness: Bool {return self._normalizedLoudness != nil}
+    public var hasNormalizedLoudness: Bool {self._normalizedLoudness != nil}
     /// Clears the value of `normalizedLoudness`. Subsequent reads from it will return its default value.
     public mutating func clearNormalizedLoudness() {self._normalizedLoudness = nil}
 
@@ -2336,64 +2537,64 @@ public struct Asset: @unchecked Sendable {
     fileprivate var _normalizedLoudness: Data? = nil
   }
 
-  public struct RemoteData: Sendable {
+  public nonisolated struct RemoteData: Sendable {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     public var otrKey: Data {
-      get {return _otrKey ?? Data()}
+      get {_otrKey ?? Data()}
       set {_otrKey = newValue}
     }
     /// Returns true if `otrKey` has been explicitly set.
-    public var hasOtrKey: Bool {return self._otrKey != nil}
+    public var hasOtrKey: Bool {self._otrKey != nil}
     /// Clears the value of `otrKey`. Subsequent reads from it will return its default value.
     public mutating func clearOtrKey() {self._otrKey = nil}
 
     /// obsolete but required for backward compatibility
     public var sha256: Data {
-      get {return _sha256 ?? Data()}
+      get {_sha256 ?? Data()}
       set {_sha256 = newValue}
     }
     /// Returns true if `sha256` has been explicitly set.
-    public var hasSha256: Bool {return self._sha256 != nil}
+    public var hasSha256: Bool {self._sha256 != nil}
     /// Clears the value of `sha256`. Subsequent reads from it will return its default value.
     public mutating func clearSha256() {self._sha256 = nil}
 
     public var assetID: String {
-      get {return _assetID ?? String()}
+      get {_assetID ?? String()}
       set {_assetID = newValue}
     }
     /// Returns true if `assetID` has been explicitly set.
-    public var hasAssetID: Bool {return self._assetID != nil}
+    public var hasAssetID: Bool {self._assetID != nil}
     /// Clears the value of `assetID`. Subsequent reads from it will return its default value.
     public mutating func clearAssetID() {self._assetID = nil}
 
     /// optional bytes asset_token = 4; // deprecated - changed type to string
     public var assetToken: String {
-      get {return _assetToken ?? String()}
+      get {_assetToken ?? String()}
       set {_assetToken = newValue}
     }
     /// Returns true if `assetToken` has been explicitly set.
-    public var hasAssetToken: Bool {return self._assetToken != nil}
+    public var hasAssetToken: Bool {self._assetToken != nil}
     /// Clears the value of `assetToken`. Subsequent reads from it will return its default value.
     public mutating func clearAssetToken() {self._assetToken = nil}
 
     public var assetDomain: String {
-      get {return _assetDomain ?? String()}
+      get {_assetDomain ?? String()}
       set {_assetDomain = newValue}
     }
     /// Returns true if `assetDomain` has been explicitly set.
-    public var hasAssetDomain: Bool {return self._assetDomain != nil}
+    public var hasAssetDomain: Bool {self._assetDomain != nil}
     /// Clears the value of `assetDomain`. Subsequent reads from it will return its default value.
     public mutating func clearAssetDomain() {self._assetDomain = nil}
 
     public var encryption: EncryptionAlgorithm {
-      get {return _encryption ?? .aesCbc}
+      get {_encryption ?? .aesCbc}
       set {_encryption = newValue}
     }
     /// Returns true if `encryption` has been explicitly set.
-    public var hasEncryption: Bool {return self._encryption != nil}
+    public var hasEncryption: Bool {self._encryption != nil}
     /// Clears the value of `encryption`. Subsequent reads from it will return its default value.
     public mutating func clearEncryption() {self._encryption = nil}
 
@@ -2415,36 +2616,36 @@ public struct Asset: @unchecked Sendable {
 }
 
 /// Actual message is encrypted with AES and sent as additional data
-public struct External: Sendable {
+public nonisolated struct External: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var otrKey: Data {
-    get {return _otrKey ?? Data()}
+    get {_otrKey ?? Data()}
     set {_otrKey = newValue}
   }
   /// Returns true if `otrKey` has been explicitly set.
-  public var hasOtrKey: Bool {return self._otrKey != nil}
+  public var hasOtrKey: Bool {self._otrKey != nil}
   /// Clears the value of `otrKey`. Subsequent reads from it will return its default value.
   public mutating func clearOtrKey() {self._otrKey = nil}
 
   /// sha256 of ciphertext, obsolete but required for backward compatibility
   public var sha256: Data {
-    get {return _sha256 ?? Data()}
+    get {_sha256 ?? Data()}
     set {_sha256 = newValue}
   }
   /// Returns true if `sha256` has been explicitly set.
-  public var hasSha256: Bool {return self._sha256 != nil}
+  public var hasSha256: Bool {self._sha256 != nil}
   /// Clears the value of `sha256`. Subsequent reads from it will return its default value.
   public mutating func clearSha256() {self._sha256 = nil}
 
   public var encryption: EncryptionAlgorithm {
-    get {return _encryption ?? .aesCbc}
+    get {_encryption ?? .aesCbc}
     set {_encryption = newValue}
   }
   /// Returns true if `encryption` has been explicitly set.
-  public var hasEncryption: Bool {return self._encryption != nil}
+  public var hasEncryption: Bool {self._encryption != nil}
   /// Clears the value of `encryption`. Subsequent reads from it will return its default value.
   public mutating func clearEncryption() {self._encryption = nil}
 
@@ -2457,37 +2658,37 @@ public struct External: Sendable {
   fileprivate var _encryption: EncryptionAlgorithm? = nil
 }
 
-public struct Reaction: Sendable {
+public nonisolated struct Reaction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// some emoji reaction or the empty string to remove previous reaction(s)
   public var emoji: String {
-    get {return _emoji ?? String()}
+    get {_emoji ?? String()}
     set {_emoji = newValue}
   }
   /// Returns true if `emoji` has been explicitly set.
-  public var hasEmoji: Bool {return self._emoji != nil}
+  public var hasEmoji: Bool {self._emoji != nil}
   /// Clears the value of `emoji`. Subsequent reads from it will return its default value.
   public mutating func clearEmoji() {self._emoji = nil}
 
   public var messageID: String {
-    get {return _messageID ?? String()}
+    get {_messageID ?? String()}
     set {_messageID = newValue}
   }
   /// Returns true if `messageID` has been explicitly set.
-  public var hasMessageID: Bool {return self._messageID != nil}
+  public var hasMessageID: Bool {self._messageID != nil}
   /// Clears the value of `messageID`. Subsequent reads from it will return its default value.
   public mutating func clearMessageID() {self._messageID = nil}
 
   /// whether this message was sent to legal hold
   public var legalHoldStatus: LegalHoldStatus {
-    get {return _legalHoldStatus ?? .unknown}
+    get {_legalHoldStatus ?? .unknown}
     set {_legalHoldStatus = newValue}
   }
   /// Returns true if `legalHoldStatus` has been explicitly set.
-  public var hasLegalHoldStatus: Bool {return self._legalHoldStatus != nil}
+  public var hasLegalHoldStatus: Bool {self._legalHoldStatus != nil}
   /// Clears the value of `legalHoldStatus`. Subsequent reads from it will return its default value.
   public mutating func clearLegalHoldStatus() {self._legalHoldStatus = nil}
 
@@ -2500,7 +2701,7 @@ public struct Reaction: Sendable {
   fileprivate var _legalHoldStatus: LegalHoldStatus? = nil
 }
 
-public struct InCallEmoji: Sendable {
+public nonisolated struct InCallEmoji: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2512,18 +2713,18 @@ public struct InCallEmoji: Sendable {
   public init() {}
 }
 
-public struct InCallHandRaise: Sendable {
+public nonisolated struct InCallHandRaise: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// true if the hand is raised, false if lowered
   public var isHandUp: Bool {
-    get {return _isHandUp ?? false}
+    get {_isHandUp ?? false}
     set {_isHandUp = newValue}
   }
   /// Returns true if `isHandUp` has been explicitly set.
-  public var hasIsHandUp: Bool {return self._isHandUp != nil}
+  public var hasIsHandUp: Bool {self._isHandUp != nil}
   /// Clears the value of `isHandUp`. Subsequent reads from it will return its default value.
   public mutating func clearIsHandUp() {self._isHandUp = nil}
 
@@ -2534,26 +2735,26 @@ public struct InCallHandRaise: Sendable {
   fileprivate var _isHandUp: Bool? = nil
 }
 
-public struct Calling: Sendable {
+public nonisolated struct Calling: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var content: String {
-    get {return _content ?? String()}
+    get {_content ?? String()}
     set {_content = newValue}
   }
   /// Returns true if `content` has been explicitly set.
-  public var hasContent: Bool {return self._content != nil}
+  public var hasContent: Bool {self._content != nil}
   /// Clears the value of `content`. Subsequent reads from it will return its default value.
   public mutating func clearContent() {self._content = nil}
 
   public var qualifiedConversationID: QualifiedConversationId {
-    get {return _qualifiedConversationID ?? QualifiedConversationId()}
+    get {_qualifiedConversationID ?? QualifiedConversationId()}
     set {_qualifiedConversationID = newValue}
   }
   /// Returns true if `qualifiedConversationID` has been explicitly set.
-  public var hasQualifiedConversationID: Bool {return self._qualifiedConversationID != nil}
+  public var hasQualifiedConversationID: Bool {self._qualifiedConversationID != nil}
   /// Clears the value of `qualifiedConversationID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedConversationID() {self._qualifiedConversationID = nil}
 
@@ -2565,17 +2766,17 @@ public struct Calling: Sendable {
   fileprivate var _qualifiedConversationID: QualifiedConversationId? = nil
 }
 
-public struct DataTransfer: Sendable {
+public nonisolated struct DataTransfer: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var trackingIdentifier: TrackingIdentifier {
-    get {return _trackingIdentifier ?? TrackingIdentifier()}
+    get {_trackingIdentifier ?? TrackingIdentifier()}
     set {_trackingIdentifier = newValue}
   }
   /// Returns true if `trackingIdentifier` has been explicitly set.
-  public var hasTrackingIdentifier: Bool {return self._trackingIdentifier != nil}
+  public var hasTrackingIdentifier: Bool {self._trackingIdentifier != nil}
   /// Clears the value of `trackingIdentifier`. Subsequent reads from it will return its default value.
   public mutating func clearTrackingIdentifier() {self._trackingIdentifier = nil}
 
@@ -2586,17 +2787,17 @@ public struct DataTransfer: Sendable {
   fileprivate var _trackingIdentifier: TrackingIdentifier? = nil
 }
 
-public struct TrackingIdentifier: Sendable {
+public nonisolated struct TrackingIdentifier: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var identifier: String {
-    get {return _identifier ?? String()}
+    get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  public var hasIdentifier: Bool {return self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
   public mutating func clearIdentifier() {self._identifier = nil}
 
@@ -2607,23 +2808,110 @@ public struct TrackingIdentifier: Sendable {
   fileprivate var _identifier: String? = nil
 }
 
+public nonisolated struct HistoryClient: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var clientID: String {
+    get {_clientID ?? String()}
+    set {_clientID = newValue}
+  }
+  /// Returns true if `clientID` has been explicitly set.
+  public var hasClientID: Bool {self._clientID != nil}
+  /// Clears the value of `clientID`. Subsequent reads from it will return its default value.
+  public mutating func clearClientID() {self._clientID = nil}
+
+  public var createdAt: String {
+    get {_createdAt ?? String()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  public var hasCreatedAt: Bool {self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  public mutating func clearCreatedAt() {self._createdAt = nil}
+
+  public var secret: Data {
+    get {_secret ?? Data()}
+    set {_secret = newValue}
+  }
+  /// Returns true if `secret` has been explicitly set.
+  public var hasSecret: Bool {self._secret != nil}
+  /// Clears the value of `secret`. Subsequent reads from it will return its default value.
+  public mutating func clearSecret() {self._secret = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _clientID: String? = nil
+  fileprivate var _createdAt: String? = nil
+  fileprivate var _secret: Data? = nil
+}
+
+/// Sent in a conversation after new history client has been added
+public nonisolated struct HistoryClientAvailable: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var client: HistoryClient {
+    get {_client ?? HistoryClient()}
+    set {_client = newValue}
+  }
+  /// Returns true if `client` has been explicitly set.
+  public var hasClient: Bool {self._client != nil}
+  /// Clears the value of `client`. Subsequent reads from it will return its default value.
+  public mutating func clearClient() {self._client = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _client: HistoryClient? = nil
+}
+
+/// Sent in a conversation after you've been added to conversation with history sharing enabled
+public nonisolated struct HistoryClientRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// Sent in a subconversation in response to a HistoryClientRequest
+public nonisolated struct HistoryClientResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var clients: [HistoryClient] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension ClientAction: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension ClientAction: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RESET_SESSION\0")
 }
 
-extension EncryptionAlgorithm: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension EncryptionAlgorithm: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0AES_CBC\0\u{1}AES_GCM\0")
 }
 
-extension LegalHoldStatus: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension LegalHoldStatus: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}DISABLED\0\u{1}ENABLED\0")
 }
 
-extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "GenericMessage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{2}\u{2}lastRead\0\u{1}cleared\0\u{1}external\0\u{1}clientAction\0\u{1}calling\0\u{1}asset\0\u{1}hidden\0\u{1}location\0\u{1}deleted\0\u{1}edited\0\u{1}confirmation\0\u{1}reaction\0\u{1}ephemeral\0\u{1}availability\0\u{1}composite\0\u{1}buttonAction\0\u{1}buttonActionConfirmation\0\u{1}dataTransfer\0\u{1}inCallEmoji\0\u{1}unknownStrategy\0\u{1}inCallHandRaise\0\u{1}multipart\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{2}\u{2}lastRead\0\u{1}cleared\0\u{1}external\0\u{1}clientAction\0\u{1}calling\0\u{1}asset\0\u{1}hidden\0\u{1}location\0\u{1}deleted\0\u{1}edited\0\u{1}confirmation\0\u{1}reaction\0\u{1}ephemeral\0\u{1}availability\0\u{1}composite\0\u{1}buttonAction\0\u{1}buttonActionConfirmation\0\u{1}dataTransfer\0\u{1}inCallEmoji\0\u{1}unknownStrategy\0\u{1}inCallHandRaise\0\u{1}multipart\0\u{1}historyClientAvailable\0\u{1}historyClientRequest\0\u{1}historyClientResponse\0\u{1}poll\0\u{1}pollVote\0")
 
   public var isInitialized: Bool {
     if self._messageID == nil {return false}
@@ -2946,6 +3234,71 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.content = .multipart(v)
         }
       }()
+      case 28: try {
+        var v: HistoryClientAvailable?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientAvailable(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientAvailable(v)
+        }
+      }()
+      case 29: try {
+        var v: HistoryClientRequest?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientRequest(v)
+        }
+      }()
+      case 30: try {
+        var v: HistoryClientResponse?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .historyClientResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .historyClientResponse(v)
+        }
+      }()
+      case 31: try {
+        var v: Poll?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .poll(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .poll(v)
+        }
+      }()
+      case 32: try {
+        var v: PollVote?
+        var hadOneofValue = false
+        if let current = self.content {
+          hadOneofValue = true
+          if case .pollVote(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.content = .pollVote(v)
+        }
+      }()
       default: break
       }
     }
@@ -3062,6 +3415,26 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       guard case .multipart(let v)? = self.content else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 27)
     }()
+    case .historyClientAvailable?: try {
+      guard case .historyClientAvailable(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 28)
+    }()
+    case .historyClientRequest?: try {
+      guard case .historyClientRequest(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
+    }()
+    case .historyClientResponse?: try {
+      guard case .historyClientResponse(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 30)
+    }()
+    case .poll?: try {
+      guard case .poll(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 31)
+    }()
+    case .pollVote?: try {
+      guard case .pollVote(let v)? = self.content else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 32)
+    }()
     default: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -3076,11 +3449,11 @@ extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension GenericMessage.UnknownStrategy: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension GenericMessage.UnknownStrategy: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0IGNORE\0\u{1}DISCARD_AND_WARN\0\u{1}WARN_USER_ALLOW_RETRY\0")
 }
 
-extension QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "QualifiedUserId"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
@@ -3125,7 +3498,7 @@ extension QualifiedUserId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension QualifiedConversationId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension QualifiedConversationId: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "QualifiedConversationId"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}domain\0")
 
@@ -3170,7 +3543,7 @@ extension QualifiedConversationId: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Composite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Composite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Composite"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}items\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -3219,7 +3592,7 @@ extension Composite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension Composite.Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Composite.Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Composite.protoMessageName + ".Item"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}button\0")
 
@@ -3291,7 +3664,7 @@ extension Composite.Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension Button: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Button: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Button"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}id\0")
 
@@ -3336,7 +3709,7 @@ extension Button: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
   }
 }
 
-extension ButtonAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension ButtonAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ButtonAction"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}button_id\0\u{3}reference_message_id\0")
 
@@ -3381,7 +3754,7 @@ extension ButtonAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 }
 
-extension ButtonActionConfirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension ButtonActionConfirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ButtonActionConfirmation"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}reference_message_id\0\u{3}button_id\0")
 
@@ -3425,7 +3798,156 @@ extension ButtonActionConfirmation: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
-extension Availability: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Poll: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "Poll"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}question\0\u{1}options\0\u{3}allow_multiple_answers\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
+
+  public var isInitialized: Bool {
+    if self._question == nil {return false}
+    if !SwiftProtobuf.Internal.areAllInitialized(self.options) {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._question) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self._allowMultipleAnswers) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self._expectsReadConfirmation) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self._legalHoldStatus) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._question {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 2)
+    }
+    try { if let v = self._allowMultipleAnswers {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._expectsReadConfirmation {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._legalHoldStatus {
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Poll, rhs: Poll) -> Bool {
+    if lhs._question != rhs._question {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs._allowMultipleAnswers != rhs._allowMultipleAnswers {return false}
+    if lhs._expectsReadConfirmation != rhs._expectsReadConfirmation {return false}
+    if lhs._legalHoldStatus != rhs._legalHoldStatus {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension PollOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "PollOption"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}text\0")
+
+  public var isInitialized: Bool {
+    if self._id == nil {return false}
+    if self._text == nil {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._text) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._id {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._text {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: PollOption, rhs: PollOption) -> Bool {
+    if lhs._id != rhs._id {return false}
+    if lhs._text != rhs._text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension PollVote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "PollVote"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}reference_message_id\0\u{3}selected_option_ids\0")
+
+  public var isInitialized: Bool {
+    if self._referenceMessageID == nil {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._referenceMessageID) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.selectedOptionIds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._referenceMessageID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    if !self.selectedOptionIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.selectedOptionIds, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: PollVote, rhs: PollVote) -> Bool {
+    if lhs._referenceMessageID != rhs._referenceMessageID {return false}
+    if lhs.selectedOptionIds != rhs.selectedOptionIds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Availability: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Availability"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0")
 
@@ -3464,11 +3986,11 @@ extension Availability: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 }
 
-extension Availability.TypeEnum: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Availability.TypeEnum: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NONE\0\u{1}AVAILABLE\0\u{1}AWAY\0\u{1}BUSY\0")
 }
 
-extension Ephemeral: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Ephemeral: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Ephemeral"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}expire_after_millis\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{1}asset\0\u{1}location\0")
 
@@ -3597,7 +4119,7 @@ extension Ephemeral: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension Text: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Text: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Text"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}content\0\u{4}\u{2}link_preview\0\u{1}mentions\0\u{1}quote\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -3664,7 +4186,7 @@ extension Text: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
   }
 }
 
-extension Knock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Knock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Knock"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}hot_knock\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -3713,7 +4235,7 @@ extension Knock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
   }
 }
 
-extension LinkPreview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension LinkPreview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "LinkPreview"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}url\0\u{3}url_offset\0\u{1}article\0\u{4}\u{2}permanent_url\0\u{1}title\0\u{1}summary\0\u{1}image\0\u{1}tweet\0")
 
@@ -3814,7 +4336,7 @@ extension LinkPreview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   }
 }
 
-extension Tweet: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Tweet: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Tweet"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}author\0\u{1}username\0")
 
@@ -3853,7 +4375,7 @@ extension Tweet: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
   }
 }
 
-extension Article: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Article: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Article"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}permanent_url\0\u{1}title\0\u{1}summary\0\u{1}image\0")
 
@@ -3908,9 +4430,9 @@ extension Article: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
   }
 }
 
-extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Mention"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}start\0\u{1}length\0\u{3}user_id\0\u{3}qualified_user_id\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}start\0\u{1}length\0\u{3}user_id\0\u{3}qualified_user_id\0\u{1}everyone\0")
 
   public var isInitialized: Bool {
     if self._start == nil {return false}
@@ -3936,6 +4458,7 @@ extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
         }
       }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._qualifiedUserID) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self._everyone) }()
       default: break
       }
     }
@@ -3958,6 +4481,9 @@ extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     try { if let v = self._qualifiedUserID {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    try { if let v = self._everyone {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3966,12 +4492,13 @@ extension Mention: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if lhs._length != rhs._length {return false}
     if lhs.mentionType != rhs.mentionType {return false}
     if lhs._qualifiedUserID != rhs._qualifiedUserID {return false}
+    if lhs._everyone != rhs._everyone {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension LastRead: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension LastRead: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "LastRead"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}last_read_timestamp\0\u{3}qualified_conversation_id\0")
 
@@ -4022,9 +4549,9 @@ extension LastRead: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Cleared"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}cleared_timestamp\0\u{3}qualified_conversation_id\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}cleared_timestamp\0\u{3}qualified_conversation_id\0\u{1}needToRemoveLocally\0")
 
   public var isInitialized: Bool {
     if self._conversationID == nil {return false}
@@ -4042,6 +4569,7 @@ extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
       case 1: try { try decoder.decodeSingularStringField(value: &self._conversationID) }()
       case 2: try { try decoder.decodeSingularInt64Field(value: &self._clearedTimestamp) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._qualifiedConversationID) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self._needToRemoveLocally) }()
       default: break
       }
     }
@@ -4061,6 +4589,9 @@ extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     try { if let v = self._qualifiedConversationID {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._needToRemoveLocally {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4068,12 +4599,13 @@ extension Cleared: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if lhs._conversationID != rhs._conversationID {return false}
     if lhs._clearedTimestamp != rhs._clearedTimestamp {return false}
     if lhs._qualifiedConversationID != rhs._qualifiedConversationID {return false}
+    if lhs._needToRemoveLocally != rhs._needToRemoveLocally {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension MessageHide: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension MessageHide: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageHide"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}conversation_id\0\u{3}message_id\0\u{3}qualified_conversation_id\0")
 
@@ -4124,7 +4656,7 @@ extension MessageHide: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   }
 }
 
-extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageDelete"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0")
 
@@ -4163,7 +4695,7 @@ extension MessageDelete: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "MessageEdit"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}replacing_message_id\0\u{1}text\0\u{1}composite\0\u{1}multipart\0")
 
@@ -4258,7 +4790,7 @@ extension MessageEdit: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   }
 }
 
-extension Quote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Quote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Quote"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}quoted_message_id\0\u{3}quoted_message_sha256\0")
 
@@ -4302,7 +4834,7 @@ extension Quote: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
   }
 }
 
-extension Confirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Confirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Confirmation"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}first_message_id\0\u{1}type\0\u{3}more_message_ids\0")
 
@@ -4352,11 +4884,11 @@ extension Confirmation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 }
 
-extension Confirmation.TypeEnum: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Confirmation.TypeEnum: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0DELIVERED\0\u{1}READ\0")
 }
 
-extension Location: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Location: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Location"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}longitude\0\u{1}latitude\0\u{1}name\0\u{1}zoom\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -4421,7 +4953,7 @@ extension Location: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension ImageAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension ImageAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "ImageAsset"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tag\0\u{1}width\0\u{1}height\0\u{3}original_width\0\u{3}original_height\0\u{3}mime_type\0\u{1}size\0\u{3}otr_key\0\u{3}mac_key\0\u{1}mac\0\u{1}sha256\0")
 
@@ -4516,7 +5048,7 @@ extension ImageAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   }
 }
 
-extension Attachment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Attachment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Attachment"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}asset\0\u{3}cell_asset\0")
 
@@ -4588,7 +5120,7 @@ extension Attachment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   }
 }
 
-extension Multipart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Multipart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Multipart"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}text\0\u{1}attachments\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -4643,7 +5175,7 @@ extension Multipart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension CellAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension CellAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "CellAsset"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{3}content_type\0\u{3}initial_name\0\u{3}initial_size\0\u{1}image\0\u{1}video\0\u{1}audio\0")
 
@@ -4754,7 +5286,7 @@ extension CellAsset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension CellAsset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension CellAsset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".ImageMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0")
 
@@ -4799,7 +5331,7 @@ extension CellAsset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension CellAsset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension CellAsset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".VideoMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{3}duration_in_millis\0")
 
@@ -4843,7 +5375,7 @@ extension CellAsset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension CellAsset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension CellAsset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = CellAsset.protoMessageName + ".AudioMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}duration_in_millis\0\u{3}normalized_loudness\0")
 
@@ -4882,7 +5414,7 @@ extension CellAsset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Asset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Asset"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}original\0\u{4}\u{2}not_uploaded\0\u{1}uploaded\0\u{1}preview\0\u{3}expects_read_confirmation\0\u{3}legal_hold_status\0")
 
@@ -5017,11 +5549,11 @@ extension Asset: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase
   }
 }
 
-extension Asset.NotUploaded: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.NotUploaded: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CANCELLED\0\u{1}FAILED\0")
 }
 
-extension Asset.Original: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.Original: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".Original"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}mime_type\0\u{1}size\0\u{1}name\0\u{1}image\0\u{1}video\0\u{1}audio\0\u{1}source\0\u{1}caption\0")
 
@@ -5137,7 +5669,7 @@ extension Asset.Original: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension Asset.Preview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.Preview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".Preview"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}mime_type\0\u{1}size\0\u{1}remote\0\u{1}image\0")
 
@@ -5206,7 +5738,7 @@ extension Asset.Preview: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension Asset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".ImageMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{1}tag\0")
 
@@ -5256,7 +5788,7 @@ extension Asset.ImageMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Asset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".VideoMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}width\0\u{1}height\0\u{3}duration_in_millis\0")
 
@@ -5300,7 +5832,7 @@ extension Asset.VideoMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Asset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".AudioMetaData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}duration_in_millis\0\u{4}\u{2}normalized_loudness\0")
 
@@ -5339,7 +5871,7 @@ extension Asset.AudioMetaData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Asset.RemoteData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Asset.RemoteData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Asset.protoMessageName + ".RemoteData"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}otr_key\0\u{1}sha256\0\u{3}asset_id\0\u{4}\u{2}asset_token\0\u{1}encryption\0\u{3}asset_domain\0")
 
@@ -5404,7 +5936,7 @@ extension Asset.RemoteData: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension External: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension External: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "External"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}otr_key\0\u{1}sha256\0\u{1}encryption\0")
 
@@ -5453,7 +5985,7 @@ extension External: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension Reaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Reaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Reaction"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}emoji\0\u{3}message_id\0\u{3}legal_hold_status\0")
 
@@ -5502,7 +6034,7 @@ extension Reaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension InCallEmoji: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension InCallEmoji: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "InCallEmoji"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}emojis\0")
 
@@ -5532,7 +6064,7 @@ extension InCallEmoji: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   }
 }
 
-extension InCallHandRaise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension InCallHandRaise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "InCallHandRaise"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}is_hand_up\0")
 
@@ -5571,7 +6103,7 @@ extension InCallHandRaise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension Calling: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Calling: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "Calling"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}content\0\u{3}qualified_conversation_id\0")
 
@@ -5616,7 +6148,7 @@ extension Calling: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
   }
 }
 
-extension DataTransfer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension DataTransfer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "DataTransfer"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}trackingIdentifier\0")
 
@@ -5655,7 +6187,7 @@ extension DataTransfer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 }
 
-extension TrackingIdentifier: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension TrackingIdentifier: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "TrackingIdentifier"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0")
 
@@ -5689,6 +6221,151 @@ extension TrackingIdentifier: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   public static func ==(lhs: TrackingIdentifier, rhs: TrackingIdentifier) -> Bool {
     if lhs._identifier != rhs._identifier {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension HistoryClient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClient"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}client_id\0\u{3}created_at\0\u{1}secret\0")
+
+  public var isInitialized: Bool {
+    if self._clientID == nil {return false}
+    if self._createdAt == nil {return false}
+    if self._secret == nil {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._clientID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeSingularBytesField(value: &self._secret) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._clientID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._createdAt {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._secret {
+      try visitor.visitSingularBytesField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClient, rhs: HistoryClient) -> Bool {
+    if lhs._clientID != rhs._clientID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._secret != rhs._secret {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension HistoryClientAvailable: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientAvailable"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0")
+
+  public var isInitialized: Bool {
+    if self._client == nil {return false}
+    if let v = self._client, !v.isInitialized {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._client) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._client {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientAvailable, rhs: HistoryClientAvailable) -> Bool {
+    if lhs._client != rhs._client {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension HistoryClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientRequest, rhs: HistoryClientRequest) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension HistoryClientResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = "HistoryClientResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}clients\0")
+
+  public var isInitialized: Bool {
+    if !SwiftProtobuf.Internal.areAllInitialized(self.clients) {return false}
+    return true
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.clients) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.clients.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.clients, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: HistoryClientResponse, rhs: HistoryClientResponse) -> Bool {
+    if lhs.clients != rhs.clients {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
