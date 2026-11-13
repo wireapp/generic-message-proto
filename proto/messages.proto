@@ -48,7 +48,6 @@ message GenericMessage {
     DataTransfer dataTransfer = 23; // client-side synchronization across devices of the same user
     InCallEmoji inCallEmoji = 24;
     // UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
-    // Next field should be 26 ↓
     InCallHandRaise inCallHandRaise = 26;
     Multipart multipart = 27;
     HistoryClientAvailable historyClientAvailable = 28;
@@ -56,6 +55,7 @@ message GenericMessage {
     HistoryClientResponse historyClientResponse = 30;
     Poll poll = 31;
     PollVote pollVote = 32;
+    // Next field should be 33 ↓ (field numbers are shared with fields outside the oneof)
   }
   optional UnknownStrategy unknownStrategy = 25 [default = IGNORE];
 
@@ -107,6 +107,18 @@ message ButtonActionConfirmation {
 
 // A native poll. The GenericMessage id is the poll id. Votes are never anonymous:
 // every client sees the sender of each encrypted PollVote.
+//
+// Senders MUST set GenericMessage.unknownStrategy = DISCARD_AND_WARN, so clients
+// without poll support show an unsupported-message notice instead of silently
+// dropping the poll.
+// Polls cannot be wrapped in Ephemeral or edited via MessageEdit. Clients should
+// not offer poll creation while self-deleting messages are active.
+// Senders should send a non-blank question and 2 to 10 options with distinct ids
+// and non-blank text. Options never change after creation.
+// Receivers drop options whose id repeats an earlier option's id.
+//
+// See Kalium ADR 0016 "Native End-to-End Encrypted Polls" for details, including
+// the SHA-256 encoding used when a Text message quotes a poll.
 message Poll {
   required string question = 1;
   repeated PollOption options = 2;
@@ -117,12 +129,19 @@ message Poll {
 }
 
 message PollOption {
-  required string id = 1;
+  required string id = 1; // stable id, unique within the poll; referenced by PollVote
   required string text = 2;
 }
 
 // The sender's complete current selection for a poll. It replaces any earlier vote from the
 // same user. An empty selection retracts the vote.
+//
+// Senders keep the default unknownStrategy (IGNORE).
+// Receivers keep one current vote per user and poll. A vote replaces the stored vote only
+// if it is not older (by message time), so out-of-order delivery cannot restore an old
+// selection. Repeated option ids are removed. A vote is dropped (not buffered) if the poll
+// is unknown, if any option id does not belong to the poll, or if it selects more than
+// one option while allow_multiple_answers is false.
 message PollVote {
   required string reference_message_id = 1;
   repeated string selected_option_ids = 2;
@@ -209,7 +228,13 @@ message Mention {
   // only optional to maintain backwards compatibility.
   optional QualifiedUserId qualified_user_id = 4;
   // Explicit group-wide mention. Send without user_id or qualified_user_id.
-  // Older clients ignore this field and continue to display the literal text.
+  // Receivers must treat a mention with everyone = true and a user_id or
+  // qualified_user_id as invalid, and ignore it.
+  // Compatibility with clients that don't know this field (they see a mention
+  // without any user id):
+  // - Web drops only the invalid mention and displays the literal text.
+  // - iOS rejects the whole Text message, so the message is NOT displayed.
+  //   Senders must take this into account until iOS supports this field.
   optional bool everyone = 5;
 }
 
@@ -229,6 +254,11 @@ message Cleared {
   required int64 cleared_timestamp = 2;
   // only optional to maintain backwards compatibility
   optional QualifiedConversationId qualified_conversation_id = 3;
+  // If true, receivers clear the conversation content AND delete the conversation
+  // locally. Like the rest of Cleared, it is only honoured when sent by the self
+  // user in the self conversation.
+  // Clients that don't know this field only clear the content and keep the
+  // conversation, so the user's devices can disagree about whether it still exists.
   optional bool needToRemoveLocally = 4 [default = false];
 }
 
@@ -247,11 +277,12 @@ message MessageDelete {
 
 message MessageEdit {
   required string replacing_message_id = 1;
+  // A reply can also be edited, but the edit only affects its Text part
+  // (see Text.quote).
   oneof content {
     Text text = 2;
     Composite composite = 3;
     Multipart multipart = 4;
-    // Reply can also be edited, but the edit will only affect the Text part
   }
 }
 
@@ -455,9 +486,17 @@ message TrackingIdentifier {
   required string identifier = 1;
 }
 
+// History sharing. These messages are defined, but no client acts on them yet:
+// Kalium receives them, logs them as unsupported and skips them. Who may send
+// them, over which protocol, and how receivers validate them still has to be
+// specified before any client implements history sharing.
 message HistoryClient {
   required string client_id = 1;
+  // ISO-8601 UTC date-time with millisecond precision, e.g. "2026-11-13T09:30:00.000Z".
+  // Unlike other timestamps in this file, this is a string, not int64 milliseconds.
   required string created_at = 2;
+  // Key material. Must only be sent end-to-end encrypted to the members allowed to
+  // read the conversation history.
   required bytes secret = 3;
 }
 

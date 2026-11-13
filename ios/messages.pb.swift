@@ -268,7 +268,6 @@ public nonisolated struct GenericMessage: Sendable {
   }
 
   /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
-  /// Next field should be 26 ↓
   public var inCallHandRaise: InCallHandRaise {
     get {
       if case .inCallHandRaise(let v)? = content {return v}
@@ -317,6 +316,7 @@ public nonisolated struct GenericMessage: Sendable {
     set {content = .poll(newValue)}
   }
 
+  /// Next field should be 33 ↓ (field numbers are shared with fields outside the oneof)
   public var pollVote: PollVote {
     get {
       if case .pollVote(let v)? = content {return v}
@@ -362,13 +362,13 @@ public nonisolated struct GenericMessage: Sendable {
     case dataTransfer(DataTransfer)
     case inCallEmoji(InCallEmoji)
     /// UnknownStrategy unknownStrategy = 25; -- Defined outside the oneof
-    /// Next field should be 26 ↓
     case inCallHandRaise(InCallHandRaise)
     case multipart(Multipart)
     case historyClientAvailable(HistoryClientAvailable)
     case historyClientRequest(HistoryClientRequest)
     case historyClientResponse(HistoryClientResponse)
     case poll(Poll)
+    /// Next field should be 33 ↓ (field numbers are shared with fields outside the oneof)
     case pollVote(PollVote)
 
     fileprivate var isInitialized: Bool {
@@ -751,6 +751,18 @@ public nonisolated struct ButtonActionConfirmation: Sendable {
 
 /// A native poll. The GenericMessage id is the poll id. Votes are never anonymous:
 /// every client sees the sender of each encrypted PollVote.
+///
+/// Senders MUST set GenericMessage.unknownStrategy = DISCARD_AND_WARN, so clients
+/// without poll support show an unsupported-message notice instead of silently
+/// dropping the poll.
+/// Polls cannot be wrapped in Ephemeral or edited via MessageEdit. Clients should
+/// not offer poll creation while self-deleting messages are active.
+/// Senders should send a non-blank question and 2 to 10 options with distinct ids
+/// and non-blank text. Options never change after creation.
+/// Receivers drop options whose id repeats an earlier option's id.
+///
+/// See Kalium ADR 0016 "Native End-to-End Encrypted Polls" for details, including
+/// the SHA-256 encoding used when a Text message quotes a poll.
 public nonisolated struct Poll: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -810,6 +822,7 @@ public nonisolated struct PollOption: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// stable id, unique within the poll; referenced by PollVote
   public var id: String {
     get {_id ?? String()}
     set {_id = newValue}
@@ -838,6 +851,13 @@ public nonisolated struct PollOption: Sendable {
 
 /// The sender's complete current selection for a poll. It replaces any earlier vote from the
 /// same user. An empty selection retracts the vote.
+///
+/// Senders keep the default unknownStrategy (IGNORE).
+/// Receivers keep one current vote per user and poll. A vote replaces the stored vote only
+/// if it is not older (by message time), so out-of-order delivery cannot restore an old
+/// selection. Repeated option ids are removed. A vote is dropped (not buffered) if the poll
+/// is unknown, if any option id does not belong to the poll, or if it selects more than
+/// one option while allow_multiple_answers is false.
 public nonisolated struct PollVote: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1338,7 +1358,13 @@ public nonisolated struct Mention: Sendable {
   public mutating func clearQualifiedUserID() {self._qualifiedUserID = nil}
 
   /// Explicit group-wide mention. Send without user_id or qualified_user_id.
-  /// Older clients ignore this field and continue to display the literal text.
+  /// Receivers must treat a mention with everyone = true and a user_id or
+  /// qualified_user_id as invalid, and ignore it.
+  /// Compatibility with clients that don't know this field (they see a mention
+  /// without any user id):
+  /// - Web drops only the invalid mention and displays the literal text.
+  /// - iOS rejects the whole Text message, so the message is NOT displayed.
+  ///   Senders must take this into account until iOS supports this field.
   public var everyone: Bool {
     get {_everyone ?? false}
     set {_everyone = newValue}
@@ -1445,6 +1471,11 @@ public nonisolated struct Cleared: Sendable {
   /// Clears the value of `qualifiedConversationID`. Subsequent reads from it will return its default value.
   public mutating func clearQualifiedConversationID() {self._qualifiedConversationID = nil}
 
+  /// If true, receivers clear the conversation content AND delete the conversation
+  /// locally. Like the rest of Cleared, it is only honoured when sent by the self
+  /// user in the self conversation.
+  /// Clients that don't know this field only clear the content and keep the
+  /// conversation, so the user's devices can disagree about whether it still exists.
   public var needToRemoveLocally: Bool {
     get {_needToRemoveLocally ?? false}
     set {_needToRemoveLocally = newValue}
@@ -1543,6 +1574,8 @@ public nonisolated struct MessageEdit: Sendable {
   /// Clears the value of `replacingMessageID`. Subsequent reads from it will return its default value.
   public mutating func clearReplacingMessageID() {self._replacingMessageID = nil}
 
+  /// A reply can also be edited, but the edit only affects its Text part
+  /// (see Text.quote).
   public var content: MessageEdit.OneOf_Content? = nil
 
   public var text: Text {
@@ -1561,7 +1594,6 @@ public nonisolated struct MessageEdit: Sendable {
     set {content = .composite(newValue)}
   }
 
-  /// Reply can also be edited, but the edit will only affect the Text part
   public var multipart: Multipart {
     get {
       if case .multipart(let v)? = content {return v}
@@ -1572,10 +1604,11 @@ public nonisolated struct MessageEdit: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
+  /// A reply can also be edited, but the edit only affects its Text part
+  /// (see Text.quote).
   public nonisolated enum OneOf_Content: Equatable, Sendable {
     case text(Text)
     case composite(Composite)
-    /// Reply can also be edited, but the edit will only affect the Text part
     case multipart(Multipart)
 
     fileprivate var isInitialized: Bool {
@@ -2808,6 +2841,10 @@ public nonisolated struct TrackingIdentifier: Sendable {
   fileprivate var _identifier: String? = nil
 }
 
+/// History sharing. These messages are defined, but no client acts on them yet:
+/// Kalium receives them, logs them as unsupported and skips them. Who may send
+/// them, over which protocol, and how receivers validate them still has to be
+/// specified before any client implements history sharing.
 public nonisolated struct HistoryClient: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -2822,6 +2859,8 @@ public nonisolated struct HistoryClient: Sendable {
   /// Clears the value of `clientID`. Subsequent reads from it will return its default value.
   public mutating func clearClientID() {self._clientID = nil}
 
+  /// ISO-8601 UTC date-time with millisecond precision, e.g. "2026-11-13T09:30:00.000Z".
+  /// Unlike other timestamps in this file, this is a string, not int64 milliseconds.
   public var createdAt: String {
     get {_createdAt ?? String()}
     set {_createdAt = newValue}
@@ -2831,6 +2870,8 @@ public nonisolated struct HistoryClient: Sendable {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   public mutating func clearCreatedAt() {self._createdAt = nil}
 
+  /// Key material. Must only be sent end-to-end encrypted to the members allowed to
+  /// read the conversation history.
   public var secret: Data {
     get {_secret ?? Data()}
     set {_secret = newValue}
