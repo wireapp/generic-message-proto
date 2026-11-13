@@ -79,8 +79,10 @@ the (E2E-encrypted) payload.
       where irrelevant).
 - [ ] Run `yarn dist && yarn test` (not run while drafting: no node toolchain
       on that machine) and check the Android/iOS builds.
-- [ ] This branch currently contains PR #108 (merged from
-      `feat/protocol-update-from-android`, not yet on master). Once #108 lands
-      on master, merge master in again and confirm the numbers 28–32 haven't
-      changed. If #108 is squash-merged, expect conflicts on its lines.
+- [x] PR #108 landed on master (squash-merged 2026-11-11, content identical
+      to the version merged earlier; 28–32 unchanged). Master merged in;
+      Kalium's proto re-checked on 2026-11-13, 33 is still free.
+- [ ] Note: #108 was merged without the review's documentation fixes
+      (`Mention.everyone` comment, `needToRemoveLocally`, poll/history docs).
+      Follow up separately; not part of this branch.
 - [ ] Remove this file before merging.
