@@ -77,8 +77,12 @@ the (E2E-encrypted) payload.
 - [ ] Decide whether to set the field on all message types or only on
       user-visible content (cheap to always set; receivers just ignore it
       where irrelevant).
-- [ ] Run `yarn dist && yarn test` (not run while drafting: no node toolchain
-      on that machine) and check the Android/iOS builds.
+- [x] iOS Swift bindings regenerated with `ios/update.sh` (protoc-gen-swift
+      1.39.0, which reproduces master's checked-in output exactly). `swift build`
+      and `swift test` pass. CI fails if these bindings are stale, so rerun
+      `ios/update.sh` after any proto change.
+- [ ] Run `yarn dist && yarn test` (no node toolchain on this machine yet;
+      CI will run it) and check the Android build.
 - [x] PR #108 landed on master (squash-merged 2026-11-11, content identical
       to the version merged earlier; 28–32 unchanged). Master merged in;
       Kalium's proto re-checked on 2026-11-13, 33 is still free.
