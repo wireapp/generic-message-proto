@@ -2,7 +2,10 @@
   "name": "@wireapp/protocol-messaging",
   "license": "GPL-3.0",
   "description": "Protocol definition for generic messages.",
-  "repository": "https://github.com/wireapp/generic-message-proto.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wireapp/generic-message-proto.git"
+  },
   "files": [
     "proto/*.proto",
     "web/*.d.ts",
