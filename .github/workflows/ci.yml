@@ -38,12 +38,29 @@ jobs:
             exit 1
           fi
 
+      # Don't rely on a Yarn pre-installed on the runner: fetch the exact version from
+      # package.json's "packageManager" field, verify its SHA-512 and install it into
+      # the job's temp dir (nothing is installed globally on the runner).
+      - name: "Install Yarn (version and checksum from packageManager)"
+        run: |
+          set -euo pipefail
+          spec=$(node -p "require('./package.json').packageManager")
+          [[ "$spec" =~ ^yarn@([0-9.]+)\+sha512\.([0-9a-f]{128})$ ]] || { echo "::error::Unexpected packageManager: $spec"; exit 1; }
+          version="${BASH_REMATCH[1]}"; sha512="${BASH_REMATCH[2]}"
+          dir="$RUNNER_TEMP/yarn"; mkdir -p "$dir"
+          curl -fsSL -o "$dir/yarn.tgz" "https://registry.npmjs.org/yarn/-/yarn-$version.tgz"
+          echo "$sha512  $dir/yarn.tgz" | sha512sum -c -
+          tar -xzf "$dir/yarn.tgz" -C "$dir"
+          echo "$dir/package/bin" >> "$GITHUB_PATH"
+
       - name: "Extend environment variables"
         run: |
           echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: "Build & Test"
-        run: yarn --frozen-lockfile && yarn dist && yarn test
+        run: |
+          echo "Using yarn $(yarn --version) from $(command -v yarn)"
+          yarn --frozen-lockfile && yarn dist && yarn test
 
       # No npm token needed for publish; OIDC is handled automatically by npm Trusted Publishers
       - name: "Configure Git identity"
