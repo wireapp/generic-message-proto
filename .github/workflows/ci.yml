@@ -6,13 +6,16 @@ on:
   pull_request:
     branches: [master]
 
+# Least privilege by default; jobs that need more request it explicitly.
 permissions:
-  id-token: write
-  contents: write
+  contents: read
 
 jobs:
   test_build_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # push version commit and tag on release
+      id-token: write # npm Trusted Publishing (OIDC)
 
     steps:
       - name: "Checkout repository"
@@ -25,15 +28,22 @@ jobs:
         with:
           node-version: "26"
 
-      - name: "Update npm to latest (Trusted Publishers requires npm >= 11.5.1)"
-        run: npm install -g npm@latest
+      # Use the npm bundled with Node instead of downloading another version.
+      - name: "Verify npm version (Trusted Publishers requires npm >= 11.5.1)"
+        run: |
+          v=$(npm --version)
+          echo "npm $v"
+          if [ "$(printf '%s\n' 11.5.1 "$v" | sort -V | head -n1)" != "11.5.1" ]; then
+            echo "::error::npm >= 11.5.1 is required for Trusted Publishing, found $v"
+            exit 1
+          fi
 
       - name: "Extend environment variables"
         run: |
           echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: "Build & Test"
-        run: yarn && yarn dist && yarn test
+        run: yarn --frozen-lockfile && yarn dist && yarn test
 
       # No npm token needed for publish; OIDC is handled automatically by npm Trusted Publishers
       - name: "Configure Git identity"
@@ -56,6 +66,8 @@ jobs:
 
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Ensure generated code is up-to-date
         run: |
