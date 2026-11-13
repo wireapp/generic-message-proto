@@ -23,8 +23,6 @@
   },
   "scripts": {
     "dist": "node web/compile.js",
-    "postversion": "git push origin master --tags && npm publish",
-    "preversion": "git checkout master && git pull && yarn && yarn dist && yarn test",
     "test": "tsc --noEmit"
   },
   "version": "1.56.0",
