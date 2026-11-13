@@ -13,11 +13,6 @@ permissions:
 jobs:
   test_build_deploy:
     runs-on: ubuntu-latest
-    env:
-      # setup-node >= v7 no longer exports a placeholder token, but the generated .npmrc
-      # still references ${NODE_AUTH_TOKEN} and yarn v1 fails if it is unset.
-      # The real auth for `npm publish` is done via OIDC (npm Trusted Publishers).
-      NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
 
     steps:
       - name: "Checkout repository"
@@ -29,7 +24,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
-          registry-url: "https://registry.npmjs.org"
 
       - name: "Update npm to latest (Trusted Publishers requires npm >= 11.5.1)"
         run: npm install -g npm@latest
