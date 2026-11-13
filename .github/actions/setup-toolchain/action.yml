@@ -1,0 +1,19 @@
+name: "Set up toolchain"
+description: >-
+  Installs Node.js and the exact Yarn version pinned in package.json's
+  "packageManager" field (checksum verified). Nothing is installed globally
+  on the runner, so the workflow doesn't depend on pre-installed software.
+
+runs:
+  using: composite
+  steps:
+    - name: "Set up Node.js"
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: "26"
+        # Never restore caches: a poisoned cache could reach the publishing job.
+        package-manager-cache: false
+
+    - name: "Install Yarn (version and checksum from packageManager)"
+      shell: bash
+      run: node "$GITHUB_ACTION_PATH/install-yarn.mjs"
