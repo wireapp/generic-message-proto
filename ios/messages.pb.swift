@@ -316,7 +316,8 @@ public nonisolated struct GenericMessage: Sendable {
     set {content = .poll(newValue)}
   }
 
-  /// Next field should be 33 ↓ (field numbers are shared with fields outside the oneof)
+  /// int64 client_created_at_millis = 33; -- Defined outside the oneof
+  /// Next field should be 34 ↓ (field numbers are shared with fields outside the oneof)
   public var pollVote: PollVote {
     get {
       if case .pollVote(let v)? = content {return v}
@@ -333,6 +334,22 @@ public nonisolated struct GenericMessage: Sendable {
   public var hasUnknownStrategy: Bool {self._unknownStrategy != nil}
   /// Clears the value of `unknownStrategy`. Subsequent reads from it will return its default value.
   public mutating func clearUnknownStrategy() {self._unknownStrategy = nil}
+
+  /// Sender-asserted time (milliseconds since Unix epoch, UTC) at which the user
+  /// issued the send action. Clients SHOULD correct it by their known offset to
+  /// the server time. The value MUST be kept unchanged across retries and
+  /// re-encryption (e.g. offline queue, missing clients).
+  /// Informational only: receivers MUST NOT use it for ordering, read state or
+  /// expiry, and SHOULD ignore values later than the server timestamp.
+  /// For External messages, set it on the inner (encrypted) GenericMessage.
+  public var clientCreatedAtMillis: Int64 {
+    get {_clientCreatedAtMillis ?? 0}
+    set {_clientCreatedAtMillis = newValue}
+  }
+  /// Returns true if `clientCreatedAtMillis` has been explicitly set.
+  public var hasClientCreatedAtMillis: Bool {self._clientCreatedAtMillis != nil}
+  /// Clears the value of `clientCreatedAtMillis`. Subsequent reads from it will return its default value.
+  public mutating func clearClientCreatedAtMillis() {self._clientCreatedAtMillis = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -368,7 +385,8 @@ public nonisolated struct GenericMessage: Sendable {
     case historyClientRequest(HistoryClientRequest)
     case historyClientResponse(HistoryClientResponse)
     case poll(Poll)
-    /// Next field should be 33 ↓ (field numbers are shared with fields outside the oneof)
+    /// int64 client_created_at_millis = 33; -- Defined outside the oneof
+    /// Next field should be 34 ↓ (field numbers are shared with fields outside the oneof)
     case pollVote(PollVote)
 
     fileprivate var isInitialized: Bool {
@@ -508,6 +526,7 @@ public nonisolated struct GenericMessage: Sendable {
 
   fileprivate var _messageID: String? = nil
   fileprivate var _unknownStrategy: GenericMessage.UnknownStrategy? = nil
+  fileprivate var _clientCreatedAtMillis: Int64? = nil
 }
 
 public nonisolated struct QualifiedUserId: Sendable {
@@ -2954,7 +2973,7 @@ nonisolated extension LegalHoldStatus: SwiftProtobuf._ProtoNameProviding {
 
 nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "GenericMessage"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{2}\u{2}lastRead\0\u{1}cleared\0\u{1}external\0\u{1}clientAction\0\u{1}calling\0\u{1}asset\0\u{1}hidden\0\u{1}location\0\u{1}deleted\0\u{1}edited\0\u{1}confirmation\0\u{1}reaction\0\u{1}ephemeral\0\u{1}availability\0\u{1}composite\0\u{1}buttonAction\0\u{1}buttonActionConfirmation\0\u{1}dataTransfer\0\u{1}inCallEmoji\0\u{1}unknownStrategy\0\u{1}inCallHandRaise\0\u{1}multipart\0\u{1}historyClientAvailable\0\u{1}historyClientRequest\0\u{1}historyClientResponse\0\u{1}poll\0\u{1}pollVote\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}message_id\0\u{1}text\0\u{1}image\0\u{1}knock\0\u{2}\u{2}lastRead\0\u{1}cleared\0\u{1}external\0\u{1}clientAction\0\u{1}calling\0\u{1}asset\0\u{1}hidden\0\u{1}location\0\u{1}deleted\0\u{1}edited\0\u{1}confirmation\0\u{1}reaction\0\u{1}ephemeral\0\u{1}availability\0\u{1}composite\0\u{1}buttonAction\0\u{1}buttonActionConfirmation\0\u{1}dataTransfer\0\u{1}inCallEmoji\0\u{1}unknownStrategy\0\u{1}inCallHandRaise\0\u{1}multipart\0\u{1}historyClientAvailable\0\u{1}historyClientRequest\0\u{1}historyClientResponse\0\u{1}poll\0\u{1}pollVote\0\u{3}client_created_at_millis\0")
 
   public var isInitialized: Bool {
     if self._messageID == nil {return false}
@@ -3342,6 +3361,7 @@ nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._Mess
           self.content = .pollVote(v)
         }
       }()
+      case 33: try { try decoder.decodeSingularInt64Field(value: &self._clientCreatedAtMillis) }()
       default: break
       }
     }
@@ -3480,6 +3500,9 @@ nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }()
     default: break
     }
+    try { if let v = self._clientCreatedAtMillis {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 33)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3487,6 +3510,7 @@ nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs._messageID != rhs._messageID {return false}
     if lhs.content != rhs.content {return false}
     if lhs._unknownStrategy != rhs._unknownStrategy {return false}
+    if lhs._clientCreatedAtMillis != rhs._clientCreatedAtMillis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
