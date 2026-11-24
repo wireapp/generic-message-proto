@@ -3,7 +3,7 @@
     "declaration": true,
     "lib": ["DOM", "ES6"],
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -12,7 +12,7 @@
     "rootDir": "web",
     "sourceMap": false,
     "strict": true,
-    "target": "ES5"
+    "target": "ES2015"
   },
   "exclude": ["node_modules"]
 }
